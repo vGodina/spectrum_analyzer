@@ -1,6 +1,7 @@
 *.filters
 *.user
 
+Spectrum_analyzer/
 Release/
 [Dd]ebug/
 .vs/
