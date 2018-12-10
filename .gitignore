@@ -1,6 +1,7 @@
 *.filters
 *.user
 
+Release/
 [Dd]ebug/
 .vs/
 
