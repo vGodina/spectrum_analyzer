@@ -1,4 +1,4 @@
-#include <MainWindow.h>
+#include "MainWindow.h"
 #include <string>
 
 MainWindow::MainWindow(int w, int h, const char* title) :Fl_Window(w, h, title)
@@ -6,6 +6,7 @@ MainWindow::MainWindow(int w, int h, const char* title) :Fl_Window(w, h, title)
 	begin();
 	Chooser = new Fl_Native_File_Chooser();
 	Chooser->title("Open a file");
+	Chooser->directory("TestData");
 	Chooser->filter("*.wav");
 	OpenButton = new Fl_Button(100, 30, 100, 30, "Open .wav file");
 	OpenButton->callback(CbOpenButton, this);

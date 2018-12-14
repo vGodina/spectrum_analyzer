@@ -1,4 +1,4 @@
-#include <MainWindow.h>
+#include "MainWindow.h"
 
 int main()
 {
