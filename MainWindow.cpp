@@ -1,3 +1,4 @@
+#include <MainWindow.h>
 #include <fltk/Fl.h>
 #include <fltk/Fl_Box.h>
 #include <fltk/Fl_Window.H>
@@ -5,20 +6,6 @@
 #include <fltk/Fl_Native_File_Chooser.h>
 #include <audiofile/AudioFile.h>
 #include <string>
-
-class MainWindow : public Fl_Window {
-public:
-	MainWindow(int w, int h, const char* title);
-	~MainWindow();
-	Fl_Button* OpenButton;
-	Fl_Native_File_Chooser* Chooser;
-	Fl_Box* FileInfo;
-	AudioFile <float> AudioTrack;
-	
-private:
-	static void CbOpenButton(Fl_Widget*, void*);
-	inline void ChooserShow();
-};
 
 MainWindow::MainWindow(int w, int h, const char* title) :Fl_Window(w, h, title)
 {
@@ -33,7 +20,7 @@ MainWindow::MainWindow(int w, int h, const char* title) :Fl_Window(w, h, title)
 	resizable(this);
 	show();
 }
-//----------------------------------------------------
+
 MainWindow::~MainWindow() {}
 
 void MainWindow::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
