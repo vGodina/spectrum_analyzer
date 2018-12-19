@@ -4,6 +4,7 @@
 #include <fltk/Fl_Button.h>
 #include <fltk/Fl_Native_File_Chooser.h>
 #include <audiofile/AudioFile.h>
+#include <memory>
 
 class MainWindow : public Fl_Window {
 public:
@@ -11,8 +12,8 @@ public:
 	~MainWindow();
 private:
 	std::unique_ptr<Fl_Button>OpenButton;
-	std::unique_ptr<Fl_Native_File_Chooser>Chooser;
 	std::unique_ptr<Fl_Box>FileInfo;
+	std::unique_ptr<Fl_Native_File_Chooser>Chooser;
 	std::unique_ptr<AudioFile<float>>AudioTrack;
 
 	static void CbOpenButton(Fl_Widget*, void*);

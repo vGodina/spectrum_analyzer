@@ -1,12 +1,11 @@
 #include "MainWindow.h"
 #include <string>
-#include <memory>
 
 MainWindow::MainWindow(int w, int h, const char* title) : Fl_Window(w, h, title),
-OpenButton(new Fl_Button(100, 30, 100, 30, "Open .wav file")),
-FileInfo(new Fl_Box(40, 100, 220, 30, "000")),
-Chooser(new Fl_Native_File_Chooser()),
-AudioTrack(new AudioFile<float>)
+	OpenButton(std::make_unique<Fl_Button>(100, 30, 100, 30, "Open .wav file")),
+	FileInfo(std::make_unique<Fl_Box>(40, 100, 220, 30, "000")),
+	Chooser(std::make_unique<Fl_Native_File_Chooser>()),
+	AudioTrack(std::make_unique<AudioFile<float>>())
 {
 	begin();
 	OpenButton->callback(CbOpenButton, this);
@@ -19,7 +18,7 @@ MainWindow::~MainWindow() {}
 
 void MainWindow::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
 {
-	((MainWindow*)Obj)->ChooserShow();
+	static_cast<MainWindow*>(Obj)->ChooserShow();
 }
 
 void MainWindow::ChooserShow()
