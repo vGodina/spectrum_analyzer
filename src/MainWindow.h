@@ -10,11 +10,11 @@ public:
 	MainWindow(int w, int h, const char* title);
 	~MainWindow();
 private:
-	Fl_Button* OpenButton;
-	Fl_Native_File_Chooser* Chooser;
-	Fl_Box* FileInfo;
-	AudioFile <float> AudioTrack;
-	
+	std::unique_ptr<Fl_Button>OpenButton;
+	std::unique_ptr<Fl_Native_File_Chooser>Chooser;
+	std::unique_ptr<Fl_Box>FileInfo;
+	std::unique_ptr<AudioFile<float>>AudioTrack;
+
 	static void CbOpenButton(Fl_Widget*, void*);
-	void ChooserShow();
+	inline void ChooserShow();
 };
