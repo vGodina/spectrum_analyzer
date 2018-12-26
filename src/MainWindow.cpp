@@ -43,12 +43,10 @@ void MainWindow::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
 
 void MainWindow::VerticalScale(float VertFactor = 1.0, bool ClearChart = TRUE)
 {
-	double* min = new double;
-	double* max = new double;
-	Chart->bounds(min, max);
+	double min, max;
+	Chart->bounds(&min, &max);
 	if (ClearChart) Chart->clear();
-	Chart->bounds((*min) * VertFactor, (*max) * VertFactor);
-	delete[] min, max;
+	Chart->bounds(min * VertFactor, max * VertFactor);
 }
 
 void MainWindow::ChartRedraw(float ZoomFactor = 1.0)
