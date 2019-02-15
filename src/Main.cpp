@@ -2,6 +2,6 @@
 
 int main()
 {
-	MainWindow BaseWindow(600, 400, "Spectrum Analyzer");
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer");
 	return Fl::run();
 }

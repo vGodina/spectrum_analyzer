@@ -5,7 +5,9 @@
 #include <fltk/Fl_Native_File_Chooser.h>
 #include <fltk/Fl_Chart.H>
 #include <fltk/Fl_Slider.H>
+#include <fltk/Fl_Choice.H>
 #include <audiofile/AudioFile.h>
+#include <audiofft/AudioFFT.h>
 #include <memory>
 #include <math.h>
 
@@ -17,13 +19,17 @@ private:
 	std::unique_ptr<Fl_Button>OpenButton;
 	std::unique_ptr<Fl_Box>FileInfo;
 	std::unique_ptr<Fl_Native_File_Chooser>Chooser;
-	std::unique_ptr<Fl_Chart>Chart;
+	std::unique_ptr<Fl_Chart>WaveformChart;
+	std::unique_ptr<Fl_Chart>SpectrumChart;
+	std::unique_ptr<Fl_Chart>LevelMeter;
+	std::unique_ptr<Fl_Choice>SizeFFT;
 	std::unique_ptr<Fl_Slider>Slider;
 	std::unique_ptr<Fl_Button>ZoomInH;
 	std::unique_ptr<Fl_Button>ZoomOutH;
 	std::unique_ptr<Fl_Button>ZoomInV;
 	std::unique_ptr<Fl_Button>ZoomOutV;
-	std::unique_ptr<AudioFile<double>>AudioTrack;
+	std::unique_ptr<AudioFile<float>>AudioTrack;
+	std::unique_ptr<audiofft::AudioFFT>FFT;
 
 	static void CbOpenButton(Fl_Widget*, void*);
 	static void CbZoomInH(Fl_Widget*, void*);
@@ -31,7 +37,9 @@ private:
 	static void CbZoomInV(Fl_Widget*, void*);
 	static void CbZoomOutV(Fl_Widget*, void*);
 	static void CbSlider(Fl_Widget*, void*);
+	static void CbSizeFFT(Fl_Widget*, void*);
 	inline void ChooserShow();
 	void ChartRedraw(float ZoomFactor);
+	void DoFFT();
 	void VerticalScale(float VertFactor, bool ClearChart);
 };
