@@ -153,11 +153,19 @@
   <ItemGroup>
     <ClCompile Include="external\include\audiofft\AudioFFT.cpp" />
     <ClCompile Include="external\include\audiofile\AudioFile.cpp" />
+    <ClCompile Include="src\Fl_AudioFile.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MainWindow.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\Spectrum.cpp" />
+    <ClCompile Include="src\Waveform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fl_AudioFile.h" />
     <ClInclude Include="src\MainWindow.h" />
+    <ClInclude Include="src\Menu.h" />
+    <ClInclude Include="src\Spectrum.h" />
+    <ClInclude Include="src\Waveform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
