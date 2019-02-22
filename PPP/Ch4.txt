@@ -1,0 +1,105 @@
+//4.0.0------------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	double Amount = 0.0;
+	double CNY_USD = 1 / 6.72;
+	double UAH_USD = 1 / 27.02;
+	double RUB_USD = 1 / 65.64;
+	string Currency = "";
+	cout << "*** CNY, UAH, RUB to USD currency converter ***\n"
+		<< "\nPlease, enter the amount and currency code (CNY, UAH, RUB):\n";
+	cin >> Amount >> Currency;
+	if (Currency == "CNY")
+		cout << Amount << " CNY = " << Amount * CNY_USD << " USD\n";
+	else if (Currency == "UAH")
+		cout << Amount << " UAH = " << Amount * UAH_USD << " USD\n";
+	else if (Currency == "RUB")
+		cout << Amount << " RUB = " << Amount * RUB_USD << " USD\n";
+	else
+		cout << "No such currency.\n";
+	return 0;
+}
+//4.0.1--------------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	double Amount = 0.0;
+	double CNY_USD = 1 / 6.72;
+	double UAH_USD = 1 / 27.02;
+	double RUB_USD = 1 / 65.64;
+	double EUR_USD = 1.14;
+	double GBP_USD = 1.5;
+	char Currency;
+	cout << "*** CNY, UAH, RUB, EUR, GBP to USD currency converter ***\n"
+		 << "\nPlease, enter the amount and currency code "
+		"(c-CNY, u-UAH, r-RUB, e-EUR, g-GBP):\n";
+	cin >> Amount >> Currency;
+	switch (Currency)
+	{
+	case 'c':
+		cout << Amount << " CNY = " << Amount * CNY_USD << " USD\n";
+		break;
+	case'u':
+		cout << Amount << " UAH = " << Amount * UAH_USD << " USD\n";
+		break;
+	case 'r':
+		cout << Amount << " RUB = " << Amount * RUB_USD << " USD\n";
+		break;
+	case 'e':
+		cout << Amount << " EUR = " << Amount * EUR_USD << " USD\n";
+		break;
+	case 'g':
+		cout << Amount << " GBP = " << Amount * GBP_USD << " USD\n";
+		break;
+	default: 
+		cout << "No such currency.\n";
+	}
+	return 0;
+}
+//4.0.2------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	char i = 'a';
+	while (i <= 'z')
+	{
+		std::cout << i << '\t' << int(i) << '\n';
+		++i;
+	}
+	return 0;
+}
+//4.0.3----------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	for (char i = '0'; i <= '9'; i++) std::cout << i << '\t' << int(i) << '\n';
+	std::cout << '\n';
+	for (char i = 'A'; i <= 'Z'; i++) std::cout << i << '\t' << int(i) << '\n';
+	std::cout << '\n';
+	for (char i = 'a'; i <= 'z'; i++) std::cout << i << '\t' << int(i) << '\n';
+	return 0;
+}
+//4.0.4-------------------------
+#include "std_lib_facilities.h"
+
+int square(int x)
+{
+	int sum = 0;
+	for (int i = 0; i < x; i++) sum += x;
+	return sum;
+}
+
+int main()
+{
+	int Num;
+	cout << "Please, enter positive number: ";
+	cin >> Num;
+	cout << "\nSquare of " << Num << " is " << square(Num) << "\n";
+	return 0;
+}
+//4.0.5------------------

@@ -67,7 +67,7 @@ void Spectrum::DoFFT(Fl_AudioFile* AudioTrack)
 		Ampl2 = (Re[n] * Re[n] + Im[n] * Im[n]) * Norm;
 		RMS += Ampl2;
 		// log scale of Ak.
-		Ampl[n] = 10 * log10(Ampl2);
+		Ampl[n] = 10.0 * log10(Ampl2);
 		SpectrumChart->add(Ampl[n]);
 	}
 	// showing RMS level at LevelMeter widget
