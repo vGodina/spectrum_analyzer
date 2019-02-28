@@ -60,14 +60,14 @@ void Spectrum::DoFFT(Fl_AudioFile* AudioTrack)
 
 	float RMS = 0.0F;
 	float Ampl2 = 0.0F; //square of Amplitude
-	float Norm = 1 / pow(static_cast<float>(N), 2);
-	for (unsigned int n = 0, i = 0; n < N + 1; n++)
+	float Norm = 1 / pow(N, 2);
+	for (int n = 0; n < N + 1; n++)
 	{
 		//Calculating normalized square of amplitude Ak
 		Ampl2 = (Re[n] * Re[n] + Im[n] * Im[n]) * Norm;
 		RMS += Ampl2;
 		// log scale of Ak.
-		Ampl[n] = 10.0 * log10(Ampl2);
+		Ampl[n] = 10.0F * log10(Ampl2);
 		SpectrumChart->add(Ampl[n]);
 	}
 	// showing RMS level at LevelMeter widget
