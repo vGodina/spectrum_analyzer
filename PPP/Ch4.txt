@@ -103,3 +103,108 @@ int main()
 	return 0;
 }
 //4.0.5------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	vector <string> words;
+	string disliked1 = "Broccoli";
+	string disliked2 = "Cheaps";
+	for (string temp; cin >> temp;)
+	{
+		(temp == disliked1 || temp == disliked2) ? words.push_back("BLEEP") : words.push_back(temp);
+		cout << words[words.size()-1] << "\n";
+	}
+	return 0;
+}
+//4.1.0-------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	vector <double> Values;
+	double value, min, max, to_meter, sum = 0.0;
+	string unit;
+	bool first_entry = true;
+	cout << "Please, enter value and unit (m, cm, in, ft):\n";
+	while (cin >> value >> unit)
+	{
+		if (unit == "m") to_meter = 1.0;
+		else if (unit == "cm") to_meter = 0.01;
+		else if (unit == "in") to_meter = 0.01 * 2.54;
+		else if (unit == "ft") to_meter = 12 * 2.54 * 0.01;
+		else to_meter = 0.0;
+
+		if (to_meter != 0.0)
+		{
+			value *= to_meter;
+			if (first_entry)
+			{
+				min = max = value;
+				first_entry = false;
+			}
+			cout << value << " meters\n";
+			if (value > max) max = value;
+			if (value < min) min = value;
+			Values.push_back(value);
+			sum += value;
+		}
+		else cout << "Unit is unknown. Value ignored.\n";	
+	}
+
+	cout << "Minimum value:	" << min
+		 << "\nMaximum value:	" << max
+		 << "\nSum of values:	" << sum
+		 << "\nValues number:	" << Values.size() << "\n\n";
+	sort(Values);
+	cout << "Values in meters:\n";
+	for (double temp : Values)
+		cout << temp << "\n";
+	return 0;
+}
+//4.2----------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	vector<double> temps;
+	double median = 0.0;
+
+	for (double temp; cin >> temp;) 
+		temps.push_back(temp);
+	sort(temps);
+	if (temps.size() % 2 == 1)
+		median = temps[temps.size() / 2];
+	else if (temps.size() % 2 == 0)
+		median = 0.5 * (temps[temps.size() / 2] + temps[temps.size() / 2 - 1]);
+	cout << "Median temperature: "<< median << '\n';
+	return 0;
+}
+//4.3---------------------------
+#include "std_lib_facilities.h"
+
+int main()
+{
+	vector <double> Distances;
+	double value, min, max, sum = 0.0;
+	bool first_entry = true;
+	cout << "Please, enter distances between towns:\n";
+	while (cin >> value)
+	{
+		if (first_entry)
+		{
+			min = max = value;
+			first_entry = false;
+		}
+		if (value > max) max = value;
+		if (value < min) min = value;
+		Distances.push_back(value);
+		sum += value;
+	}
+	cout << "Minimum distance:	" << min
+		<< "\nMaximum distance:	" << max
+		<< "\nTotal distance:	" << sum
+		<< "\nAverage distance:	" << sum / Distances.size() << '\n';
+	return 0;
+}
+//4.4------------------------
