@@ -2,7 +2,7 @@
 
 Fl_AudioFile::Fl_AudioFile() :
 	Fl_Box(0, 0, 0, 0),
-	AudioTrack(AudioFile<float>())
+	AudioTrack()
 {}
 
 Fl_AudioFile::~Fl_AudioFile() {}

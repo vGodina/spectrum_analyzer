@@ -29,8 +29,7 @@ Spectrum::~Spectrum() {}
 void Spectrum::CbSizeFFT(Fl_Widget* SizeFFT, void* Obj)
 {
 	// Get pointer to Group and Window
-	Fl_Widget* Widget = static_cast<Fl_Widget*>(SizeFFT);
-	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widget->parent());
+	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(SizeFFT->parent());
 	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
 	static_cast<Spectrum*>(Obj)->DoFFT(AudioTrack->GetAudio());
 }

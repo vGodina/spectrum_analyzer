@@ -16,8 +16,7 @@ Menu::~Menu() {}
 void Menu::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
 {
 	// Get pointer to Group and Window
-	Fl_Widget* Widget = static_cast<Fl_Widget*>(OpenButton);
-	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widget->parent());
+	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(OpenButton->parent());
 	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
 	static_cast<Menu*>(Obj)->ChooserShow(AudioTrack->GetAudio());
 }

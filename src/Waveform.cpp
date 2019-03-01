@@ -25,11 +25,10 @@ ZoomInV(std::make_unique<Fl_Button>(522, 100, 25, 25, "+"))
 
 Waveform::~Waveform() {}
 
-AudioFile<float>* Waveform::AudioPtr(Fl_Widget* Widget)
+AudioFile <float>* Waveform::AudioPtr(Fl_Widget* Widget)
 {
-	Fl_Widget* Widg = static_cast<Fl_Widget*>(Widget);
 	// Get pointer to Window
-	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widg->parent());
+	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widget->parent());
 	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
 	return AudioTrack->GetAudio();
 }
