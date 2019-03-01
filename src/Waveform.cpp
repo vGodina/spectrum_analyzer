@@ -2,7 +2,7 @@
 #include "Fl_AudioFile.h"
 #include "Waveform.h"
 
-Waveform::Waveform() : 
+Waveform::Waveform() : Fl_Box(0, 0, 0, 0),
 WaveformChart(std::make_unique<Fl_Chart>(20, 100, 500, 200)),
 Slider(std::make_unique<Fl_Slider>(20, 300, 500, 20)),
 ZoomOutH(std::make_unique<Fl_Button>(20, 322, 25, 25, "-")),
@@ -101,4 +101,12 @@ void Waveform::VerticalScale(float VertFactor = 1.0, bool ClearChart = 1)
 	WaveformChart->bounds(&min, &max);
 	if (ClearChart) WaveformChart->clear();
 	WaveformChart->bounds(min * VertFactor, max * VertFactor);
+}
+
+void Waveform::Redraw(AudioFile<float>* AudioTrack)
+{
+	Slider->slider_size(1);
+	WaveformChart->clear();
+	WaveformChart->bounds(-1, 1);
+	ChartRedraw(AudioTrack);
 }

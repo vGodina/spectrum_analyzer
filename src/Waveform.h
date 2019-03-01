@@ -1,11 +1,15 @@
+#ifndef WAVEFORM
+#define WAVEFORM
+
 #include <fltk/Fl_Button.h>
 #include <fltk/Fl_Chart.H>
 #include <fltk/Fl_Slider.H>
 
-class Waveform {
+class Waveform : public Fl_Box {
 public:
 	Waveform();
 	~Waveform();
+	void Redraw(AudioFile<float>*);
 private:
 	std::unique_ptr<Fl_Chart>WaveformChart;
 	std::unique_ptr<Fl_Slider>Slider;
@@ -22,5 +26,6 @@ private:
 	inline static AudioFile<float>* AudioPtr(Fl_Widget*);
 	void ChartRedraw(AudioFile<float>*, float ZoomFactor);
 	void VerticalScale(float VertFactor, bool ClearChart);
-
 };
+
+#endif WAVEFORM
