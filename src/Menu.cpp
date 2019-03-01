@@ -22,7 +22,7 @@ void Menu::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
 	static_cast<Menu*>(Obj)->ChooserShow(AudioTrack->GetAudio());
 }
 
-void Menu::ChooserShow(std::shared_ptr<AudioFile<float>> AudioTrack)
+void Menu::ChooserShow(AudioFile<float>* AudioTrack)
 {
 	Chooser->show();
 	AudioTrack->load(Chooser->filename());

@@ -12,6 +12,6 @@ private:
 	std::unique_ptr<Fl_Native_File_Chooser>Chooser;
 
 	static void CbOpenButton(Fl_Widget*, void*);
-	void ChooserShow(std::shared_ptr<AudioFile<float>>);
+	void ChooserShow(AudioFile<float>*);
 };
 

@@ -6,11 +6,11 @@
 
 class Fl_AudioFile : public Fl_Box {
 private:
-	std::shared_ptr<AudioFile<float>> AudioTrack;
+	AudioFile<float> AudioTrack;
 public:
 	Fl_AudioFile();
 	~Fl_AudioFile();
-	std::shared_ptr<AudioFile<float>> GetAudio();
+	AudioFile<float>* GetAudio();
 };
 
 #endif FL_AUDIOFILE

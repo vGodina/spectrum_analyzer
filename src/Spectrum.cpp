@@ -35,7 +35,7 @@ void Spectrum::CbSizeFFT(Fl_Widget* SizeFFT, void* Obj)
 	static_cast<Spectrum*>(Obj)->DoFFT(AudioTrack->GetAudio());
 }
 
-void Spectrum::DoFFT(std::shared_ptr<AudioFile<float>> AudioTrack)
+void Spectrum::DoFFT(AudioFile<float>* AudioTrack)
 {
 	SpectrumChart->clear();
 	SpectrumChart->bounds(-120.0, 0.0);

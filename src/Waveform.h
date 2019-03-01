@@ -19,8 +19,8 @@ private:
 	static void CbZoomInV(Fl_Widget*, void*);
 	static void CbZoomOutV(Fl_Widget*, void*);
 	static void CbSlider(Fl_Widget*, void*);
-	inline static std::shared_ptr<AudioFile<float>> AudioPtr(Fl_Widget*);
-	void ChartRedraw(std::shared_ptr<AudioFile<float>>, float ZoomFactor);
+	inline static AudioFile<float>* AudioPtr(Fl_Widget*);
+	void ChartRedraw(AudioFile<float>*, float ZoomFactor);
 	void VerticalScale(float VertFactor, bool ClearChart);
 
 };
