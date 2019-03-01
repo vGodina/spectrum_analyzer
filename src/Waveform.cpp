@@ -25,13 +25,13 @@ ZoomInV(std::make_unique<Fl_Button>(522, 100, 25, 25, "+"))
 
 Waveform::~Waveform() {}
 
-Fl_AudioFile* Waveform::AudioPtr(Fl_Widget* Widget)
+std::shared_ptr<AudioFile<float>> Waveform::AudioPtr(Fl_Widget* Widget)
 {
 	Fl_Widget* Widg = static_cast<Fl_Widget*>(Widget);
 	// Get pointer to Window
 	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widg->parent());
 	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
-	return AudioTrack;
+	return AudioTrack->GetAudio();
 }
 
 void Waveform::CbZoomInH(Fl_Widget* ZoomIn, void* Obj)
@@ -65,7 +65,7 @@ void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
 	static_cast<Waveform*>(Obj)->ChartRedraw(AudioPtr(Slider), 1.0);
 }
 
-void Waveform::ChartRedraw(Fl_AudioFile* AudioTrack, float ZoomFactor = 1.0)
+void Waveform::ChartRedraw(std::shared_ptr<AudioFile<float>> AudioTrack, float ZoomFactor = 1.0)
 {
 	constexpr int ChartLength = 1024;
 	float SliderSize = ZoomFactor * Slider->slider_size();

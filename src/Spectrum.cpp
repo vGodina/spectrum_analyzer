@@ -24,9 +24,18 @@ Spectrum::Spectrum():
 	SizeFFT->value(0);
 }
 
-Spectrum::~Spectrum() { }
+Spectrum::~Spectrum() {}
 
-void Spectrum::DoFFT(Fl_AudioFile* AudioTrack)
+void Spectrum::CbSizeFFT(Fl_Widget* SizeFFT, void* Obj)
+{
+	// Get pointer to Group and Window
+	Fl_Widget* Widget = static_cast<Fl_Widget*>(SizeFFT);
+	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widget->parent());
+	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
+	static_cast<Spectrum*>(Obj)->DoFFT(AudioTrack->GetAudio());
+}
+
+void Spectrum::DoFFT(std::shared_ptr<AudioFile<float>> AudioTrack)
 {
 	SpectrumChart->clear();
 	SpectrumChart->bounds(-120.0, 0.0);
@@ -75,13 +84,4 @@ void Spectrum::DoFFT(Fl_AudioFile* AudioTrack)
 	LevelMeter->clear();
 	LevelMeter->bounds(-120.0, 0.0);
 	LevelMeter->add(RMS);
-}
-
-void Spectrum::CbSizeFFT(Fl_Widget* SizeFFT, void* Obj)
-{
-	// Get pointer to Group and Window
-	Fl_Widget* Widget = static_cast<Fl_Widget*>(SizeFFT);
-	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widget->parent());
-	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
-	static_cast<Spectrum*>(Obj)->DoFFT(AudioTrack);
 }

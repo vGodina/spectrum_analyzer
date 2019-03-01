@@ -13,5 +13,5 @@ private:
 	std::unique_ptr<audiofft::AudioFFT>FFT;
 
 	static void CbSizeFFT(Fl_Widget*, void*);
-	void DoFFT(Fl_AudioFile*);
+	void DoFFT(std::shared_ptr<AudioFile<float>>);
 };
