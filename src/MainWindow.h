@@ -17,5 +17,5 @@ private:
 	boost::signals2::connection  SliderConnection;
 
 	void LoadAudio(std::string FileName);
-	void SliderHandler();
+	void SliderHandler(double SliderSize, double SliderValue);
 };

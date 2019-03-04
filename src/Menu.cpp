@@ -1,6 +1,5 @@
 #include "Menu.h"
 
-
 Menu::Menu() :
 	Chooser(),
 	OpenButton (30, 30, 100, 30, "Open .wav file"),
@@ -27,9 +26,4 @@ void Menu::Emit()
 boost::signals2::connection Menu::connect(const signal_t::slot_type &slot)
 {
 	return MenuSignal.connect(slot);
-}
-
-std::string Menu::GetFilename()
-{
-	return Chooser.filename();
 }

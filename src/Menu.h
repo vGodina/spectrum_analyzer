@@ -7,9 +7,8 @@
 class Menu {
 public:
 	Menu();
-	using signal_t = boost::signals2::signal<void (const std::string)>;
+	using signal_t = boost::signals2::signal<void (std::string)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot);
-	std::string GetFilename();
 private:
 	Fl_Native_File_Chooser Chooser;
 	Fl_Button OpenButton;

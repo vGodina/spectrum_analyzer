@@ -8,10 +8,9 @@ class Waveform {
 public:
 	Waveform();
 	void Show(const AudioFile<float>&);
-	using signal_t = boost::signals2::signal<void ()>;
+	using signal_t = boost::signals2::signal<void (float, double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
-	double GetSliderSize();
-	double GetSliderValue();
+
 private:
 	Fl_Chart WaveformChart;
 	Fl_Slider Slider;

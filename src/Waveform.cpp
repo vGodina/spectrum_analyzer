@@ -99,16 +99,6 @@ void Waveform::Show(const AudioFile<float>& AudioTrk)
 	Draw();
 }
 
-double Waveform::GetSliderSize()
-{
-	return Slider.slider_size();
-}
-
-double Waveform::GetSliderValue()
-{
-	return Slider.value();
-}
-
 boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscriber)
 {
 	return SliderSignal.connect(subscriber);
@@ -116,5 +106,5 @@ boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscri
 
 void Waveform::Emit()
 {
-	SliderSignal();
+	SliderSignal(Slider.slider_size(), Slider.value());
 }

@@ -5,8 +5,8 @@ MainWindow::MainWindow(int w, int h, const char* title) : Fl_Double_Window(w, h,
 	AudioTrack(), WaveFrm(), SpectraFrm(), MainMenu()
 {
 	//Connecting MainMenu signal with LoadAudio function
-	MenuConnection = MainMenu.connect(boost::bind(&MainWindow::LoadAudio, this));
-	SliderConnection = WaveFrm.connect(boost::bind(&MainWindow::SliderHandler, this));
+	MenuConnection = MainMenu.connect(boost::bind(&MainWindow::LoadAudio, this, _1));
+	SliderConnection = WaveFrm.connect(boost::bind(&MainWindow::SliderHandler, this, _1, _2));
 	resizable(this);
 	Fl::visual(FL_DOUBLE | FL_INDEX);
 	show();
@@ -19,9 +19,9 @@ void MainWindow::LoadAudio(std::string FileName)
 	SpectraFrm.Show(AudioTrack);
 }
 
-void MainWindow::SliderHandler()
+void MainWindow::SliderHandler(double SliderSize, double SliderValue)
 {
-	SpectraFrm.SetSliderSize(WaveFrm.GetSliderSize());
-	SpectraFrm.SetSliderValue(WaveFrm.GetSliderValue());
+	SpectraFrm.SetSliderSize(SliderSize);
+	SpectraFrm.SetSliderValue(SliderValue);
 	SpectraFrm.Show(AudioTrack);
 }
