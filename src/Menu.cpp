@@ -10,13 +10,10 @@ Menu::Menu() :
 	Chooser.filter("*.wav");
 }
 
-Menu::~Menu() {}
-
 void Menu::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
 {
 	static_cast<Menu*>(Obj)->Emit();
 }
-
 
 void Menu::Emit()
 {

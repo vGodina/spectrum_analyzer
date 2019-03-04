@@ -1,5 +1,4 @@
 #include "Waveform.h"
-#include <audiofile/AudioFile.h>
 
 Waveform::Waveform() :
 WaveformChart(20, 100, 500, 200),
@@ -18,95 +17,104 @@ ZoomInV(522, 100, 25, 25, "+")
 	WaveformChart.color(FL_WHITE);
 	WaveformChart.type(FL_LINE_CHART);
 	Slider.type(FL_HORIZONTAL);
-	Slider.slider_size(1);
+	Slider.slider_size(1.0);
 	Slider.value(0.5);
 }
 
-Waveform::~Waveform() {}
-/*
-AudioFile <float>* Waveform::AudioPtr(Fl_Widget* Widget)
-{
-	// Get pointer to Window
-	Fl_Double_Window* Window = static_cast<Fl_Double_Window*>(Widget->parent());
-	Fl_AudioFile* AudioTrack = static_cast<Fl_AudioFile*>(Window->child(0));
-	return AudioTrack->GetAudio();
-}*/
-
 void Waveform::CbZoomInH(Fl_Widget* ZoomIn, void* Obj)
 {
-	static_cast<Waveform*>(Obj)->ChartRedraw(0.5);
+	static_cast<Waveform*>(Obj)->Draw(2.0);
 }
 
 void Waveform::CbZoomOutH(Fl_Widget* ZoomOutH, void* Obj)
 {
-	Waveform* win = static_cast<Waveform*>(Obj);
-	if (win->Slider.slider_size() < 1)
-		win->ChartRedraw(2);
+	static_cast<Waveform*>(Obj)->Draw(0.5);
 }
 
 void Waveform::CbZoomInV(Fl_Widget* ZoomInV, void* Obj)
 {
-	Waveform* win = static_cast<Waveform*>(Obj);
-	win->VerticalScale(0.5, 0);
-	win->WaveformChart.redraw();
+	Waveform* Widget = static_cast<Waveform*>(Obj);
+	Widget->VerticalScale(2.0, false);
+	Widget->WaveformChart.redraw();
 }
 
 void Waveform::CbZoomOutV(Fl_Widget* ZoomOutV, void* Obj)
 {
-	Waveform* win = static_cast<Waveform*>(Obj);
-	win->VerticalScale(2, 0);
-	win->WaveformChart.redraw();
+	Waveform* Widget = static_cast<Waveform*>(Obj);
+	Widget->VerticalScale(0.5, false);
+	Widget->WaveformChart.redraw();
 }
 
 void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
 {
-	static_cast<Waveform*>(Obj)->ChartRedraw(1.0);
+	static_cast<Waveform*>(Obj)->Draw(1.0);
+	static_cast<Waveform*>(Obj)->Emit();
 }
 
-void Waveform::ChartRedraw(float ZoomFactor = 1.0)
+void Waveform::Draw(double ZoomFactor = 1.0)
 {
-	AudioFile<float>* AudioTrack(0); ///////////////////////////DUMMY!!!
-	constexpr int ChartLength = 1024;
-	float SliderSize = ZoomFactor * Slider.slider_size();
-	float SliderValue = static_cast<float>(Slider.value());
-	int AudioLength = AudioTrack->getNumSamplesPerChannel();
-	// resize Slider size
-	Slider.slider_size(SliderSize);
-	if (Slider.slider_size() == 1) Slider.value(0.5);
-	// keep Chart bounds with no changes
-	VerticalScale(1.0, 1);
-	// Center value of Slider
-	float Center = SliderValue - SliderValue * SliderSize + SliderSize / 2;
-	int VisibleSamples = AudioLength * SliderSize;
-
-	int StartSample = Center * AudioLength - VisibleSamples / 2;
-	int Delta = VisibleSamples;
-	int Decimation = 1;
-	if (VisibleSamples > ChartLength)
+	if (AudioTrack)
 	{
-		Delta = ChartLength;
-		Decimation = VisibleSamples / ChartLength;
+		constexpr int ChartLength = 1024;
+		// resize Slider size
+		Slider.slider_size(Slider.slider_size() / ZoomFactor);
+		if (Slider.slider_size() == 1.0)
+			Slider.value(0.5);
+		// reset Chart and keep its bounds with no changes
+		VerticalScale(1.0, true);
+		// Center value of Slider
+		double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
+		int VisibleSamples = AudioTrack->getNumSamplesPerChannel() * Slider.slider_size();
+		int StartSample = Center * AudioTrack->getNumSamplesPerChannel() - VisibleSamples / 2;
+		int Delta = VisibleSamples;
+		int Decimation = 1;
+		if (VisibleSamples > ChartLength)
+		{
+			Delta = ChartLength;
+			Decimation = VisibleSamples / ChartLength;
+		}
+		for (int i = 0; i < Delta; i++)
+		{
+			WaveformChart.add(AudioTrack->samples[0][StartSample + i * Decimation]);
+		}
 	}
-	for (int i = 0; i < Delta; i++)
-	{
-		double val = AudioTrack->samples[0][StartSample + i * Decimation];
-		WaveformChart.add(val);
-	}
-	//DoFFT();
 }
 
-void Waveform::VerticalScale(float VertFactor = 1.0, bool ClearChart = 1)
+void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)
 {
 	double min, max;
 	WaveformChart.bounds(&min, &max);
-	if (ClearChart) WaveformChart.clear();
-	WaveformChart.bounds(min * VertFactor, max * VertFactor);
+	if (ClearChart)
+		WaveformChart.clear();
+	min /= VertFactor;
+	max /= VertFactor;
+	WaveformChart.bounds(min, max);
 }
-/*
-void Waveform::Redraw(AudioFile<float>* AudioTrack)
+
+void Waveform::Show(const AudioFile<float>* AudioTrk)
 {
-	Slider.slider_size(1);
-	WaveformChart.clear();
-	WaveformChart.bounds(-1, 1);
-	ChartRedraw(AudioTrack);
-}*/
+	AudioTrack = AudioTrk;
+	Slider.slider_size(1.0);
+	Slider.value(0.5);
+	Draw();
+}
+
+double Waveform::GetSliderSize()
+{
+	return Slider.slider_size();
+}
+
+double Waveform::GetSliderValue()
+{
+	return Slider.value();
+}
+
+boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscriber)
+{
+	return SliderSignal.connect(subscriber);
+}
+
+void Waveform::Emit()
+{
+	SliderSignal();
+}
