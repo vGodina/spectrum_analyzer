@@ -7,7 +7,7 @@
 class Waveform {
 public:
 	Waveform();
-	void Show(const AudioFile<float>*);
+	void Show(const AudioFile<float>&);
 	using signal_t = boost::signals2::signal<void ()>;
 	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
 	double GetSliderSize();

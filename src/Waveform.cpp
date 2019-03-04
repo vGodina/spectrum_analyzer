@@ -91,9 +91,9 @@ void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)
 	WaveformChart.bounds(min, max);
 }
 
-void Waveform::Show(const AudioFile<float>* AudioTrk)
+void Waveform::Show(const AudioFile<float>& AudioTrk)
 {
-	AudioTrack = AudioTrk;
+	AudioTrack = &AudioTrk;
 	Slider.slider_size(1.0);
 	Slider.value(0.5);
 	Draw();

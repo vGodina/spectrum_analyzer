@@ -20,13 +20,13 @@ void Menu::Emit()
 	// Open FileChooser and emit signal if file is choosen
 	if (Chooser.show() == 0)
 	{
-		MenuSignal();
+		MenuSignal(Chooser.filename());
 	}
 }
 
-boost::signals2::connection Menu::connect(const signal_t::slot_type &subscriber)
+boost::signals2::connection Menu::connect(const signal_t::slot_type &slot)
 {
-	return MenuSignal.connect(subscriber);
+	return MenuSignal.connect(slot);
 }
 
 std::string Menu::GetFilename()

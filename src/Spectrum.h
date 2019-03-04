@@ -5,7 +5,7 @@
 class Spectrum {
 public:
 	Spectrum();
-	void Show(const AudioFile<float>*);
+	void Show(const AudioFile<float>&);
 	void SetSliderSize(double);
 	void SetSliderValue(double);
 private:
@@ -13,6 +13,7 @@ private:
 	Fl_Chart LevelMeter;
 	Fl_Choice FFTChoice;
 	audiofft::AudioFFT FFT;
+
 	const AudioFile<float>* AudioTrack;
 	int FFTSize;
 	double SliderSize;
