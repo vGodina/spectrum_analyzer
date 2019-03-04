@@ -7,11 +7,11 @@ public:
 	Spectrum();
 	~Spectrum();
 private:
-	std::unique_ptr<Fl_Chart>SpectrumChart;
-	std::unique_ptr<Fl_Chart>LevelMeter;
-	std::unique_ptr<Fl_Choice>SizeFFT;
-	std::unique_ptr<audiofft::AudioFFT>FFT;
+	Fl_Chart SpectrumChart;
+	Fl_Chart LevelMeter;
+	Fl_Choice SizeFFT;
+	audiofft::AudioFFT FFT;
 
 	static void CbSizeFFT(Fl_Widget*, void*);
-	void DoFFT(AudioFile<float>*);
+	void DoFFT();
 };

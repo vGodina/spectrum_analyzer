@@ -9,9 +9,11 @@ class MainWindow : public Fl_Double_Window {
 public:
 	MainWindow(int w, int h, const char* title);
 	~MainWindow();
+	void LoadAudio();
 private:
-	std::unique_ptr<Fl_AudioFile>AudioTrack;
-	std::unique_ptr<Waveform>Wave;
-	std::unique_ptr<Spectrum>Spectra;
-	std::unique_ptr<Menu>MainMenu;
+	Fl_AudioFile AudioTrack;
+	Waveform WaveFrm;
+	Spectrum SpectraFrm;
+	Menu MainMenu;
+	boost::signals2::connection  MenuConnection;
 };

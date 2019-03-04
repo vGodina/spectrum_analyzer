@@ -6,8 +6,9 @@
 
 class Fl_AudioFile : public Fl_Box {
 private:
-	AudioFile<float> AudioTrack;
+	
 public:
+	AudioFile<float> AudioTrack;
 	Fl_AudioFile();
 	~Fl_AudioFile();
 	AudioFile<float>* GetAudio();

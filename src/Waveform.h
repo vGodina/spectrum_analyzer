@@ -5,26 +5,26 @@
 #include <fltk/Fl_Chart.H>
 #include <fltk/Fl_Slider.H>
 
-class Waveform : public Fl_Box {
+class Waveform {
 public:
 	Waveform();
 	~Waveform();
-	void Redraw(AudioFile<float>*);
+	//void Redraw(AudioFile<float>*);
 private:
-	std::unique_ptr<Fl_Chart>WaveformChart;
-	std::unique_ptr<Fl_Slider>Slider;
-	std::unique_ptr<Fl_Button>ZoomInH;
-	std::unique_ptr<Fl_Button>ZoomOutH;
-	std::unique_ptr<Fl_Button>ZoomInV;
-	std::unique_ptr<Fl_Button>ZoomOutV;
+	Fl_Chart WaveformChart;
+	Fl_Slider Slider;
+	Fl_Button ZoomInH;
+	Fl_Button ZoomOutH;
+	Fl_Button ZoomInV;
+	Fl_Button ZoomOutV;
 
 	static void CbZoomInH(Fl_Widget*, void*);
 	static void CbZoomOutH(Fl_Widget*, void*);
 	static void CbZoomInV(Fl_Widget*, void*);
 	static void CbZoomOutV(Fl_Widget*, void*);
 	static void CbSlider(Fl_Widget*, void*);
-	inline static AudioFile<float>* AudioPtr(Fl_Widget*);
-	void ChartRedraw(AudioFile<float>*, float ZoomFactor);
+	//inline static AudioFile<float>* AudioPtr(Fl_Widget*);
+	void ChartRedraw(float ZoomFactor);
 	void VerticalScale(float VertFactor, bool ClearChart);
 };
 
