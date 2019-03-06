@@ -33,7 +33,7 @@ void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
 	static_cast<Spectrum*>(Obj)->Draw();
 }
 
-void Spectrum::Show(const AudioFile<float>& AudioTrk)
+void Spectrum::Pass(const AudioFile<float>& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
 	InitFFT();
@@ -65,25 +65,24 @@ void Spectrum::Draw()
 		int N = FFTSize / 2;
 		// Finding start sample from which FFT will be performed.  
 		// Center of selection to be FFT-ed matches the center of waveform slider
-		//float SliderSize = 0.5; // Slider->slider_size();
-		//float SliderValue = static_cast<float>(0.5);// (Slider->value());
 		int AudioLength = AudioTrack->getNumSamplesPerChannel();
-		float Center = SliderValue - SliderValue * SliderSize + SliderSize / 2;
-		int StartSample = Center * AudioLength - FFTSize / 2;
+		double Center = SliderValue - SliderValue * SliderSize + SliderSize / 2;
+		int StartSample = static_cast<int>(Center * AudioLength - N);
 		// Limiting StartSample addressing to file size
 		if (StartSample < 0)
 			StartSample = 0;
 		if (StartSample > (AudioLength - FFTSize))
 			StartSample = AudioLength - FFTSize;
-
 		std::vector<float> Re(N + 1);
 		std::vector<float> Im(N + 1);
 		std::vector<float> Ampl(N + 1);
-		FFT.fft(&AudioTrack->samples[0][StartSample], Re.data(), Im.data());
 
+		FFT.fft(&AudioTrack->samples[0][StartSample], Re.data(), Im.data());
+		
 		float RMS = 0.0F;
-		float Ampl2 = 0.0F; //square of Amplitude
+		float Ampl2 = 0.0; //square of Amplitude
 		float Norm = 1 / pow(N, 2);
+
 		for (int n = 0; n < N + 1; n++)
 		{
 			//Calculating normalized square of amplitude Ak
@@ -94,19 +93,15 @@ void Spectrum::Draw()
 			SpectrumChart.add(Ampl[n]);
 		}
 		// showing RMS level at LevelMeter widget
-		RMS = 10.0 * log10(RMS / 2);
+		RMS = 10.0f * log10(RMS / 2);
 		LevelMeter.clear();
 		LevelMeter.bounds(-120.0, 0.0);
 		LevelMeter.add(RMS);
 	}
 }
 
-void Spectrum::SetSliderSize(double SliderSz)
+void Spectrum::SetSlider(double SliderSz, double SliderVal)
 {
 	SliderSize = SliderSz;
-}
-
-void Spectrum::SetSliderValue(double SliderVal)
-{
 	SliderValue = SliderVal;
 }

@@ -2,8 +2,7 @@
 
 Menu::Menu() :
 	Chooser(),
-	OpenButton (30, 30, 100, 30, "Open .wav file"),
-	FileInfo (200, 30, 220, 30, "000")
+	OpenButton (30, 30, 100, 30, "Open .wav file")
 {
 	OpenButton.callback (CbOpenButton, this);
 	Chooser.filter("*.wav");

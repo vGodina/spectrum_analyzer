@@ -5,9 +5,8 @@
 class Spectrum {
 public:
 	Spectrum();
-	void Show(const AudioFile<float>&);
-	void SetSliderSize(double);
-	void SetSliderValue(double);
+	void Pass(const AudioFile<float>&);
+	void SetSlider(double, double);
 private:
 	Fl_Chart SpectrumChart;
 	Fl_Chart LevelMeter;

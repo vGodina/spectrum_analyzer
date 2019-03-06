@@ -7,8 +7,8 @@
 class Waveform {
 public:
 	Waveform();
-	void Show(const AudioFile<float>&);
-	using signal_t = boost::signals2::signal<void (float, double)>;
+	void Pass(const AudioFile<float>&);
+	using signal_t = boost::signals2::signal <void (float, double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
 
 private:
@@ -21,12 +21,12 @@ private:
 	const AudioFile<float>* AudioTrack;
 	signal_t SliderSignal;
 
+	void EmitSignal();
+	static void CbSlider(Fl_Widget*, void*);
 	static void CbZoomInH(Fl_Widget*, void*);
 	static void CbZoomOutH(Fl_Widget*, void*);
 	static void CbZoomInV(Fl_Widget*, void*);
 	static void CbZoomOutV(Fl_Widget*, void*);
-	static void CbSlider(Fl_Widget*, void*);
 	void Draw(double ZoomFactor);
 	void VerticalScale(double VertFactor, bool ClearChart);
-	void Emit();
 };
