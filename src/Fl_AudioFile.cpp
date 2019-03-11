@@ -1,13 +1,39 @@
 #include "Fl_AudioFile.h"
 
-Fl_AudioFile::Fl_AudioFile() :
-	Fl_Box(0, 0, 0, 0),
-	AudioTrack()
-{}
+Fl_AudioFile<float>::Fl_AudioFile() : AudioTrack() {}
+Fl_AudioFile<double>::Fl_AudioFile() : AudioTrack() {}
 
-Fl_AudioFile::~Fl_AudioFile() {}
-
-AudioFile<float>* Fl_AudioFile::GetAudio()
+bool Fl_AudioFile<float>::load(std::string FileName)
 {
-	return &AudioTrack;
+	bool flag = AudioTrack.load(FileName);
+	Fl_AudioFile::samples = AudioTrack.samples;
+	return flag;
 }
+
+bool Fl_AudioFile<double>::load(std::string FileName)
+{
+	bool flag = AudioTrack.load(FileName);
+	Fl_AudioFile::samples = AudioTrack.samples;
+	return flag;
+}
+
+int Fl_AudioFile<float>::GetLength () const
+{
+	return AudioTrack.getNumSamplesPerChannel();
+}
+
+int Fl_AudioFile<double>::GetLength () const
+{
+	return AudioTrack.getNumSamplesPerChannel();
+}
+
+IAudioFile<float>::AudioBuffer Fl_AudioFile<float>::GetData() const
+{
+	return Fl_AudioFile<float>::samples;
+}
+
+IAudioFile<double>::AudioBuffer Fl_AudioFile<double>::GetData() const
+{
+	return Fl_AudioFile<double>::samples;
+}
+

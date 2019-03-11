@@ -1,6 +1,6 @@
+#include <boost/signals2.hpp>
 #include <fltk/Fl_Button.h>
 #include <fltk/Fl_Native_File_Chooser.h>
-#include <boost/signals2.hpp>
 
 class Menu {
 public:

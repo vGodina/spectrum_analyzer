@@ -1,4 +1,3 @@
-#include <audiofile/AudioFile.h>
 #include <string>
 #include <vector>
 #include "Spectrum.h"
@@ -33,9 +32,9 @@ void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
 	static_cast<Spectrum*>(Obj)->Draw();
 }
 
-void Spectrum::Pass(const AudioFile<float>& AudioTrk)
+void Spectrum::Pass(const IAudioFile<float>::AudioBuffer AudioTrk)
 {
-	AudioTrack = &AudioTrk;
+	AudioTrack = AudioTrk;
 	InitFFT();
 	Draw();
 }
@@ -43,29 +42,26 @@ void Spectrum::Pass(const AudioFile<float>& AudioTrk)
 void Spectrum::InitFFT()
 {
 	// Verify FFTChoice, initialize FFT object and reassign FFTSize
-	if (AudioTrack)
-	{
+
 		int temp = 2 << (FFTChoice.value() + 8);
-		while (temp > AudioTrack->getNumSamplesPerChannel())
+		while (temp > AudioTrack[0].size())
 		{
 			temp /= 2;
 			FFTChoice.value(FFTChoice.value() - 1);
 		}
 		FFTSize = temp;
 		FFT.init(FFTSize);
-	}
+
 }
 
 void Spectrum::Draw()
 {
-	if (AudioTrack)
-	{
 		SpectrumChart.clear();
 		SpectrumChart.bounds(-120.0, 0.0);
 		int N = FFTSize / 2;
 		// Finding start sample from which FFT will be performed.  
 		// Center of selection to be FFT-ed matches the center of waveform slider
-		int AudioLength = AudioTrack->getNumSamplesPerChannel();
+		int AudioLength = AudioTrack[0].size();
 		double Center = SliderValue - SliderValue * SliderSize + SliderSize / 2;
 		int StartSample = static_cast<int>(Center * AudioLength - N);
 		// Limiting StartSample addressing to file size
@@ -76,8 +72,7 @@ void Spectrum::Draw()
 		std::vector<float> Re(N + 1);
 		std::vector<float> Im(N + 1);
 		std::vector<float> Ampl(N + 1);
-
-		FFT.fft(&AudioTrack->samples[0][StartSample], Re.data(), Im.data());
+		FFT.fft(&AudioTrack[0][StartSample], Re.data(), Im.data());
 		
 		float RMS = 0.0F;
 		float Ampl2 = 0.0; //square of Amplitude
@@ -97,7 +92,6 @@ void Spectrum::Draw()
 		LevelMeter.clear();
 		LevelMeter.bounds(-120.0, 0.0);
 		LevelMeter.add(RMS);
-	}
 }
 
 void Spectrum::SetSlider(double SliderSz, double SliderVal)

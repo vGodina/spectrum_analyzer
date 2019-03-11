@@ -1,11 +1,12 @@
 #include <audiofft/AudioFFT.h>
 #include <fltk/Fl_Chart.H>
 #include <fltk/Fl_Choice.H>
+#include "Fl_AudioFile.h"
 
 class Spectrum {
 public:
 	Spectrum();
-	void Pass(const AudioFile<float>&);
+	void Pass(const IAudioFile<float>::AudioBuffer);
 	void SetSlider(double, double);
 private:
 	Fl_Chart SpectrumChart;
@@ -13,7 +14,7 @@ private:
 	Fl_Choice FFTChoice;
 	audiofft::AudioFFT FFT;
 
-	const AudioFile<float>* AudioTrack;
+	Fl_AudioFile<float>::AudioBuffer AudioTrack;
 	int FFTSize;
 	double SliderSize;
 	double SliderValue;

@@ -3,11 +3,12 @@
 Waveform::Waveform() :
 WaveformChart(20, 100, 500, 200),
 Slider(20, 300, 500, 20),
-ZoomOutH(20, 322, 25, 25, "-"),
 ZoomInH(47, 322, 25, 25, "+"),
-ZoomOutV(522, 127, 25, 25, "-"),
-ZoomInV(522, 100, 25, 25, "+")
+ZoomOutH(20, 322, 25, 25, "-"),
+ZoomInV(522, 100, 25, 25, "+"),
+ZoomOutV(522, 127, 25, 25, "-")
 {
+
 	ZoomInH.callback(CbZoomInH, this);
 	ZoomOutH.callback(CbZoomOutH, this);
 	Slider.callback(CbSlider, this);
@@ -37,9 +38,9 @@ boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscri
 	return SliderSignal.connect(subscriber);
 }
 
-void Waveform::Pass(const AudioFile<float>& AudioTrk)
+void Waveform::Pass(const IAudioFile<float>::AudioBuffer AudioTrk)
 {
-	AudioTrack = &AudioTrk;
+	AudioTrack = AudioTrk;
 	Slider.slider_size(1.0);
 	Slider.value(0.5);
 	Draw(1.0);
@@ -47,8 +48,6 @@ void Waveform::Pass(const AudioFile<float>& AudioTrk)
 
 void Waveform::Draw(double ZoomFactor = 1.0)
 {
-	if (AudioTrack)
-	{
 		constexpr int ChartLength = 1024;
 		// resize Slider size
 		Slider.slider_size(Slider.slider_size() / ZoomFactor);
@@ -57,9 +56,10 @@ void Waveform::Draw(double ZoomFactor = 1.0)
 		// reset Chart and keep its bounds with no changes
 		VerticalScale(1.0, true);
 		// Center value of Slider
+		int Length = AudioTrack[0].size();
 		double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
-		int VisibleSamples = AudioTrack->getNumSamplesPerChannel() * Slider.slider_size();
-		int StartSample = Center * AudioTrack->getNumSamplesPerChannel() - VisibleSamples / 2;
+		int VisibleSamples = Length * Slider.slider_size();
+		int StartSample = Center * Length - VisibleSamples / 2;
 		int Delta = VisibleSamples;
 		int Decimation = 1;
 		if (VisibleSamples > ChartLength)
@@ -69,9 +69,9 @@ void Waveform::Draw(double ZoomFactor = 1.0)
 		}
 		for (int i = 0; i < Delta; i++)
 		{
-			WaveformChart.add(AudioTrack->samples[0][StartSample + i * Decimation]);
+			//Fl_AudioFile<float>::AudioBuffer& Copy = *AudioTrack;
+			WaveformChart.add(AudioTrack[0][StartSample + i * Decimation]);
 		}
-	}
 }
 
 void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)

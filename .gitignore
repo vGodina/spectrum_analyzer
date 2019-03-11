@@ -4,6 +4,8 @@
 Release/
 [Dd]ebug/
 .vs/
+test/
+packages/
 
 
 # Prerequisites
