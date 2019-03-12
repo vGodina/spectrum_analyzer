@@ -49,6 +49,8 @@ int Waveform::Pass(const IAudioFile<float>::AudioBuffer* AudioTrk)
 
 bool Waveform::Draw(double ZoomFactor = 1.0)
 {
+	if (AudioTrack != nullptr)
+	{
 		constexpr int ChartLength = 1024;
 		// resize Slider size
 		Slider.slider_size(Slider.slider_size() / ZoomFactor);
@@ -73,6 +75,7 @@ bool Waveform::Draw(double ZoomFactor = 1.0)
 			WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
 		}
 		return true;
+	}
 }
 
 void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)

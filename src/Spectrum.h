@@ -7,7 +7,7 @@ class Spectrum {
 public:
 	Spectrum();
 	void Pass(const IAudioFile<float>::AudioBuffer*);
-	void SetSlider(double, double);
+	void SetSlider(float, double);
 private:
 	Fl_Chart SpectrumChart;
 	Fl_Chart LevelMeter;

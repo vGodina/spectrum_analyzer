@@ -10,7 +10,7 @@ MainWindow::MainWindow(int w, int h, const char* title) : Fl_Double_Window(w, h,
 	MenuConnection = MainMenu.connect(boost::bind(&MainWindow::HandleAudioFile, this, _1));
 	SliderConnection = WaveFrm.connect(boost::bind(&MainWindow::HandleSlider, this, _1, _2));
 	// Interior initialization
-	SpectraFrm.SetSlider(1.0, 0.5);
+	SpectraFrm.SetSlider(1.0f, 0.5);
 	resizable(this);
 	Fl::visual(FL_DOUBLE | FL_INDEX);
 	show();

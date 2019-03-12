@@ -42,7 +42,7 @@ void Spectrum::Pass(const IAudioFile<float>::AudioBuffer* AudioTrk)
 void Spectrum::InitFFT()
 {
 	// Verify FFTChoice, initialize FFT object and reassign FFTSize
-
+	if (AudioTrack != nullptr) {
 		int temp = 2 << (FFTChoice.value() + 8);
 		while (temp > (*AudioTrack)[0].size())
 		{
@@ -51,11 +51,12 @@ void Spectrum::InitFFT()
 		}
 		FFTSize = temp;
 		FFT.init(FFTSize);
-
+	}
 }
 
 void Spectrum::Draw()
 {
+	if (AudioTrack != nullptr) {
 		SpectrumChart.clear();
 		SpectrumChart.bounds(-120.0, 0.0);
 		int N = FFTSize / 2;
@@ -73,7 +74,7 @@ void Spectrum::Draw()
 		std::vector<float> Im(N + 1);
 		std::vector<float> Ampl(N + 1);
 		FFT.fft(&(*AudioTrack)[0][StartSample], Re.data(), Im.data());
-		
+
 		float RMS = 0.0F;
 		float Ampl2 = 0.0; //square of Amplitude
 		float Norm = 1 / pow(N, 2);
@@ -92,9 +93,10 @@ void Spectrum::Draw()
 		LevelMeter.clear();
 		LevelMeter.bounds(-120.0, 0.0);
 		LevelMeter.add(RMS);
+	}
 }
 
-void Spectrum::SetSlider(double SliderSz, double SliderVal)
+void Spectrum::SetSlider(float SliderSz, double SliderVal)
 {
 	SliderSize = SliderSz;
 	SliderValue = SliderVal;
