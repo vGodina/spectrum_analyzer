@@ -4,9 +4,8 @@
 Release/
 [Dd]ebug/
 .vs/
-test/
 packages/
-
+x64/
 
 # Prerequisites
 *.d

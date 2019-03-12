@@ -69,7 +69,6 @@ void Waveform::Draw(double ZoomFactor = 1.0)
 		}
 		for (int i = 0; i < Delta; i++)
 		{
-			//Fl_AudioFile<float>::AudioBuffer& Copy = *AudioTrack;
 			WaveformChart.add(AudioTrack[0][StartSample + i * Decimation]);
 		}
 }
