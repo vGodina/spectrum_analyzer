@@ -6,7 +6,7 @@
 class Spectrum {
 public:
 	Spectrum();
-	void Pass(const IAudioFile<float>::AudioBuffer);
+	void Pass(const IAudioFile<float>::AudioBuffer*);
 	void SetSlider(double, double);
 private:
 	Fl_Chart SpectrumChart;
@@ -14,7 +14,7 @@ private:
 	Fl_Choice FFTChoice;
 	audiofft::AudioFFT FFT;
 
-	Fl_AudioFile<float>::AudioBuffer AudioTrack;
+	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
 	int FFTSize;
 	double SliderSize;
 	double SliderValue;

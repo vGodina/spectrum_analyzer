@@ -7,7 +7,7 @@
 class Waveform {
 public:
 	Waveform();
-	void Pass(const IAudioFile<float>::AudioBuffer);
+	void Pass(const IAudioFile<float>::AudioBuffer*);
 	using signal_t = boost::signals2::signal <void (float, double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
 
@@ -18,7 +18,7 @@ private:
 	Fl_Button ZoomOutH;
 	Fl_Button ZoomInV;
 	Fl_Button ZoomOutV;
-	Fl_AudioFile<float>::AudioBuffer AudioTrack;
+	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
 	signal_t SliderSignal;
 	int AudioLength;
 

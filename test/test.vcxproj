@@ -53,10 +53,12 @@
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\IAudioFile.h" />
     <ClInclude Include="..\src\Waveform.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\IAudioFile.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">

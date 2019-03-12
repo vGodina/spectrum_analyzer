@@ -1,4 +1,3 @@
-#define TESTING_PROCEDURE
 #include "pch.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -8,16 +7,16 @@
 template <typename T>
 class AudioFileMock : public IAudioFile<T> {
 public:
-	AudioFileMock() : IAudioFile() {}
+	//AudioFileMock() : IAudioFile() {}
 	MOCK_CONST_METHOD0_T(GetLength, int());
-	MOCK_CONST_METHOD0_T(GetData, IAudioFile<T>::AudioBuffer());
+	MOCK_CONST_METHOD0_T(GetData, IAudioFile<T>::AudioBuffer*());
 	MOCK_METHOD1_T(load, bool(std::string FileName));
 };
 
 TEST(Waveform, PassData) {
 	AudioFileMock<float> Mock;
 	Waveform Test;
-	Test.Pass(Mock.GetData());
+	//Test.Pass(Mock.GetData());
 }
 
 int main(int argc, char **argv) {

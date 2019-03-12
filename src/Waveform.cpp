@@ -38,7 +38,7 @@ boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscri
 	return SliderSignal.connect(subscriber);
 }
 
-void Waveform::Pass(const IAudioFile<float>::AudioBuffer AudioTrk)
+void Waveform::Pass(const IAudioFile<float>::AudioBuffer* AudioTrk)
 {
 	AudioTrack = AudioTrk;
 	Slider.slider_size(1.0);
@@ -56,7 +56,7 @@ void Waveform::Draw(double ZoomFactor = 1.0)
 		// reset Chart and keep its bounds with no changes
 		VerticalScale(1.0, true);
 		// Center value of Slider
-		int Length = AudioTrack[0].size();
+		int Length = (*AudioTrack)[0].size();
 		double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
 		int VisibleSamples = Length * Slider.slider_size();
 		int StartSample = Center * Length - VisibleSamples / 2;
@@ -69,7 +69,7 @@ void Waveform::Draw(double ZoomFactor = 1.0)
 		}
 		for (int i = 0; i < Delta; i++)
 		{
-			WaveformChart.add(AudioTrack[0][StartSample + i * Decimation]);
+			WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
 		}
 }
 

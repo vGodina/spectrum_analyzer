@@ -9,7 +9,7 @@ public:
 	Fl_AudioFile ();
 	bool load(std::string FileName) override;
 	int GetLength () const override;
-	IAudioFile<T>::AudioBuffer GetData() const override;
+	IAudioFile<T>::AudioBuffer* GetData() const override;
 private:
 	AudioFile<T> AudioTrack;
 };
