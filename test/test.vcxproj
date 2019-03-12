@@ -58,6 +58,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\external\include\audiofile\AudioFile.cpp" />
     <ClCompile Include="..\src\IAudioFile.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />
     <ClCompile Include="test.cpp" />
