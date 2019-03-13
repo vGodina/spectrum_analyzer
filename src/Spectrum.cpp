@@ -32,7 +32,7 @@ void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
 	static_cast<Spectrum*>(Obj)->Draw();
 }
 
-void Spectrum::Pass(const IAudioFile<float>::AudioBuffer* AudioTrk)
+void Spectrum::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
 {
 	AudioTrack = AudioTrk;
 	InitFFT();

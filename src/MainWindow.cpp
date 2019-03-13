@@ -19,13 +19,13 @@ MainWindow::MainWindow(int w, int h, const char* title) : Fl_Double_Window(w, h,
 bool MainWindow::HandleAudioFile(std::string FileName)
 {
 	bool Loaded = AudioTrack.load(FileName);
-	WaveFrm.Pass(AudioTrack.GetData());
-	SpectraFrm.Pass(AudioTrack.GetData());
+	WaveFrm.GetAudio(AudioTrack.PassData());
+	SpectraFrm.GetAudio(AudioTrack.PassData());
 	return Loaded;
 }
 
 void MainWindow::HandleSlider(float SliderSize, double SliderValue)
 {
 	SpectraFrm.SetSlider(SliderSize, SliderValue);
-	SpectraFrm.Pass(AudioTrack.GetData());
+	SpectraFrm.GetAudio(AudioTrack.PassData());
 }

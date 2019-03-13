@@ -7,27 +7,32 @@
 class Waveform {
 public:
 	Waveform();
-	int Pass(const IAudioFile<float>::AudioBuffer*);
-	using signal_t = boost::signals2::signal <void (float, double)>;
+	using signal_t = boost::signals2::signal <void(float, double)>;
+	// Passes AudioBuffer into Waveform
+	int GetAudio(const IAudioFile<float>::AudioBuffer*);
+	// Method to connect Waveform signal with 
 	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
 
 private:
+	// Widgets
 	Fl_Chart WaveformChart;
 	Fl_Slider Slider;
 	Fl_Button ZoomInH;
 	Fl_Button ZoomOutH;
 	Fl_Button ZoomInV;
 	Fl_Button ZoomOutV;
-	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
-	signal_t SliderSignal;
-	int AudioLength;
-
-	void EmitSignal();
+	// Widgets callbacks
 	static void CbSlider(Fl_Widget*, void*);
 	static void CbZoomInH(Fl_Widget*, void*);
 	static void CbZoomOutH(Fl_Widget*, void*);
 	static void CbZoomInV(Fl_Widget*, void*);
 	static void CbZoomOutV(Fl_Widget*, void*);
+	// Signal variable and method. EmitSignal is called in CbSlider method
+	signal_t SliderSignal;
+	void EmitSignal();
+
+	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
+
 	bool Draw(double ZoomFactor);
 	void VerticalScale(double VertFactor, bool ClearChart);
 };

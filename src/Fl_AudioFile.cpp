@@ -27,12 +27,12 @@ int Fl_AudioFile<double>::GetLength () const
 	return AudioTrack.getNumSamplesPerChannel();
 }
 
-IAudioFile<float>::AudioBuffer* Fl_AudioFile<float>::GetData() const
+IAudioFile<float>::AudioBuffer* Fl_AudioFile<float>::PassData() const
 {
 	return Fl_AudioFile<float>::SamplesPtr;
 }
 
-IAudioFile<double>::AudioBuffer* Fl_AudioFile<double>::GetData() const
+IAudioFile<double>::AudioBuffer* Fl_AudioFile<double>::PassData() const
 {
 	return Fl_AudioFile<double>::SamplesPtr;
 }

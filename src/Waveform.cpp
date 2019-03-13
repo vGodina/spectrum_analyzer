@@ -38,7 +38,7 @@ boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscri
 	return SliderSignal.connect(subscriber);
 }
 
-int Waveform::Pass(const IAudioFile<float>::AudioBuffer* AudioTrk)
+int Waveform::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
 {
 	AudioTrack = AudioTrk;
 	Slider.slider_size(1.0);
