@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 #include "IAudioFile.h"
 #include "Waveform.h"
+#include "Spectrum.h"
 
 template <typename T>
 class AudioFileMock : public IAudioFile<T> {
@@ -13,6 +14,7 @@ public:
 	MOCK_METHOD1_T(load, bool(std::string FileName));
 };
 
+// Testing Waveform with AudioFile Mock
 TEST(Waveform, LoadAudio) {
 	int NumCh = 1;
 	int Length = 10000;
@@ -23,6 +25,18 @@ TEST(Waveform, LoadAudio) {
 	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
 	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), Length);
+}
+// Testing Spectrum with AudioFile Mock
+TEST(Spectrum, LoadAudio) {
+	int NumCh = 1;
+	int Length = 10000;
+	std::vector<std::vector<float>> AudioBuf(NumCh, std::vector<float>(Length));
+	Spectrum SpectrForm;
+	AudioFileMock<float> Mock;
+
+	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
+	// This test covers Waveform methods: Pass, Draw, VerticalScale
+	EXPECT_EQ(SpectrForm.GetAudio(Mock.PassData()), Length);
 }
 
 int main(int argc, char **argv) {

@@ -54,12 +54,17 @@
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="..\src\IAudioFile.h" />
+    <ClInclude Include="..\src\Spectrum.h" />
     <ClInclude Include="..\src\Waveform.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\external\include\audiofft\AudioFFT.cpp" />
     <ClCompile Include="..\external\include\audiofile\AudioFile.cpp" />
+    <ClCompile Include="..\src\FFTHandler.cpp" />
     <ClCompile Include="..\src\IAudioFile.cpp" />
+    <ClCompile Include="..\src\LevelMeter.cpp" />
+    <ClCompile Include="..\src\Spectrum.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
