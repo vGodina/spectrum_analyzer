@@ -7,7 +7,7 @@
 class Waveform {
 public:
 	Waveform();
-	using signal_t = boost::signals2::signal <void(float, double)>;
+	using signal_t = boost::signals2::signal <void(int)>;
 	// Passes AudioBuffer into Waveform
 	int GetAudio(const IAudioFile<float>::AudioBuffer*);
 	// Method to connect Waveform signal with 
@@ -32,7 +32,7 @@ private:
 	void EmitSignal();
 
 	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
-
+	int CenterSample;
 	bool Draw(double ZoomFactor);
 	void VerticalScale(double VertFactor, bool ClearChart);
 };

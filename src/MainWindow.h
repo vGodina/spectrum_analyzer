@@ -9,13 +9,13 @@ class MainWindow : public Fl_Double_Window {
 public:
 	MainWindow(int w, int h, const char* title);
 private:
-	Fl_AudioFile<float> AudioTrack;
+	Fl_AudioFile <float> AudioTrack;
 	Waveform WaveFrm;
 	Spectrum SpectraFrm;
 	Menu MainMenu;
 	boost::signals2::connection  MenuConnection;
-	boost::signals2::connection  SliderConnection;
+	boost::signals2::connection  SliderInteraction;
 
-	bool HandleAudioFile (std::string FileName);
-	void HandleSlider (float SliderSize, double SliderValue);
+	bool AudioFileHandler (std::string FileName);
+	void SliderHandler (int CenterSample);
 };

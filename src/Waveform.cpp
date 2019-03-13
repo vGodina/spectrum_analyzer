@@ -27,10 +27,10 @@ void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
 	static_cast<Waveform*>(Obj)->Draw(1.0);
 	static_cast<Waveform*>(Obj)->EmitSignal();
 }
-
+// Signal passes the index of audio sample corresponding to the center of Slider
 void Waveform::EmitSignal()
 {
-	SliderSignal(Slider.slider_size(), Slider.value());
+	SliderSignal(CenterSample);
 }
 
 boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscriber)
@@ -59,10 +59,11 @@ bool Waveform::Draw(double ZoomFactor = 1.0)
 		// reset Chart and keep its bounds with no changes
 		VerticalScale(1.0, true);
 		// Center value of Slider
-		int Length = (*AudioTrack)[0].size();
+		int AudioLength = (*AudioTrack)[0].size();
 		double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
-		int VisibleSamples = Length * Slider.slider_size();
-		int StartSample = Center * Length - VisibleSamples / 2;
+		CenterSample = static_cast<int>(Center * AudioLength);
+		int VisibleSamples = AudioLength * Slider.slider_size();
+		int StartSample = Center * AudioLength - VisibleSamples / 2;
 		int Delta = VisibleSamples;
 		int Decimation = 1;
 		if (VisibleSamples > ChartLength)

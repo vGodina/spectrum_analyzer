@@ -10,6 +10,7 @@ Spectrum::Spectrum():
 {
 	FFTChoice.callback(CbFFTChoice, this);
 	// Initialize widgets
+	//SetSlider(1.0, 0.5);
 	SpectrumChart.color(FL_WHITE);
 	SpectrumChart.type(FL_LINE_CHART);
 	LevelMeter.type(FL_BAR_CHART);
@@ -24,6 +25,7 @@ Spectrum::Spectrum():
 	}
 	FFTChoice.value(0);
 	FFTSize = 2 << (FFTChoice.value() + 8);
+	CenterSample = 0;
 }
 
 void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
@@ -63,8 +65,9 @@ void Spectrum::Draw()
 		// Finding start sample from which FFT will be performed.  
 		// Center of selection to be FFT-ed matches the center of waveform slider
 		int AudioLength = (*AudioTrack)[0].size();
-		double Center = SliderValue - SliderValue * SliderSize + SliderSize / 2;
-		int StartSample = static_cast<int>(Center * AudioLength - N);
+		//double Center = SliderValue - SliderValue * SliderSize + SliderSize / 2;
+		//int StartSample = static_cast<int>(Center * AudioLength - N);
+		int StartSample = (CenterSample - N);
 		// Limiting StartSample addressing to file size
 		if (StartSample < 0)
 			StartSample = 0;
@@ -95,9 +98,8 @@ void Spectrum::Draw()
 		LevelMeter.add(RMS);
 	}
 }
-
-void Spectrum::SetSlider(float SliderSz, double SliderVal)
+// Gets index of audio sample corresponding to the center of FFT window
+void Spectrum::GetPosition(int CentrSmpl)
 {
-	SliderSize = SliderSz;
-	SliderValue = SliderVal;
+	CenterSample = CentrSmpl;
 }

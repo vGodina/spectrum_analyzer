@@ -7,7 +7,7 @@ class Spectrum {
 public:
 	Spectrum();
 	void GetAudio(const IAudioFile<float>::AudioBuffer*);
-	void SetSlider(float, double);
+	void GetPosition(int);
 private:
 	Fl_Chart SpectrumChart;
 	Fl_Chart LevelMeter;
@@ -16,10 +16,9 @@ private:
 
 	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
 	int FFTSize;
-	double SliderSize;
-	double SliderValue;
-
+	int CenterSample;
 	static void CbFFTChoice(Fl_Widget*, void*);
 	void Draw();
 	void InitFFT();
+
 };
