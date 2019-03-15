@@ -62,7 +62,6 @@
     <ClCompile Include="..\external\include\audiofft\AudioFFT.cpp" />
     <ClCompile Include="..\external\include\audiofile\AudioFile.cpp" />
     <ClCompile Include="..\src\FFTHandler.cpp" />
-    <ClCompile Include="..\src\IAudioFile.cpp" />
     <ClCompile Include="..\src\LevelMeter.cpp" />
     <ClCompile Include="..\src\Spectrum.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />

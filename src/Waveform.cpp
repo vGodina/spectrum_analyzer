@@ -1,4 +1,5 @@
 #include "Waveform.h"
+#include <vector>
 
 Waveform::Waveform() :
 WaveformChart(20, 100, 500, 200),
@@ -21,10 +22,17 @@ ZoomOutV(522, 127, 25, 25, "-")
 	Slider.value(0.5);
 }
 
-bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
+bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
-	AudioTrack = AudioTrk;
+	AudioTrack = &AudioTrk;
 	AudioLength = (*AudioTrack)[0].size();
+	float bound = 0.0f;
+	for (int i = 0; i < AudioLength; ++i) {
+		float temp = (*AudioTrack)[0][i];
+		if (temp < 0) temp = -temp;
+		if (bound < temp) bound = temp;
+	}
+	WaveformChart.bounds(-bound, bound);
 	Slider.slider_size(1.0);
 	Slider.value(0.5);
 	Draw(1.0);
@@ -56,8 +64,12 @@ bool Waveform::Draw(double ZoomFactor = 1.0)
 	Waveform::CenterSample = static_cast<int>(Center * AudioLength);
 	int VisibleSamples = AudioLength * Slider.slider_size();
 	int StartSample = Waveform::CenterSample - VisibleSamples / 2;
-	int ChartLength = 1000;
+	int ChartLength = 700;
 	int Decimation = VisibleSamples / ChartLength;
+	if (VisibleSamples < ChartLength) {
+		Decimation = 1;
+		ChartLength = VisibleSamples;
+	}
 	if (AudioTrack != nullptr) {
 		for (int i = 0; i < ChartLength; ++i)
 			WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);

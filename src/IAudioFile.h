@@ -6,17 +6,12 @@ template <typename T>
 class IAudioFile
 {
 public:
-	IAudioFile();
+	virtual ~IAudioFile() = default;
 	using AudioBuffer = std::vector<std::vector<T> >;
-	virtual bool load (std::string FileName) = 0;
-	virtual bool load () = 0;
+	virtual bool Load (std::string FileName) = 0;
+	virtual bool IsLoaded () = 0;
 	virtual int GetLength () const = 0;
-	virtual AudioBuffer* PassData () const = 0;
-protected:
-	// A vector of vectors of audio samples: samples[channel][sampleIndex]
-	AudioBuffer samples;
-	AudioBuffer* SamplesPtr;
-	bool Loaded;
+	virtual const AudioBuffer& PassData () const = 0;
 };
 
 #endif IAUDIOFILE

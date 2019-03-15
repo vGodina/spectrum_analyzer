@@ -18,15 +18,15 @@ MainWindow::MainWindow (int w, int h, const char* title) : Fl_Double_Window (w, 
 
 bool MainWindow::AudioFileHandler (std::string FileName)
 {
-	bool Loaded = AudioTrack.load(FileName);
+	bool Loaded = AudioTrack.Load(FileName);
 	WaveFrm.GetAudio(AudioTrack.PassData());
 	SliderHandler(AudioTrack.GetLength() / 2);
 	return Loaded;
 }
-
+ 
 void MainWindow::SliderHandler (int CenterSample)
 {
-	if (AudioTrack.load()) {
+	if (AudioTrack.IsLoaded()) {
 		SpectraFrm.GetPosition(CenterSample);
 		SpectraFrm.GetAudio(AudioTrack.PassData());
 	}

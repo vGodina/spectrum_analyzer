@@ -18,9 +18,9 @@ Spectrum::Spectrum():
 	FFTSize = 2 << (FFTChoice.value() + 8);
 }
 
-bool Spectrum::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
+bool Spectrum::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
-	AudioTrack = AudioTrk;
+	AudioTrack = &AudioTrk;
 	CheckFFTSize();
 	Draw();
 	return true;

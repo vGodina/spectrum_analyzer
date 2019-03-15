@@ -7,7 +7,7 @@
 class Spectrum {
 public:
 	Spectrum();
-	bool GetAudio(const IAudioFile<float>::AudioBuffer*);
+	bool GetAudio(const IAudioFile<float>::AudioBuffer&);
 	void GetPosition(int);
 private:
 	Fl_Choice FFTChoice;

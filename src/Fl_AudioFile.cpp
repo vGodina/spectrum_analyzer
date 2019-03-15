@@ -1,48 +1,33 @@
 #include "Fl_AudioFile.h"
 
-Fl_AudioFile<float>::Fl_AudioFile() : AudioTrack() {}
-Fl_AudioFile<double>::Fl_AudioFile() : AudioTrack() {}
+template <typename T>
+Fl_AudioFile<T>::Fl_AudioFile() : AudioTrack() {}
 
-bool Fl_AudioFile<float>::load(std::string FileName)
+
+template <typename T>
+bool Fl_AudioFile<T>::Load(std::string FileName)
 {
 	Loaded = AudioTrack.load(FileName);
-	Fl_AudioFile::samples = AudioTrack.samples;
 	return Loaded;
 }
 
-bool Fl_AudioFile<double>::load(std::string FileName)
-{
-	Loaded = AudioTrack.load(FileName);
-	Fl_AudioFile::samples = AudioTrack.samples;
-	return Loaded;
-}
-
-bool Fl_AudioFile<float>::load()
+template <typename T>
+bool Fl_AudioFile<T>::IsLoaded()
 {
 	return Loaded;
 }
 
-bool Fl_AudioFile<double>::load()
-{
-	return Loaded;
-}
-
-int Fl_AudioFile<float>::GetLength () const
+template <typename T>
+int Fl_AudioFile<T>::GetLength () const
 {
 	return AudioTrack.getNumSamplesPerChannel();
 }
 
-int Fl_AudioFile<double>::GetLength () const
+template <typename T>
+const typename IAudioFile<T>::AudioBuffer& Fl_AudioFile<T>::PassData() const
 {
-	return AudioTrack.getNumSamplesPerChannel();
+	return AudioTrack.samples;
 }
 
-IAudioFile<float>::AudioBuffer* Fl_AudioFile<float>::PassData() const
-{
-	return Fl_AudioFile<float>::SamplesPtr;
-}
-
-IAudioFile<double>::AudioBuffer* Fl_AudioFile<double>::PassData() const
-{
-	return Fl_AudioFile<double>::SamplesPtr;
-}
+template class Fl_AudioFile<float>;
+template class Fl_AudioFile<double>;

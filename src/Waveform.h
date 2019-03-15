@@ -9,7 +9,7 @@ public:
 	Waveform();
 	using signal_t = boost::signals2::signal <void(int)>;
 	// Passes AudioBuffer into Waveform
-	bool GetAudio(const IAudioFile<float>::AudioBuffer*);
+	bool GetAudio(const IAudioFile<float>::AudioBuffer&);
 	// Method to connect Waveform signal with 
 	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
 

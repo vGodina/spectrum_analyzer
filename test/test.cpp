@@ -9,10 +9,10 @@ template <typename T>
 class AudioFileMock : public IAudioFile<T> {
 public:
 	AudioFileMock() : IAudioFile<T>::IAudioFile() {}
-	MOCK_METHOD0_T(load, bool());
-	MOCK_METHOD1_T(load, bool(std::string FileName));
+	MOCK_METHOD0_T(IsLoaded, bool());
+	MOCK_METHOD1_T(Load, bool(std::string FileName));
 	MOCK_CONST_METHOD0_T(GetLength, int());
-	MOCK_CONST_METHOD0_T(PassData, IAudioFile<T>::AudioBuffer*());
+	MOCK_CONST_METHOD0_T(PassData, IAudioFile<T>::AudioBuffer&());
 
 
 };
@@ -29,7 +29,7 @@ TEST(Waveform, LoadAudio) {
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
 	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), true);
 }
-// Testing Spectrum with AudioFile Mock
+/* Testing Spectrum with AudioFile Mock
 TEST(Spectrum, LoadAudio) {
 	int NumCh = 1;
 	int Length = 10000;
@@ -41,6 +41,7 @@ TEST(Spectrum, LoadAudio) {
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
 	EXPECT_EQ(SpectrForm.GetAudio(Mock.PassData()), true);
 }
+*/
 
 int main(int argc, char **argv) {
 	testing::InitGoogleMock(&argc, argv);
