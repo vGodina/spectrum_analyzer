@@ -10,7 +10,7 @@ MainWindow::MainWindow (int w, int h, const char* title) : Fl_Double_Window (w, 
 	MenuConnection = MainMenu.connect(boost::bind(&MainWindow::AudioFileHandler, this, _1));
 	// Connecting Waveform slider's movement with its MainWindow Handler: update Spectrum chart
 	SliderInteraction = WaveFrm.connect(boost::bind(&MainWindow::SliderHandler, this, _1));
-	// Interior initialization
+
 	resizable(this);
 	Fl::visual(FL_DOUBLE | FL_INDEX);
 	show();

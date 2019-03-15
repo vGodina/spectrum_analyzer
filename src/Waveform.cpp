@@ -8,29 +8,28 @@ ZoomOutH(20, 322, 25, 25, "-"),
 ZoomInV(522, 100, 25, 25, "+"),
 ZoomOutV(522, 127, 25, 25, "-")
 {
-
+	Slider.callback(CbSlider, this);
 	ZoomInH.callback(CbZoomInH, this);
 	ZoomOutH.callback(CbZoomOutH, this);
-	Slider.callback(CbSlider, this);
 	ZoomInV.callback(CbZoomInV, this);
 	ZoomOutV.callback(CbZoomOutV, this);
-		// Initialization of  widgets
+	// Initialization of  widgets
 	WaveformChart.color(FL_WHITE);
 	WaveformChart.type(FL_LINE_CHART);
 	Slider.type(FL_HORIZONTAL);
 	Slider.slider_size(1.0);
 	Slider.value(0.5);
+	AudioLength = 0;
 }
 
-void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
+bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
 {
-	static_cast<Waveform*>(Obj)->Draw(1.0);
-	static_cast<Waveform*>(Obj)->EmitSignal();
-}
-// Signal passes the index of audio sample corresponding to the center of Slider
-void Waveform::EmitSignal()
-{
-	SliderSignal(CenterSample);
+	AudioTrack = AudioTrk;
+	AudioLength = (*AudioTrack)[0].size();
+	Slider.slider_size(1.0);
+	Slider.value(0.5);
+	Draw(1.0);
+	return true;
 }
 
 boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscriber)
@@ -38,43 +37,32 @@ boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscri
 	return SliderSignal.connect(subscriber);
 }
 
-int Waveform::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
+// Signal passes the index of audio sample corresponding to the center of Slider
+void Waveform::EmitSignal()
 {
-	AudioTrack = AudioTrk;
-	Slider.slider_size(1.0);
-	Slider.value(0.5);
-	Draw(1.0);
-	return (*AudioTrack)[0].size();
+	SliderSignal(Waveform::CenterSample);
+}
+
+void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
+{
+	static_cast<Waveform*>(Obj)->Draw(1.0);
+	static_cast<Waveform*>(Obj)->EmitSignal();
 }
 
 bool Waveform::Draw(double ZoomFactor = 1.0)
 {
-	if (AudioTrack != nullptr)
-	{
-		constexpr int ChartLength = 1024;
-		// resize Slider size
-		Slider.slider_size(Slider.slider_size() / ZoomFactor);
-		if (Slider.slider_size() == 1.0)
-			Slider.value(0.5);
-		// reset Chart and keep its bounds with no changes
-		VerticalScale(1.0, true);
-		// Center value of Slider
-		int AudioLength = (*AudioTrack)[0].size();
-		double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
-		CenterSample = static_cast<int>(Center * AudioLength);
-		int VisibleSamples = AudioLength * Slider.slider_size();
-		int StartSample = Center * AudioLength - VisibleSamples / 2;
-		int Delta = VisibleSamples;
-		int Decimation = 1;
-		if (VisibleSamples > ChartLength)
-		{
-			Delta = ChartLength;
-			Decimation = VisibleSamples / ChartLength;
-		}
-		for (int i = 0; i < Delta; i++)
-		{
-			WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
-		}
+	Slider.slider_size(Slider.slider_size() / ZoomFactor);
+	double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
+	Waveform::CenterSample = static_cast<int>(Center * AudioLength);
+
+	constexpr double ChartLength = 1024.0;
+	int VisibleSamples = AudioLength * Slider.slider_size();
+	int StartSample = Waveform::CenterSample - VisibleSamples / 2;
+	double Decimation = VisibleSamples / ChartLength;
+	VerticalScale(1.0, true);
+	if (AudioLength > 0) {
+		for (int i = 0; i < ChartLength; ++i)
+			WaveformChart.add((*AudioTrack)[0][StartSample + static_cast<int>(i * Decimation)]);
 		return true;
 	}
 }
@@ -97,19 +85,17 @@ void Waveform::CbZoomInH(Fl_Widget* ZoomIn, void* Obj)
 
 void Waveform::CbZoomOutH(Fl_Widget* ZoomOutH, void* Obj)
 {
-	static_cast<Waveform*>(Obj)->Draw(0.5);
+	Waveform* Widget = static_cast<Waveform*>(Obj);
+	if (Widget->Slider.slider_size() == 1.0) Widget->Slider.value(0.5);
+	Widget->Draw(0.5);
 }
 
 void Waveform::CbZoomInV(Fl_Widget* ZoomInV, void* Obj)
 {
-	Waveform* Widget = static_cast<Waveform*>(Obj);
-	Widget->VerticalScale(2.0, false);
-	Widget->WaveformChart.redraw();
+	static_cast<Waveform*>(Obj)->VerticalScale(2.0, false);
 }
 
 void Waveform::CbZoomOutV(Fl_Widget* ZoomOutV, void* Obj)
 {
-	Waveform* Widget = static_cast<Waveform*>(Obj);
-	Widget->VerticalScale(0.5, false);
-	Widget->WaveformChart.redraw();
+	static_cast<Waveform*>(Obj)->VerticalScale(0.5, false);
 }

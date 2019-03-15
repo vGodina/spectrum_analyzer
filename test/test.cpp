@@ -24,7 +24,7 @@ TEST(Waveform, LoadAudio) {
 
 	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
-	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), Length);
+	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), true);
 }
 // Testing Spectrum with AudioFile Mock
 TEST(Spectrum, LoadAudio) {
@@ -36,7 +36,7 @@ TEST(Spectrum, LoadAudio) {
 
 	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
-	EXPECT_EQ(SpectrForm.GetAudio(Mock.PassData()), Length);
+	EXPECT_EQ(SpectrForm.GetAudio(Mock.PassData()), true);
 }
 
 int main(int argc, char **argv) {

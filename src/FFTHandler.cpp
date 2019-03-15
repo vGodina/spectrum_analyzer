@@ -2,13 +2,11 @@
 
 
 
-FFTHandler::FFTHandler() : 
-	FFT()
+FFTHandler::FFTHandler() : FFT()
 {
-
 }
 
-void FFTHandler::DoFFT(std::vector <float> AudioTrack, int CenterSample, int FFTSize)
+void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 {
 	FFT.init(FFTSize);
 	int N = FFTSize / 2;
@@ -50,4 +48,9 @@ double FFTHandler::PassRMS ()
 double FFTHandler::PassAmpl(int Index)
 {
 	return Ampl[Index];
+}
+
+void FFTHandler::SetCenterSample(int CentrSample)
+{
+	CenterSample = CentrSample;
 }
