@@ -5,16 +5,26 @@ Fl_AudioFile<double>::Fl_AudioFile() : AudioTrack() {}
 
 bool Fl_AudioFile<float>::load(std::string FileName)
 {
-	bool flag = AudioTrack.load(FileName);
+	Loaded = AudioTrack.load(FileName);
 	Fl_AudioFile::samples = AudioTrack.samples;
-	return flag;
+	return Loaded;
 }
 
 bool Fl_AudioFile<double>::load(std::string FileName)
 {
-	bool flag = AudioTrack.load(FileName);
+	Loaded = AudioTrack.load(FileName);
 	Fl_AudioFile::samples = AudioTrack.samples;
-	return flag;
+	return Loaded;
+}
+
+bool Fl_AudioFile<float>::load()
+{
+	return Loaded;
+}
+
+bool Fl_AudioFile<double>::load()
+{
+	return Loaded;
 }
 
 int Fl_AudioFile<float>::GetLength () const

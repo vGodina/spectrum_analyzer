@@ -7,7 +7,8 @@ template <typename T>
 class Fl_AudioFile : public IAudioFile<T> {
 public:
 	Fl_AudioFile ();
-	bool load(std::string FileName) override;
+	bool load (std::string FileName) override;
+	bool load() override;
 	int GetLength () const override;
 	IAudioFile<T>::AudioBuffer* PassData() const override;
 private:

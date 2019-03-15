@@ -42,14 +42,11 @@ void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
 void Spectrum::CheckFFTSize()
 {
 	int temp = 2 << (FFTChoice.value() + 8);
-	if (AudioTrack != nullptr) {	
-		while (temp > (*AudioTrack)[0].size())
-		{
-			temp /= 2;
-			FFTChoice.value(FFTChoice.value() - 1);
-		}
-		FFTSize = temp;
+	while (temp > (*AudioTrack)[0].size()) {
+		temp /= 2;
+		FFTChoice.value(FFTChoice.value() - 1);
 	}
+	FFTSize = temp;
 }
 
 void Spectrum::Draw()

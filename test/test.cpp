@@ -9,9 +9,12 @@ template <typename T>
 class AudioFileMock : public IAudioFile<T> {
 public:
 	AudioFileMock() : IAudioFile<T>::IAudioFile() {}
+	MOCK_METHOD0_T(load, bool());
+	MOCK_METHOD1_T(load, bool(std::string FileName));
 	MOCK_CONST_METHOD0_T(GetLength, int());
 	MOCK_CONST_METHOD0_T(PassData, IAudioFile<T>::AudioBuffer*());
-	MOCK_METHOD1_T(load, bool(std::string FileName));
+
+
 };
 
 // Testing Waveform with AudioFile Mock

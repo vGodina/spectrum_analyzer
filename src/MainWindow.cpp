@@ -26,6 +26,8 @@ bool MainWindow::AudioFileHandler (std::string FileName)
 
 void MainWindow::SliderHandler (int CenterSample)
 {
-	SpectraFrm.GetPosition(CenterSample);
-	SpectraFrm.GetAudio(AudioTrack.PassData());
+	if (AudioTrack.load()) {
+		SpectraFrm.GetPosition(CenterSample);
+		SpectraFrm.GetAudio(AudioTrack.PassData());
+	}
 }

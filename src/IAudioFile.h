@@ -9,12 +9,14 @@ public:
 	IAudioFile();
 	using AudioBuffer = std::vector<std::vector<T> >;
 	virtual bool load (std::string FileName) = 0;
+	virtual bool load () = 0;
 	virtual int GetLength () const = 0;
 	virtual AudioBuffer* PassData () const = 0;
 protected:
 	// A vector of vectors of audio samples: samples[channel][sampleIndex]
 	AudioBuffer samples;
 	AudioBuffer* SamplesPtr;
+	bool Loaded;
 };
 
 #endif IAUDIOFILE

@@ -19,7 +19,6 @@ ZoomOutV(522, 127, 25, 25, "-")
 	Slider.type(FL_HORIZONTAL);
 	Slider.slider_size(1.0);
 	Slider.value(0.5);
-	AudioLength = 0;
 }
 
 bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer* AudioTrk)
@@ -51,18 +50,17 @@ void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
 
 bool Waveform::Draw(double ZoomFactor = 1.0)
 {
+	VerticalScale(1.0, true);
 	Slider.slider_size(Slider.slider_size() / ZoomFactor);
 	double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
 	Waveform::CenterSample = static_cast<int>(Center * AudioLength);
-
-	constexpr double ChartLength = 1024.0;
 	int VisibleSamples = AudioLength * Slider.slider_size();
 	int StartSample = Waveform::CenterSample - VisibleSamples / 2;
-	double Decimation = VisibleSamples / ChartLength;
-	VerticalScale(1.0, true);
-	if (AudioLength > 0) {
+	int ChartLength = 1000;
+	int Decimation = VisibleSamples / ChartLength;
+	if (AudioTrack != nullptr) {
 		for (int i = 0; i < ChartLength; ++i)
-			WaveformChart.add((*AudioTrack)[0][StartSample + static_cast<int>(i * Decimation)]);
+			WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
 		return true;
 	}
 }
