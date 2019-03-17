@@ -17,9 +17,6 @@ ZoomOutV(522, 127, 25, 25, "-")
 	// Initialization of  widgets
 	WaveformChart.color(FL_WHITE);
 	WaveformChart.type(FL_LINE_CHART);
-	Slider.type(FL_HORIZONTAL);
-	Slider.slider_size(1.0);
-	Slider.value(0.5);
 }
 
 bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
@@ -33,38 +30,30 @@ bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
 		if (bound < temp) bound = temp;
 	}
 	WaveformChart.bounds(-bound, bound);
-	Slider.slider_size(1.0);
-	Slider.value(0.5);
+	Slider.Reset();
 	Draw(1.0);
 	return true;
 }
 
 boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscriber)
 {
-	return SliderSignal.connect(subscriber);
-}
-
-// Signal passes the index of audio sample corresponding to the center of Slider
-void Waveform::EmitSignal()
-{
-	SliderSignal(Waveform::CenterSample);
+	return Slider.connect(subscriber);
 }
 
 void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
 {
 	static_cast<Waveform*>(Obj)->Draw(1.0);
-	static_cast<Waveform*>(Obj)->EmitSignal();
+	static_cast<CustomSlider*>(Slider)->EmitSignal();
 }
 
 bool Waveform::Draw(double ZoomFactor = 1.0)
 {
-	VerticalScale(1.0, true);
-	Slider.slider_size(Slider.slider_size() / ZoomFactor);
-	double Center = Slider.value() - Slider.slider_size() * (Slider.value() - 0.5);
-	Waveform::CenterSample = static_cast<int>(Center * AudioLength);
-	int VisibleSamples = AudioLength * Slider.slider_size();
-	int StartSample = Waveform::CenterSample - VisibleSamples / 2;
-	int ChartLength = 700;
+	int ChartLength = 1000;
+	VerticalScale(1.0, true); // It holds Chart's bounds with no change after clear
+	Slider.Resize(ZoomFactor);
+	int VisibleSamples = Slider.slider_size() * AudioLength;
+	int StartSample = Slider.GetStartValue() * AudioLength;
+
 	int Decimation = VisibleSamples / ChartLength;
 	if (VisibleSamples < ChartLength) {
 		Decimation = 1;
@@ -96,7 +85,6 @@ void Waveform::CbZoomInH(Fl_Widget* ZoomIn, void* Obj)
 void Waveform::CbZoomOutH(Fl_Widget* ZoomOutH, void* Obj)
 {
 	Waveform* Widget = static_cast<Waveform*>(Obj);
-	if (Widget->Slider.slider_size() == 1.0) Widget->Slider.value(0.5);
 	Widget->Draw(0.5);
 }
 

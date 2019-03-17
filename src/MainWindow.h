@@ -17,5 +17,5 @@ private:
 	boost::signals2::connection  SliderInteraction;
 
 	bool AudioFileHandler (std::string FileName);
-	void SliderHandler (int CenterSample);
+	void SliderHandler (double CenterSample);
 };

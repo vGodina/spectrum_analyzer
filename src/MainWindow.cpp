@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <iostream>
+
 MainWindow::MainWindow (int w, int h, const char* title) : Fl_Double_Window (w, h, title),
 	AudioTrack(),
 	WaveFrm(),
@@ -24,9 +25,10 @@ bool MainWindow::AudioFileHandler (std::string FileName)
 	return Loaded;
 }
  
-void MainWindow::SliderHandler (int CenterSample)
+void MainWindow::SliderHandler (double CenterValue)
 {
 	if (AudioTrack.IsLoaded()) {
+		int CenterSample = static_cast<int>(CenterValue * AudioTrack.GetLength());
 		SpectraFrm.GetPosition(CenterSample);
 		SpectraFrm.GetAudio(AudioTrack.PassData());
 	}

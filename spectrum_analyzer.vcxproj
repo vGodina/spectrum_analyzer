@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="external\include\audiofft\AudioFFT.cpp" />
     <ClCompile Include="external\include\audiofile\AudioFile.cpp" />
+    <ClCompile Include="src\CustomSlider.cpp" />
     <ClCompile Include="src\FFTHandler.cpp" />
     <ClCompile Include="src\Fl_AudioFile.cpp" />
     <ClCompile Include="src\LevelMeter.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Waveform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CustomSlider.h" />
     <ClInclude Include="src\FFTHandler.h" />
     <ClInclude Include="src\Fl_AudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
