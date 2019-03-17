@@ -13,8 +13,6 @@ public:
 	MOCK_METHOD1_T(Load, bool(std::string FileName));
 	MOCK_CONST_METHOD0_T(GetLength, int());
 	MOCK_CONST_METHOD0_T(PassData, IAudioFile<T>::AudioBuffer&());
-
-
 };
 
 // Testing Waveform with AudioFile Mock
@@ -25,7 +23,7 @@ TEST(Waveform, LoadAudio) {
 	Waveform WForm;
 	AudioFileMock<float> Mock;
 
-	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
+	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::ReturnRef(AudioBuf));
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
 	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), true);
 }
