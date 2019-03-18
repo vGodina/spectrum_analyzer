@@ -27,9 +27,10 @@ bool Spectrum::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
 }
 
 // Gets index of audio sample corresponding to the center of FFT window
-void Spectrum::GetPosition(int CentrSmpl)
+bool Spectrum::GetPosition(int CentrSmpl)
 {
 	FFT.SetCenterSample(CentrSmpl);
+	return true;
 }
 
 void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)

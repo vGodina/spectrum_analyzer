@@ -6,12 +6,14 @@
 #include "IMenu.h"
 #include "IWaveForm.h"
 #include "Waveform.h"
-#include "Spectrum.h"
+#include "Fl_AudioFile.h"
 #include <audiofile/AudioFile.h>
-#include "SlotFunction.h"
+#include "MockFunctions.h"
 
 using namespace testing;
-//////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////AudioFileMock//////////////////////////////////////////////////
+
 template <typename T>
 class AudioFileMock : public IAudioFile<T> {
 public:
@@ -30,26 +32,27 @@ TEST(Waveform, LoadAudio) {
 	Waveform WForm;
 	AudioFileMock<float> Mock;
 	EXPECT_CALL(Mock, PassData()).WillOnce(ReturnRef(AudioBuf));
-	// This test covers Waveform methods: Pass, Draw, VerticalScale
 	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), true);
 }
-////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////MenuMock///////////////////////////////////////////////////////
+
 class MenuMock : public IMenu {
 public:
 	MOCK_METHOD1(connect, boost::signals2::connection(const signal_t::slot_type &slot));
 };
 
 TEST(AudioFileMock, Load) {
-	AudioFileMock<float> MockAudio;
-	std::string FilePath = "C:\\Users\\Vladimir_Godina\\source\\repos\\.git\\spectrum_analyzer\\TestData\\test.wav";
 	MenuMock Menu;
-	boost::signals2::connection Connection;
+	std::string FilePath = "C:\\Users\\Vladimir_Godina\\source\\repos\\.git\\spectrum_analyzer\\TestData\\test.wav";
 	MenuMock::signal_t MenuSignal;
-	EXPECT_CALL(Menu, connect(_)).WillOnce(Return(MenuSignal.connect(SlotFunction)));
-	Menu.connect(SlotFunction);
+	EXPECT_CALL(Menu, connect(_)).WillOnce(Return(MenuSignal.connect(AudioFileHandler)));
+	Menu.connect(AudioFileHandler);
 	MenuSignal(FilePath);
 }
-//////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////WaveFormMock///////////////////////////////////////////////////
+
 class WaveFormMock : public IWaveForm {
 public:
 	MOCK_METHOD1(connect, boost::signals2::connection (const signal_t::slot_type &slot));
@@ -57,21 +60,19 @@ public:
 };
 
 TEST(AudioFileMock, TestWaveForm) {
-	AudioFileMock<float> MockAudio;
-	std::string FilePath = "C:\\Users\\Vladimir_Godina\\source\\repos\\.git\\spectrum_analyzer\\TestData\\test.wav";
 	WaveFormMock WFormMock;
 	double SliderValue = 0.5;
-	boost::signals2::connection Connection;
-	WaveFormMock::signal_t WFormSignal;
-	EXPECT_CALL(WFormMock, connect(_)).WillOnce(Return(WFormSignal.connect(WFormSlotFunction)));
-	WFormMock.connect(WFormSlotFunction);
-	WFormSignal(SliderValue);
+	WaveFormMock::signal_t SliderSignal;
+	EXPECT_CALL(WFormMock, connect(_)).WillOnce(Return(SliderSignal.connect(SliderHandler)));
+	WFormMock.connect(SliderHandler);
+	SliderSignal(SliderValue);
 }
 
 int main(int argc, char **argv) {
 	testing::InitGoogleMock(&argc, argv);
 	return RUN_ALL_TESTS();
 }
+
 
 /* Testing Spectrum with AudioFile Mock
 TEST(Spectrum, LoadAudio) {
