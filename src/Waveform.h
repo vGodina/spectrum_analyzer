@@ -4,16 +4,16 @@
 #include <fltk/Fl_Slider.H>
 #include "Fl_AudioFile.h"
 #include "CustomSlider.h"
+#include "IWaveForm.h"
 #include <typeinfo>
 
-class Waveform {
+class Waveform : public IWaveForm {
 public:
 	Waveform();
 	using signal_t = boost::signals2::signal <void(double)>;
-	bool GetAudio(const IAudioFile<float>::AudioBuffer&);
-	// Method to connect Waveform signal with
-	//using signal_t = boost::signals2::signal <void(double)>;
-	boost::signals2::connection connect(const signal_t::slot_type &subscriber);
+	// Method signal from Slider to slot
+	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
+	bool GetAudio(const IAudioFile<float>::AudioBuffer&) override;
 
 private:
 	Fl_Chart WaveformChart;

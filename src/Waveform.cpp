@@ -35,9 +35,9 @@ bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
 	return true;
 }
 
-boost::signals2::connection Waveform::connect(const signal_t::slot_type &subscriber)
+boost::signals2::connection Waveform::connect(const signal_t::slot_type &slot)
 {
-	return Slider.connect(subscriber);
+	return Slider.connect(slot);
 }
 
 void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)

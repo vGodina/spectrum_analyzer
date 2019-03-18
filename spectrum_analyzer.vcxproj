@@ -172,6 +172,8 @@
     <ClInclude Include="src\FFTHandler.h" />
     <ClInclude Include="src\Fl_AudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
+    <ClInclude Include="src\IMenu.h" />
+    <ClInclude Include="src\IWaveForm.h" />
     <ClInclude Include="src\LevelMeter.h" />
     <ClInclude Include="src\MainWindow.h" />
     <ClInclude Include="src\Menu.h" />
