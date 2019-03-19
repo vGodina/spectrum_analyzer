@@ -1,20 +1,22 @@
 #include <fltk/Fl_Chart.H>
 #include <fltk/Fl_Choice.H>
-#include "Fl_AudioFile.h"
+#include <fltk/Fl_Group.H>
+#include "IAudioFile.h"
+#include "ISpectrum.h"
 #include "LevelMeter.h"
 #include "FFTHandler.h"
 
-class Spectrum {
+class Spectrum : public ISpectrum, public Fl_Group {
 public:
 	Spectrum();
-	bool GetAudio(const IAudioFile<float>::AudioBuffer&);
+	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
 	bool GetPosition(int);
 private:
 	Fl_Choice FFTChoice;
 	Fl_Chart SpectrumChart;
 	LevelMeter LMeter;
 	FFTHandler FFT;
-	const Fl_AudioFile<float>::AudioBuffer* AudioTrack;
+	const IAudioFile<float>::AudioBuffer* AudioTrack;
 	int FFTSize;
 
 	static void CbFFTChoice(Fl_Widget*, void*);

@@ -1,7 +1,6 @@
 #include "Waveform.h"
-#include <vector>
 
-Waveform::Waveform() :
+Waveform::Waveform() : Fl_Group(20, 100, 527, 247),
 WaveformChart(20, 100, 500, 200),
 Slider(20, 300, 500, 20),
 ZoomInH(47, 322, 25, 25, "+"),
@@ -19,7 +18,7 @@ ZoomOutV(522, 127, 25, 25, "-")
 	WaveformChart.type(FL_LINE_CHART);
 }
 
-bool Waveform::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
+bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
 	AudioLength = (*AudioTrack)[0].size();
@@ -53,7 +52,6 @@ bool Waveform::Draw(double ZoomFactor = 1.0)
 	Slider.Resize(ZoomFactor);
 	int VisibleSamples = Slider.slider_size() * AudioLength;
 	int StartSample = Slider.GetStartValue() * AudioLength;
-
 	int Decimation = VisibleSamples / ChartLength;
 	if (VisibleSamples < ChartLength) {
 		Decimation = 1;
@@ -84,8 +82,7 @@ void Waveform::CbZoomInH(Fl_Widget* ZoomIn, void* Obj)
 
 void Waveform::CbZoomOutH(Fl_Widget* ZoomOutH, void* Obj)
 {
-	Waveform* Widget = static_cast<Waveform*>(Obj);
-	Widget->Draw(0.5);
+	static_cast<Waveform*>(Obj)->Draw(0.5);
 }
 
 void Waveform::CbZoomInV(Fl_Widget* ZoomInV, void* Obj)

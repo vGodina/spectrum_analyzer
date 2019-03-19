@@ -2,13 +2,14 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <boost/signals2.hpp>
+#include <audiofile/AudioFile.h>
+#include "Waveform.h"
+#include "Fl_AudioFile.h"
+#include "MockFunctions.h"
 #include "IAudioFile.h"
 #include "IMenu.h"
 #include "IWaveForm.h"
-#include "Waveform.h"
-#include "Fl_AudioFile.h"
-#include <audiofile/AudioFile.h>
-#include "MockFunctions.h"
+#include "ISpectrum.h"
 
 using namespace testing;
 
@@ -32,7 +33,7 @@ TEST(Waveform, LoadAudio) {
 	Waveform WForm;
 	AudioFileMock<float> Mock;
 	EXPECT_CALL(Mock, PassData()).WillOnce(ReturnRef(AudioBuf));
-	EXPECT_EQ(WForm.GetAudio(Mock.PassData()), true);
+	EXPECT_EQ(WForm.TakeAudioData(Mock.PassData()), true);
 }
 
 /////////////////////////MenuMock///////////////////////////////////////////////////////
@@ -56,7 +57,7 @@ TEST(AudioFileMock, Load) {
 class WaveFormMock : public IWaveForm {
 public:
 	MOCK_METHOD1(connect, boost::signals2::connection (const signal_t::slot_type &slot));
-	MOCK_METHOD1(GetAudio, bool (const IAudioFile<float>::AudioBuffer &AudioData));
+	MOCK_METHOD1(TakeAudioData, bool (const IAudioFile<float>::AudioBuffer &AudioData));
 };
 
 TEST(AudioFileMock, TestWaveForm) {
@@ -68,6 +69,15 @@ TEST(AudioFileMock, TestWaveForm) {
 	SliderSignal(SliderValue);
 }
 
+/////////////////////////SpectrumFormMock///////////////////////////////////////////////
+
+class SpectrumFormMock : public ISpectrum {
+public:
+	MOCK_METHOD1(TakeAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
+	MOCK_METHOD1(GetPosition, bool(int));
+};
+
+/////////////////////////main///////////////////////////////////////////////////////////
 int main(int argc, char **argv) {
 	testing::InitGoogleMock(&argc, argv);
 	return RUN_ALL_TESTS();
@@ -84,7 +94,7 @@ TEST(Spectrum, LoadAudio) {
 
 	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
 	// This test covers Waveform methods: Pass, Draw, VerticalScale
-	EXPECT_EQ(SpectrForm.GetAudio(Mock.PassData()), true);
+	EXPECT_EQ(SpectrForm.TakeAudioData(Mock.PassData()), true);
 }
 */
 

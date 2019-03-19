@@ -1,8 +1,7 @@
-#include <string>
-#include <vector>
 #include "Spectrum.h"
 
-Spectrum::Spectrum():
+Spectrum::Spectrum() :
+	Fl_Group(20, 360, 500, 222),
 	SpectrumChart(20, 360, 500, 200),
 	FFTChoice(420, 560, 100, 22, "FFT Size:"),
 	FFT(),
@@ -18,7 +17,7 @@ Spectrum::Spectrum():
 	FFTSize = 2 << (FFTChoice.value() + 8);
 }
 
-bool Spectrum::GetAudio(const IAudioFile<float>::AudioBuffer& AudioTrk)
+bool Spectrum::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
 	CheckFFTSize();
