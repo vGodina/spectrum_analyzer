@@ -3,9 +3,9 @@
 
 int main()
 {
-	MainWindow BaseWindow(600, 600, "Spectrum Analyzer");
-	BaseWindow.MainMenu = new Menu;
-	BaseWindow.Init();
+	Menu menu;
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", &menu);
+	BaseWindow.add(menu);
 	BaseWindow.show();
 	return Fl::run();
 }

@@ -1,12 +1,12 @@
 #include <boost/signals2.hpp>
 #include <fltk/Fl_Button.h>
+#include <fltk/Fl_Group.H>
 #include <fltk/Fl_Native_File_Chooser.h>
 #include "IMenu.h"
 
-class Menu : public IMenu {
+class Menu : public IMenu, public Fl_Group {
 public:
 	Menu();
-	//using signal_t = boost::signals2::signal <void (std::string)>;
 	boost::signals2::connection connect (const signal_t::slot_type &slot);
 private:
 	Fl_Native_File_Chooser Chooser;

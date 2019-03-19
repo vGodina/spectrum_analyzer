@@ -1,22 +1,21 @@
 #include "MainWindow.h"
 #include <iostream>
 
-MainWindow::MainWindow (int w, int h, const char* title) : Fl_Double_Window (w, h, title),
+MainWindow::MainWindow (int w, int h, const char* title, IMenu* mainMenu) :
+	Fl_Double_Window (w, h, title),
+	MainMenu{ mainMenu },
 	AudioTrack(),
 	WaveFrm(),
 	SpectraFrm()
+	
 {
-
 	// Connecting Waveform slider's movement with its MainWindow Handler: update Spectrum chart
 	SliderInteraction = WaveFrm.connect(boost::bind(&MainWindow::SliderHandler, this, _1));
-	resizable(this);
-	Fl::visual(FL_DOUBLE | FL_INDEX);
-	
-}
-void MainWindow::Init()
-{
 	// Connecting MainMenu signal with HandleAudio function. _1 allocates placeholder for passing value of file path
 	MenuConnection = MainMenu->connect(boost::bind(&MainWindow::AudioFileHandler, this, _1));
+	resizable(this);
+	Fl::visual(FL_DOUBLE | FL_INDEX);
+	//show();
 }
 
 bool MainWindow::AudioFileHandler (std::string FileName)
