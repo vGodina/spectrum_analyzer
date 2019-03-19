@@ -11,5 +11,6 @@ public:
 	virtual ~ISpectrum() = default;
 	virtual bool TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioData) = 0;
 	virtual bool GetPosition(int) = 0;
+	virtual Fl_Widget* getImplementatioWidget() = 0;
 };
 #endif ISPECTRUM

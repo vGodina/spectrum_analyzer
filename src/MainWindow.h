@@ -7,12 +7,12 @@
 
 class MainWindow : public Fl_Double_Window {
 public:
-	MainWindow(int w, int h, const char* title, IMenu* mainMenu, IAudioFile<float>* AudioTrk, IWaveForm* WaveForm, ISpectrum* SpectraForm);
+	MainWindow(int w, int h, const char* title, IAudioFile<float>* AudioTrk, std::unique_ptr<IMenu>&& mainMenu, std::unique_ptr<IWaveForm>&& WaveForm, std::unique_ptr<ISpectrum>&& SpectrumForm);
 private:
+	std::unique_ptr<IMenu> MainMenu;
+	std::unique_ptr <IWaveForm> WaveFrm;
+	std::unique_ptr <ISpectrum> SpectraFrm;
 	IAudioFile<float>* AudioTrack;
-	IMenu* MainMenu;
-	IWaveForm* WaveFrm;
-	ISpectrum* SpectraFrm;
 
 	boost::signals2::connection  MenuConnection;
 	boost::signals2::connection  SliderInteraction;

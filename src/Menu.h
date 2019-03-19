@@ -4,10 +4,12 @@
 #include <fltk/Fl_Native_File_Chooser.h>
 #include "IMenu.h"
 
-class Menu : public IMenu, public Fl_Group {
+class Menu : public Fl_Group, public IMenu {
 public:
 	Menu();
 	boost::signals2::connection connect (const signal_t::slot_type &slot);
+	Fl_Group* getImplementatioWidget() override;
+
 private:
 	Fl_Native_File_Chooser Chooser;
 	Fl_Button OpenButton;

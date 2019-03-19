@@ -60,3 +60,8 @@ void Spectrum::Draw()
 		LMeter.Set(FFT.PassRMS());
 	}
 }
+
+Fl_Group* Spectrum::getImplementatioWidget()
+{
+	return this;
+}

@@ -4,16 +4,15 @@
 #include "Waveform.h"
 #include "Spectrum.h"
 
+#include <memory>
+
 int main()
 {
-	Menu MainMenu;
+	//std::unique_ptr<Menu> MainMenu;
+	auto MainMenu = std::make_unique<Menu>();
+	auto WaveFrm = std::make_unique<Waveform>();
+	auto SpectrFrm = std::make_unique<Spectrum>();
 	Fl_AudioFile<float> AudioTrack;
-	Waveform WaveFrm;
-	Spectrum SpectrFrm;
-	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", &MainMenu, &AudioTrack, &WaveFrm, &SpectrFrm);
-	BaseWindow.add(MainMenu);
-	BaseWindow.add(WaveFrm);
-	BaseWindow.add(SpectrFrm);
-	BaseWindow.show();
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", &AudioTrack, std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm));
 	return Fl::run();
 }

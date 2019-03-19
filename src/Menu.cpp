@@ -1,13 +1,14 @@
 #include "Menu.h"
 #include <iostream>
 
-Menu::Menu() : Fl_Group(30,30,100,30),
+Menu::Menu() : Fl_Group(30, 30, 100, 30),
 	Chooser(),
 	OpenButton (30, 30, 100, 30, "Open .wav file")
 {
 	OpenButton.callback (CbOpenButton, this);
 	Chooser.filter("*.wav");
 }
+
 
 void Menu::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
 {
@@ -26,4 +27,9 @@ void Menu::Emit()
 boost::signals2::connection Menu::connect(const signal_t::slot_type &slot)
 {
 	return MenuSignal.connect(slot);
+}
+
+Fl_Group* Menu::getImplementatioWidget()
+{
+	return this;
 }

@@ -94,3 +94,8 @@ void Waveform::CbZoomOutV(Fl_Widget* ZoomOutV, void* Obj)
 {
 	static_cast<Waveform*>(Obj)->VerticalScale(0.5, false);
 }
+
+Fl_Group* Waveform::getImplementatioWidget()
+{
+	return this;
+}
