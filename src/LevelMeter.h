@@ -4,7 +4,7 @@ class LevelMeter
 {
 public:
 	LevelMeter();
-	void Set(float);
+	void Set(double);
 private:
 	Fl_Chart Meter;
 };

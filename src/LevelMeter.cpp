@@ -9,9 +9,9 @@ LevelMeter::LevelMeter() :
 	Meter.add(-120);
 }
 
-void LevelMeter::Set(float value)
+void LevelMeter::Set(double value)
 {
 	Meter.clear();
 	Meter.bounds(-120.0, 0.0);
-	Meter.add(value);
+	Meter.add(static_cast<float>(value));
 }

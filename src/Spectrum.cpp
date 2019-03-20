@@ -5,7 +5,8 @@ Spectrum::Spectrum() :
 	SpectrumChart(20, 360, 500, 200),
 	FFTChoice(420, 560, 100, 22, "FFT Size:"),
 	FFT(),
-	LMeter()
+	LMeter(),
+	AudioTrack(nullptr)
 {
 	FFTChoice.callback(CbFFTChoice, this);
 	SpectrumChart.color(FL_WHITE);
@@ -32,7 +33,7 @@ bool Spectrum::GetPosition(int CentrSmpl)
 	return true;
 }
 
-void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
+void Spectrum::CbFFTChoice(Fl_Widget*, void* Obj)
 {
 	static_cast<Spectrum*>(Obj)->CheckFFTSize();
 	static_cast<Spectrum*>(Obj)->Draw();
@@ -41,8 +42,8 @@ void Spectrum::CbFFTChoice(Fl_Widget* SizeFFT, void* Obj)
 // Check if choosed FFT Size is not bigger than audio length
 void Spectrum::CheckFFTSize()
 {
-	int temp = 2 << (FFTChoice.value() + 8);
-	while (temp > (*AudioTrack)[0].size()) {
+	unsigned int temp = 2 << (FFTChoice.value() + 8);
+	while (AudioTrack != nullptr && temp > (*AudioTrack)[0].size()) {
 		temp /= 2;
 		FFTChoice.value(FFTChoice.value() - 1);
 	}

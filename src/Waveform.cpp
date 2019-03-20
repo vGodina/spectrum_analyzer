@@ -6,7 +6,9 @@ Slider(20, 300, 500, 20),
 ZoomInH(47, 322, 25, 25, "+"),
 ZoomOutH(20, 322, 25, 25, "-"),
 ZoomInV(522, 100, 25, 25, "+"),
-ZoomOutV(522, 127, 25, 25, "-")
+ZoomOutV(522, 127, 25, 25, "-"),
+AudioTrack(nullptr), 
+AudioLength(0)
 {
 	Slider.callback(CbSlider, this);
 	ZoomInH.callback(CbZoomInH, this);
@@ -57,11 +59,9 @@ bool Waveform::Draw(double ZoomFactor = 1.0)
 		Decimation = 1;
 		ChartLength = VisibleSamples;
 	}
-	if (AudioTrack != nullptr) {
-		for (int i = 0; i < ChartLength; ++i)
-			WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
-		return true;
-	}
+	for (int i = 0; i < ChartLength; ++i)
+		WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
+	return (ChartLength == 0) ? false : true;
 }
 
 void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)
@@ -75,22 +75,22 @@ void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)
 	WaveformChart.bounds(min, max);
 }
 
-void Waveform::CbZoomInH(Fl_Widget* ZoomIn, void* Obj)
+void Waveform::CbZoomInH(Fl_Widget*, void* Obj)
 {
 	static_cast<Waveform*>(Obj)->Draw(2.0);
 }
 
-void Waveform::CbZoomOutH(Fl_Widget* ZoomOutH, void* Obj)
+void Waveform::CbZoomOutH(Fl_Widget*, void* Obj)
 {
 	static_cast<Waveform*>(Obj)->Draw(0.5);
 }
 
-void Waveform::CbZoomInV(Fl_Widget* ZoomInV, void* Obj)
+void Waveform::CbZoomInV(Fl_Widget*, void* Obj)
 {
 	static_cast<Waveform*>(Obj)->VerticalScale(2.0, false);
 }
 
-void Waveform::CbZoomOutV(Fl_Widget* ZoomOutV, void* Obj)
+void Waveform::CbZoomOutV(Fl_Widget*, void* Obj)
 {
 	static_cast<Waveform*>(Obj)->VerticalScale(0.5, false);
 }

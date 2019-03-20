@@ -41,6 +41,7 @@ TEST(Waveform, LoadAudio) {
 class MenuMock : public IMenu {
 public:
 	MOCK_METHOD1(connect, boost::signals2::connection(const signal_t::slot_type &slot));
+	MOCK_METHOD0(getImplementatioWidget, Fl_Widget*());
 };
 
 TEST(AudioFileMock, Load) {
@@ -56,6 +57,7 @@ TEST(AudioFileMock, Load) {
 
 class WaveFormMock : public IWaveForm {
 public:
+	MOCK_METHOD0(getImplementatioWidget, Fl_Widget*());
 	MOCK_METHOD1(connect, boost::signals2::connection (const signal_t::slot_type &slot));
 	MOCK_METHOD1(TakeAudioData, bool (const IAudioFile<float>::AudioBuffer &AudioData));
 };
@@ -73,6 +75,7 @@ TEST(AudioFileMock, TestWaveForm) {
 
 class SpectrumFormMock : public ISpectrum {
 public:
+	MOCK_METHOD0(getImplementatioWidget, Fl_Widget*());
 	MOCK_METHOD1(TakeAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
 	MOCK_METHOD1(GetPosition, bool(int));
 };
