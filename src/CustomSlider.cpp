@@ -1,6 +1,6 @@
 #include "CustomSlider.h"
 
-CustomSlider::CustomSlider (int x, int y, int w, int h) : Fl_Slider(x, y, w, h)
+CustomSlider::CustomSlider(int x, int y, int w, int h) : Fl_Slider{ x, y, w, h }
 {
 	type(FL_HORIZONTAL);
 	Reset();

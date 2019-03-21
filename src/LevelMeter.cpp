@@ -1,7 +1,7 @@
 #include "LevelMeter.h"
 
 LevelMeter::LevelMeter() :
-	Meter(520, 360, 10, 200)
+	Meter { 520, 360, 10, 200 }
 {
 	Meter.type(FL_BAR_CHART);
 	Meter.color(FL_GREEN);

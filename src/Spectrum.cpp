@@ -1,12 +1,12 @@
 #include "Spectrum.h"
 
 Spectrum::Spectrum() :
-	Fl_Group(20, 360, 500, 222),
-	SpectrumChart(20, 360, 500, 200),
-	FFTChoice(420, 560, 100, 22, "FFT Size:"),
-	FFT(),
-	LMeter(),
-	AudioTrack(nullptr)
+	Fl_Group { 20, 360, 500, 222 },
+	SpectrumChart { 20, 360, 500, 200 },
+	FFTChoice { 420, 560, 100, 22, "FFT Size:" },
+	FFT {},
+	LMeter {},
+	AudioTrack { nullptr }
 {
 	FFTChoice.callback(CbFFTChoice, this);
 	SpectrumChart.color(FL_WHITE);

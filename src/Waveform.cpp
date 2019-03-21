@@ -1,14 +1,14 @@
 #include "Waveform.h"
 
-Waveform::Waveform() : Fl_Group(20, 100, 527, 247),
-WaveformChart(20, 100, 500, 200),
-Slider(20, 300, 500, 20),
-ZoomInH(47, 322, 25, 25, "+"),
-ZoomOutH(20, 322, 25, 25, "-"),
-ZoomInV(522, 100, 25, 25, "+"),
-ZoomOutV(522, 127, 25, 25, "-"),
-AudioTrack(nullptr), 
-AudioLength(0)
+Waveform::Waveform() : Fl_Group{ 20, 100, 527, 247 },
+WaveformChart { 20, 100, 500, 200 },
+Slider { 20, 300, 500, 20 },
+ZoomInH { 47, 322, 25, 25, "+" },
+ZoomOutH { 20, 322, 25, 25, "-" },
+ZoomInV { 522, 100, 25, 25, "+" },
+ZoomOutV { 522, 127, 25, 25, "-" },
+AudioTrack {nullptr}, 
+AudioLength {0}
 {
 	Slider.callback(CbSlider, this);
 	ZoomInH.callback(CbZoomInH, this);
@@ -25,8 +25,9 @@ bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 	AudioTrack = &AudioTrk;
 	AudioLength = (*AudioTrack)[0].size();
 	float bound = 0.0f;
+	auto p = (*AudioTrack)[0];
 	for (int i = 0; i < AudioLength; ++i) {
-		float temp = (*AudioTrack)[0][i];
+		float temp = p[i];
 		if (temp < 0) temp = -temp;
 		if (bound < temp) bound = temp;
 	}
@@ -52,15 +53,16 @@ bool Waveform::Draw(double ZoomFactor = 1.0)
 	int ChartLength = 1000;
 	VerticalScale(1.0, true); // It holds Chart's bounds with no change after clear
 	Slider.Resize(ZoomFactor);
-	int VisibleSamples = Slider.slider_size() * AudioLength;
-	int StartSample = Slider.GetStartValue() * AudioLength;
+	int VisibleSamples = static_cast<int>(round(Slider.slider_size() * AudioLength));
+	int StartSample = static_cast<int>(round(Slider.GetStartValue() * AudioLength));
 	int Decimation = VisibleSamples / ChartLength;
 	if (VisibleSamples < ChartLength) {
 		Decimation = 1;
 		ChartLength = VisibleSamples;
 	}
+	auto p = (*AudioTrack)[0];
 	for (int i = 0; i < ChartLength; ++i)
-		WaveformChart.add((*AudioTrack)[0][StartSample + i * Decimation]);
+		WaveformChart.add(p[StartSample + i * Decimation]);
 	return (ChartLength == 0) ? false : true;
 }
 

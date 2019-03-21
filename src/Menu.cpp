@@ -1,9 +1,9 @@
 #include "Menu.h"
 #include <iostream>
 
-Menu::Menu() : Fl_Group(30, 30, 100, 30),
-	Chooser(),
-	OpenButton (30, 30, 100, 30, "Open .wav file")
+Menu::Menu() : Fl_Group { 30, 30, 100, 30 },
+	Chooser{},
+	OpenButton {30, 30, 100, 30, "Open .wav file"}
 {
 	OpenButton.callback (CbOpenButton, this);
 	Chooser.filter("*.wav");

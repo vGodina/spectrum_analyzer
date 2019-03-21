@@ -2,16 +2,15 @@
 #include <iostream>
 
 MainWindow::MainWindow (int w, int h, const char* title,
-	std::unique_ptr<IMenu>&& IMenu,
-	std::unique_ptr<IWaveForm> && IWaveForm,
-	std::unique_ptr<ISpectrum> && ISpectrum,
-	std::unique_ptr<IAudioFile<float>> && IAudioFile) :
-
-	Fl_Double_Window (w, h, title),
-	MainMenu(std::move(IMenu)),
-	WaveFrm(std::move(IWaveForm)),
-	SpectraFrm(std::move(ISpectrum)),
-	AudioTrack(std::move(IAudioFile))
+	std::unique_ptr<IMenu> Menu,
+	std::unique_ptr<IWaveForm> WaveForm,
+	std::unique_ptr<ISpectrum> Spectrum,
+	std::unique_ptr<IAudioFile<float>> AudioFile) :
+		Fl_Double_Window { w, h, title },
+		MainMenu { std::move(Menu) },
+		WaveFrm { std::move(WaveForm) },
+		SpectraFrm {std::move(Spectrum)},
+		AudioTrack {std::move(AudioFile)}
 {
 	add(MainMenu->getImplementatioWidget());
 	add(WaveFrm->getImplementatioWidget());

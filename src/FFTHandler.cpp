@@ -2,9 +2,7 @@
 
 
 
-FFTHandler::FFTHandler() : FFT()
-{
-}
+FFTHandler::FFTHandler() : FFT() { }
 
 void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 {
@@ -25,8 +23,9 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 
 	FFT.fft(&AudioTrack[StartSample], Re.data(), Im.data());
 	double RMS = 0.0F;
-	double Ampl2 = 0.0; //square of Amplitude
-	double Norm = 1 / pow(N, 2);
+	float Ampl2 = 0.0F; //square of Amplitude
+	
+	float Norm = 1 / pow(static_cast<float>(N), 2);
 
 	for (int n = 0; n < N + 1; ++n)
 	{
@@ -34,7 +33,7 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 		Ampl2 = (Re[n] * Re[n] + Im[n] * Im[n]) * Norm;
 		RMS += Ampl2;
 		// log scale of Ak.
-		Ampl[n] = 10.0F * log10(Ampl2);
+		Ampl[n] = 10.0F * log10f(Ampl2);
 	}
 	// showing RMS level at LevelMeter widget
 	LogRMS = 10.0 * log10(RMS / 2);
