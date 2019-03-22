@@ -11,7 +11,7 @@ public:
 	Spectrum();
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
 	bool GetPosition(int);
-	Fl_Group* getImplementatioWidget() override;
+	Fl_Group* getImplWidget() override;
 private:
 	Fl_Choice FFTChoice;
 	Fl_Chart SpectrumChart;

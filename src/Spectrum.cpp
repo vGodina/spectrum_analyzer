@@ -62,7 +62,7 @@ void Spectrum::Draw()
 	}
 }
 
-Fl_Group* Spectrum::getImplementatioWidget()
+Fl_Group* Spectrum::getImplWidget()
 {
 	return this;
 }

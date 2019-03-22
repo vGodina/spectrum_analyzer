@@ -1,7 +1,5 @@
 #include "FFTHandler.h"
 
-
-
 FFTHandler::FFTHandler() : FFT() { }
 
 void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
@@ -24,9 +22,7 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 	FFT.fft(&AudioTrack[StartSample], Re.data(), Im.data());
 	double RMS = 0.0F;
 	float Ampl2 = 0.0F; //square of Amplitude
-	
 	float Norm = 1 / pow(static_cast<float>(N), 2);
-
 	for (int n = 0; n < N + 1; ++n)
 	{
 		//Calculating normalized square of amplitude Ak

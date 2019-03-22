@@ -12,7 +12,7 @@ public:
 	using signal_t = boost::signals2::signal <void(double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
-	Fl_Group* getImplementatioWidget() override;
+	Fl_Group* getImplWidget() override;
 
 private:
 	Fl_Chart WaveformChart;
@@ -28,6 +28,7 @@ private:
 	static void CbZoomInV(Fl_Widget*, void*);
 	static void CbZoomOutV(Fl_Widget*, void*);
 
+	std::vector<float> AudioVector;
 	int CenterSample;
 	int AudioLength;
 	const IAudioFile<float>::AudioBuffer* AudioTrack;

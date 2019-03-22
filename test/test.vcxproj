@@ -68,6 +68,7 @@
     <ClCompile Include="..\src\FFTHandler.cpp" />
     <ClCompile Include="..\src\Fl_AudioFile.cpp" />
     <ClCompile Include="..\src\LevelMeter.cpp" />
+    <ClCompile Include="..\src\MainWindow.cpp" />
     <ClCompile Include="..\src\Spectrum.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />
     <ClCompile Include="test.cpp" />

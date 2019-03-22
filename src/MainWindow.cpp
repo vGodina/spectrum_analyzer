@@ -12,9 +12,9 @@ MainWindow::MainWindow (int w, int h, const char* title,
 		SpectraFrm {std::move(Spectrum)},
 		AudioTrack {std::move(AudioFile)}
 {
-	add(MainMenu->getImplementatioWidget());
-	add(WaveFrm->getImplementatioWidget());
-	add(SpectraFrm->getImplementatioWidget());
+	add(MainMenu->getImplWidget());
+	add(WaveFrm->getImplWidget());
+	add(SpectraFrm->getImplWidget());
 	// Connecting MainMenu signal with HandleAudio function. _1 allocates placeholder for passing value of file path
 	MenuConnection = MainMenu->connect(boost::bind(&MainWindow::AudioFileHandler, this, _1));
 	// Connecting Waveform slider's movement with its MainWindow Handler: update Spectrum chart

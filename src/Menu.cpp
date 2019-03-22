@@ -10,7 +10,7 @@ Menu::Menu() : Fl_Group { 30, 30, 100, 30 },
 }
 
 
-void Menu::CbOpenButton(Fl_Widget* OpenButton, void* Obj)
+void Menu::CbOpenButton(Fl_Widget*, void* Obj)
 {
 	static_cast<Menu*>(Obj)->Emit();
 }
@@ -29,7 +29,7 @@ boost::signals2::connection Menu::connect(const signal_t::slot_type &slot)
 	return MenuSignal.connect(slot);
 }
 
-Fl_Group* Menu::getImplementatioWidget()
+Fl_Group* Menu::getImplWidget()
 {
 	return this;
 }

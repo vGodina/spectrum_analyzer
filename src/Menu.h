@@ -8,7 +8,7 @@ class Menu : public Fl_Group, public IMenu {
 public:
 	Menu();
 	boost::signals2::connection connect (const signal_t::slot_type &slot);
-	Fl_Group* getImplementatioWidget() override;
+	Fl_Group* getImplWidget() override;
 
 private:
 	Fl_Native_File_Chooser Chooser;

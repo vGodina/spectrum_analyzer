@@ -7,8 +7,7 @@ ZoomInH { 47, 322, 25, 25, "+" },
 ZoomOutH { 20, 322, 25, 25, "-" },
 ZoomInV { 522, 100, 25, 25, "+" },
 ZoomOutV { 522, 127, 25, 25, "-" },
-AudioTrack {nullptr}, 
-AudioLength {0}
+AudioTrack {nullptr}
 {
 	Slider.callback(CbSlider, this);
 	ZoomInH.callback(CbZoomInH, this);
@@ -23,13 +22,11 @@ AudioLength {0}
 bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
-	AudioLength = (*AudioTrack)[0].size();
+	AudioVector = (*AudioTrack)[0];
 	float bound = 0.0f;
-	auto p = (*AudioTrack)[0];
-	for (int i = 0; i < AudioLength; ++i) {
-		float temp = p[i];
-		if (temp < 0) temp = -temp;
-		if (bound < temp) bound = temp;
+	for (auto Sample : AudioVector) {
+		float temp = ((Sample < 0) ? -Sample : Sample);
+		bound = ((bound < temp) ? temp : bound);
 	}
 	WaveformChart.bounds(-bound, bound);
 	Slider.Reset();
@@ -48,21 +45,20 @@ void Waveform::CbSlider(Fl_Widget* Slider, void* Obj)
 	static_cast<CustomSlider*>(Slider)->EmitSignal();
 }
 
-bool Waveform::Draw(double ZoomFactor = 1.0)
+bool Waveform::Draw(double ZoomFactor)
 {
 	int ChartLength = 1000;
 	VerticalScale(1.0, true); // It holds Chart's bounds with no change after clear
 	Slider.Resize(ZoomFactor);
-	int VisibleSamples = static_cast<int>(round(Slider.slider_size() * AudioLength));
-	int StartSample = static_cast<int>(round(Slider.GetStartValue() * AudioLength));
+	int VisibleSamples = static_cast<int>(round(Slider.slider_size() * AudioVector.size()));
+	int StartSample = static_cast<int>(round(Slider.GetStartValue() * AudioVector.size()));
 	int Decimation = VisibleSamples / ChartLength;
 	if (VisibleSamples < ChartLength) {
 		Decimation = 1;
 		ChartLength = VisibleSamples;
 	}
-	auto p = (*AudioTrack)[0];
 	for (int i = 0; i < ChartLength; ++i)
-		WaveformChart.add(p[StartSample + i * Decimation]);
+		WaveformChart.add(AudioVector[StartSample + i * Decimation]);
 	return (ChartLength == 0) ? false : true;
 }
 
@@ -97,7 +93,7 @@ void Waveform::CbZoomOutV(Fl_Widget*, void* Obj)
 	static_cast<Waveform*>(Obj)->VerticalScale(0.5, false);
 }
 
-Fl_Group* Waveform::getImplementatioWidget()
+Fl_Group* Waveform::getImplWidget()
 {
 	return this;
 }
