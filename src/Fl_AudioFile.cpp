@@ -12,7 +12,7 @@ bool Fl_AudioFile<T>::Load(std::string FileName)
 }
 
 template <typename T>
-bool Fl_AudioFile<T>::IsLoaded()
+bool Fl_AudioFile<T>::IsLoaded() const
 {
 	return Loaded;
 }

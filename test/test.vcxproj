@@ -57,7 +57,6 @@
     <ClInclude Include="..\src\IMenu.h" />
     <ClInclude Include="..\src\ISpectrum.h" />
     <ClInclude Include="..\src\IWaveForm.h" />
-    <ClInclude Include="..\src\MockFunctions.h" />
     <ClInclude Include="..\src\Waveform.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

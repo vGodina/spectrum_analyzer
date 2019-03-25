@@ -26,17 +26,20 @@ MainWindow::MainWindow (int w, int h, const char* title,
 
 bool MainWindow::AudioFileHandler (std::string FileName)
 {
-	bool Loaded = AudioTrack->Load(FileName);
-	WaveFrm->TakeAudioData(AudioTrack->PassData());
-	SliderHandler(AudioTrack->GetLength() / 2);
-	return Loaded;
+	if (AudioTrack->Load(FileName)) {
+		WaveFrm->TakeAudioData(AudioTrack->PassData());
+		SliderHandler(0.5);
+		return true;
+	}
+	else
+		return false;
 }
  
 void MainWindow::SliderHandler (double CenterValue)
 {
 	if (AudioTrack->IsLoaded()) {
 		int CenterSample = static_cast<int>(CenterValue * AudioTrack->GetLength());
-		SpectraFrm->GetPosition(CenterSample);
+		SpectraFrm->SetPosition(CenterSample);
 		SpectraFrm->TakeAudioData(AudioTrack->PassData());
 	}
 }

@@ -10,7 +10,7 @@ class Spectrum : public Fl_Group, public ISpectrum {
 public:
 	Spectrum();
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
-	bool GetPosition(int);
+	bool SetPosition(int);
 	Fl_Group* getImplWidget() override;
 private:
 	Fl_Choice FFTChoice;

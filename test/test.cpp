@@ -1,12 +1,8 @@
 #include "pch.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <boost/signals2.hpp>
-#include <audiofile/AudioFile.h>
+//#include <boost/signals2.hpp>
 #include "MainWindow.h"
-#include "Waveform.h"
-#include "Fl_AudioFile.h"
-#include "MockFunctions.h"
 #include "IAudioFile.h"
 #include "IMenu.h"
 #include "IWaveForm.h"
@@ -19,40 +15,34 @@ using namespace testing;
 template <typename T>
 class AudioFileMock : public IAudioFile<T> {
 public:
-	AudioFileMock() : IAudioFile<T>::IAudioFile() {}
-	MOCK_METHOD0_T(IsLoaded, bool());
+	MOCK_CONST_METHOD0_T(IsLoaded, bool());
 	MOCK_METHOD1_T(Load, bool(std::string FileName));
 	MOCK_CONST_METHOD0_T(GetLength, int());
 	MOCK_CONST_METHOD0_T(PassData, IAudioFile<T>::AudioBuffer&());
-};
 
-/* Testing Waveform with AudioFile Mock
-TEST(Waveform, LoadAudio) {
-	int NumCh = 1;
-	int Length = 10000;
-	std::vector<std::vector<float>> AudioBuf (NumCh, std::vector<float>(Length));
-	Waveform WForm;
-	AudioFileMock<float> Mock;
-	EXPECT_CALL(Mock, PassData()).WillOnce(ReturnRef(AudioBuf));
-	EXPECT_EQ(WForm.TakeAudioData(Mock.PassData()), true);
-}*/
+	IAudioFile<T>::AudioBuffer stubBuffer;
+
+	AudioFileMock() {
+		ON_CALL(*this, PassData()).WillByDefault(ReturnRef(stubBuffer));
+	}
+};
 
 /////////////////////////MenuMock///////////////////////////////////////////////////////
 
 class MenuMock : public IMenu {
 public:
-	MOCK_METHOD0(getImplWidget, Fl_Widget*());
+	MOCK_METHOD0(getImplWidget, Fl_Group*());
 	MOCK_METHOD1(connect, boost::signals2::connection(const signal_t::slot_type &slot));
+
+	Fl_Group StubGroup;
+	signal_t signal;
+
+	MenuMock() : StubGroup(0, 0, 0, 0) {
+		ON_CALL(*this, getImplWidget()).WillByDefault(Return(&StubGroup));
+		ON_CALL(*this, connect(_)).WillByDefault(Invoke([this](const signal_t::slot_type &s) { return signal.connect(s); }));
+
+	}
 };
-/*
-TEST(AudioFileMock, Load) {
-	MenuMock Menu;
-	std::string FilePath = "C:\\Users\\Vladimir_Godina\\source\\repos\\.git\\spectrum_analyzer\\TestData\\test.wav";
-	MenuMock::signal_t MenuSignal;
-	EXPECT_CALL(Menu, connect(_)).WillOnce(Return(MenuSignal.connect(AudioFileHandler)));
-	Menu.connect(AudioFileHandler);
-	MenuSignal(FilePath);
-}*/
 
 /////////////////////////WaveFormMock///////////////////////////////////////////////////
 
@@ -61,16 +51,15 @@ public:
 	MOCK_METHOD0(getImplWidget, Fl_Widget*());
 	MOCK_METHOD1(connect, boost::signals2::connection (const signal_t::slot_type &slot));
 	MOCK_METHOD1(TakeAudioData, bool (const IAudioFile<float>::AudioBuffer &AudioData));
+
+	Fl_Group StubGroup;
+	signal_t signal;
+
+	WaveFormMock() : StubGroup(0, 0, 0, 0) {
+		ON_CALL(*this, getImplWidget()).WillByDefault(Return(&StubGroup));
+		ON_CALL(*this, connect(_)).WillByDefault(Invoke([this](const signal_t::slot_type &s) { return signal.connect(s); }));
+	}
 };
-/*
-TEST(AudioFileMock, TestWaveForm) {
-	WaveFormMock WFormMock;
-	double SliderValue = 0.5;
-	WaveFormMock::signal_t SliderSignal;
-	EXPECT_CALL(WFormMock, connect(_)).WillOnce(Return(SliderSignal.connect(SliderHandler)));
-	WFormMock.connect(SliderHandler);
-	SliderSignal(SliderValue);
-}*/
 
 /////////////////////////SpectrumFormMock///////////////////////////////////////////////
 
@@ -78,18 +67,215 @@ class SpectrumFormMock : public ISpectrum {
 public:
 	MOCK_METHOD0(getImplWidget, Fl_Widget*());
 	MOCK_METHOD1(TakeAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
-	MOCK_METHOD1(GetPosition, bool(int));
-};
+	MOCK_METHOD1(SetPosition, bool(int));
+	Fl_Group StubGroup;
 
-TEST(MainWindow, TestMocks) {
-	auto MainMenu = std::make_unique<MenuMock>();
-	auto WaveFrm = std::make_unique<WaveFormMock>();
-	auto SpectrFrm = std::make_unique<SpectrumFormMock>();
-	auto AudioTrack = std::make_unique<AudioFileMock<float>>();
-	//EXPECT_CALL(MainMenu, getImplWidget()).WillOnce(Return(_));
+	SpectrumFormMock() : StubGroup(0, 0, 0, 0) {
+		ON_CALL(*this, getImplWidget()).WillByDefault(Return(&StubGroup));
+	}
+};
+/*
+class MainWindowTest : public Test {
+public:
+	void SetUp() {
+		auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+		auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+		auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+		auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+		auto mm = MainMenu.get();
+		auto at = AudioTrack.get();
+		auto wf = WaveFrm.get();
+		auto sf = SpectrFrm.get();
+
+		MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+	}
+	MainWindow* BaseWindow;
+	MenuMock* mm;
+	WaveFormMock* wf;
+	SpectrumFormMock* sf;
+	AudioFileMock<float>* af;
+};
+*/
+TEST(MainWindow, ShouldLoadFileByMenuSignal) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto mm = MainMenu.get();
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
 	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
 
-	//EXPECT_CALL(WFormMock, connect(_)).WillOnce(Return(SliderSignal.connect(SliderHandler)));
+	EXPECT_CALL(*at, Load("test.wav"));
+
+	// Act
+	mm->signal("test.wav");
+	// Assert
+}
+
+TEST(MainWindow, ShouldReportTrueWhenFileIsLoaded) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto mm = MainMenu.get();
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+
+	ON_CALL(*at, Load(_)).WillByDefault(Return(true));
+
+	// Act
+	auto result = mm->signal("test.wav");
+
+	// Assert
+	ASSERT_TRUE(result.get());
+}
+
+TEST(MainWindow, ShouldReportFalseWhenFileIsNotLoaded) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto mm = MainMenu.get();
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+
+	ON_CALL(*at, Load(_)).WillByDefault(Return(false));
+
+	// Act
+	auto result = mm->signal("test.wav");
+
+	// Assert
+	ASSERT_FALSE(result.get());
+}
+
+TEST(MainWindow, ShouldReportTrueWhenBufferPassedToWaveform) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto mm = MainMenu.get();
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+
+	ON_CALL(*at, Load(_)).WillByDefault(Return(true));
+	EXPECT_CALL(*wf, TakeAudioData(at->stubBuffer));
+	// Act
+
+	mm->signal("test.wav");
+	// Assert
+}
+
+TEST(MainWindow, ShouldReportFalseWhenBufferNotPassedToWaveform) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto mm = MainMenu.get();
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+
+	ON_CALL(*at, Load(_)).WillByDefault(Return(false));
+	EXPECT_CALL(*wf, TakeAudioData(_)).Times(0);
+	// Act
+
+	mm->signal("test.wav");
+	// Assert
+}
+
+
+
+TEST(MainWindow, SliderHandlerIsCalled) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+
+	EXPECT_CALL(*at, IsLoaded());
+	// Act
+	wf->signal(0.0);
+	// Assert
+}
+
+TEST(MainWindow, SliderPositionReceivesRightValue) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+	
+	ON_CALL(*at, IsLoaded()).WillByDefault(Return(true));
+	EXPECT_CALL(*at, GetLength()).WillOnce(Return(100));
+	EXPECT_CALL(*sf, SetPosition(60));
+	// Act
+	wf->signal(0.6);
+	// Assert
+}
+
+TEST(MainWindow, SliderPositionReceivesWrongValue) {
+	// Arrange
+
+	auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
+	auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
+	auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
+	auto AudioTrack = std::make_unique<NiceMock<AudioFileMock<float>>>();
+
+	auto at = AudioTrack.get();
+	auto wf = WaveFrm.get();
+	auto sf = SpectrFrm.get();
+
+	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+
+	ON_CALL(*at, IsLoaded()).WillByDefault(Return(true));
+	EXPECT_CALL(*at, GetLength()).WillOnce(Return(0));
+	EXPECT_CALL(*sf, SetPosition(Matcher<int>(Ne(60))));
+	// Act
+	wf->signal(0.6);
+	// Assert
 }
 
 /////////////////////////main///////////////////////////////////////////////////////////
@@ -97,35 +283,3 @@ int main(int argc, char **argv) {
 	testing::InitGoogleMock(&argc, argv);
 	return RUN_ALL_TESTS();
 }
-
-
-/* Testing Spectrum with AudioFile Mock
-TEST(Spectrum, LoadAudio) {
-	int NumCh = 1;
-	int Length = 10000;
-	std::vector<std::vector<float>> AudioBuf(NumCh, std::vector<float>(Length));
-	Spectrum SpectrForm;
-	AudioFileMock<float> Mock;
-
-	EXPECT_CALL(Mock, PassData()).WillOnce(::testing::Return(&AudioBuf));
-	// This test covers Waveform methods: Pass, Draw, VerticalScale
-	EXPECT_EQ(SpectrForm.TakeAudioData(Mock.PassData()), true);
-}
-*/
-
-/* Version with real Audio data. Preparing test data from real audiofile
-std::string FilePath = "C:\\Users\\Vladimir_Godina\\source\\repos\\.git\\spectrum_analyzer\\TestData\\test.wav";
-AudioFile<float> Audio;
-Audio.load(FilePath);
-int Length = Audio.getNumSamplesPerChannel();
-int NumCh = Audio.getNumChannels();
-AudioFileMock<float>::AudioBuffer AudioBuf (NumCh, std::vector<float>(Length)); // Create AudioBuffer
-AudioBuf[0] = Audio.samples[0]; // Initialize AudioBuffer with data from AudioFile
-*/
-
-/* Unused stuff
-EXPECT_CALL(Mock, load(FilePath)).WillOnce(::testing::Return(true));
-EXPECT_CALL(Mock, GetLength()).WillOnce(::testing::Return(Length));
-EXPECT_TRUE(Mock.load(FilePath));
-EXPECT_EQ(Mock.GetLength(), Length);
-*/

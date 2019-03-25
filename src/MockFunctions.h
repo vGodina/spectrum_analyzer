@@ -22,7 +22,6 @@ void SliderHandler(double CenterValue)
 	Spectrum SpectraFrm;
 	int Length = 1000;
 	int CenterSample = static_cast<int>(CenterValue * Length);
-	if (SpectraFrm.GetPosition(CenterSample))*/
+	if (SpectraFrm.SetPosition(CenterSample))*/
 		std::cout << "\n Value " << CenterValue << " is set to Spectrum widget successfully \n\n";
-
 }
