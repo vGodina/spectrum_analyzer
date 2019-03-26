@@ -33,7 +33,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)src;$(SolutionDir)external\include;C:\Users\Vladimir_Godina\Downloads\boost_1_69_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(MSBuildThisFileDirectory)mock;$(SolutionDir)src;$(SolutionDir)external\include;C:\Users\Vladimir_Godina\Downloads\boost_1_69_0;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
@@ -57,7 +57,11 @@
     <ClInclude Include="..\src\IMenu.h" />
     <ClInclude Include="..\src\ISpectrum.h" />
     <ClInclude Include="..\src\IWaveForm.h" />
-    <ClInclude Include="..\src\Waveform.h" />
+    <ClInclude Include="MainWindowTest.h" />
+    <ClInclude Include="mock\AudioFileMock.h" />
+    <ClInclude Include="mock\MenuMock.h" />
+    <ClInclude Include="mock\SpectrumFormMock.h" />
+    <ClInclude Include="mock\WaveFormMock.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
