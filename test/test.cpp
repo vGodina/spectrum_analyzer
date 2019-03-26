@@ -7,7 +7,7 @@ using namespace testing;
 
 ////////////////////////AudioHandler/////////////////////////////////////////////////////
 
-TEST_F(MainWindowTest, AudioTrackLoadCalledByMenuSignal)
+TEST_F(MainWindowTest, AudioTrackLoadingCalledByMenuSignal)
 {
 	// Arrange
 	EXPECT_CALL(*AudioTrack, Load(_));
@@ -28,17 +28,7 @@ TEST_F(MainWindowTest, AudioTrackReceivedProperNameFromMenuSignal)
 	Menu->signal("test.wav");
 };
 
-TEST_F(MainWindowTest, SignalsIfReceivedImproperNameFromMenuSignal)
-{
-	// Arrange
-
-	EXPECT_CALL(*AudioTrack, Load(Matcher<std::string>(Ne("test.wav")))).Times(1);
-
-	//Act
-	Menu->signal("test1.wav");
-};
-
-TEST_F(MainWindowTest, ShouldReportTrueWhenFileIsLoaded)
+TEST_F(MainWindowTest, AudioFileHandlerReturnedTrue)
 {
 	ON_CALL(*AudioTrack, Load(_)).WillByDefault(Return(true));
 	
@@ -46,7 +36,7 @@ TEST_F(MainWindowTest, ShouldReportTrueWhenFileIsLoaded)
 	EXPECT_TRUE(result.get());
 }
 
-TEST_F(MainWindowTest, ShouldReportFalseWhenFileNotLoaded)
+TEST_F(MainWindowTest, AudioFileHandlerReturnedFalse)
 {
 	ON_CALL(*AudioTrack, Load(_)).WillByDefault(Return(false));
 
@@ -88,7 +78,14 @@ TEST_F(MainWindowTest, SliderHandlerNotCalledFromAudioHandler)
 
 ////////////////////////SliderHandler////////////////////////////////////////////////////
 
-TEST_F(MainWindowTest, ShouldReturnTrueIfSliderHandlerCalledByWaveformSignal)
+TEST_F(MainWindowTest, SliderHandlerCalledByWaveformSignal)
+{
+	EXPECT_CALL(*AudioTrack, IsLoaded());
+
+	Waveform->signal(0.0);
+}
+
+TEST_F(MainWindowTest, SliderHandlerReturnedTrue)
 {
 	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
 
@@ -96,7 +93,7 @@ TEST_F(MainWindowTest, ShouldReturnTrueIfSliderHandlerCalledByWaveformSignal)
 	EXPECT_TRUE(result.get());
 };
 
-TEST_F(MainWindowTest, ShouldReturnFalseIfSliderHandlerNotCalledByWaveformSignal)
+TEST_F(MainWindowTest, SliderHandlerReturnedFalse)
 {
 	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(false));
 
@@ -104,10 +101,18 @@ TEST_F(MainWindowTest, ShouldReturnFalseIfSliderHandlerNotCalledByWaveformSignal
 	EXPECT_FALSE(result.get());
 };
 
+TEST_F(MainWindowTest, CenterSampleCalculationCalled)
+{
+	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
+	EXPECT_CALL(*AudioTrack, GetLength());
+
+	Waveform->signal(0.6);
+}
+
 TEST_F(MainWindowTest, SliderPositionReceivesRightValue)
 {	
 	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
-	EXPECT_CALL(*AudioTrack, GetLength()).WillOnce(Return(100));
+	ON_CALL(*AudioTrack, GetLength()).WillByDefault(Return(100));
 	EXPECT_CALL(*Spectrum, SetPosition(60));
 
 	Waveform->signal(0.6);
@@ -116,7 +121,7 @@ TEST_F(MainWindowTest, SliderPositionReceivesRightValue)
 TEST_F(MainWindowTest, SliderPositionReceivesWrongValue)
 {	
 	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
-	EXPECT_CALL(*AudioTrack, GetLength()).WillOnce(Return(0));
+	ON_CALL(*AudioTrack, GetLength()).WillByDefault(Return(0));
 	EXPECT_CALL(*Spectrum, SetPosition(Matcher<int>(Ne(60))));
 
 	Waveform->signal(0.6);
