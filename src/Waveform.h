@@ -9,7 +9,7 @@
 class Waveform : public Fl_Group, public IWaveForm {
 public:
 	Waveform();
-	using signal_t = boost::signals2::signal <void(double)>;
+	using signal_t = boost::signals2::signal <bool (double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
 	Fl_Group* getImplWidget() override;
