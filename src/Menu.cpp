@@ -7,8 +7,8 @@ Menu::Menu() : Fl_Group { 30, 30, 100, 30 },
 {
 	OpenButton.callback (CbOpenButton, this);
 	Chooser.filter("*.wav");
+	end();
 }
-
 
 void Menu::CbOpenButton(Fl_Widget*, void* Obj)
 {

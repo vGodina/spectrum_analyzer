@@ -1,3 +1,6 @@
+#ifndef AUDIOFILEMOCK
+#define AUDIOFILEMOCK
+
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "IAudioFile.h"
@@ -20,3 +23,5 @@ public:
 		ON_CALL(*this, PassData()).WillByDefault(ReturnRef(stubBuffer));
 	}
 };
+
+#endif AUDIOFILEMOCK
