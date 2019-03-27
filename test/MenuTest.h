@@ -2,7 +2,6 @@
 #include <gmock/gmock.h>
 #include "Menu.h"
 #include "AudioFileMock.h"
-#include <fltk/Fl_Double_Window.H>
 
 using namespace testing;
 

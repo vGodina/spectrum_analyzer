@@ -19,5 +19,6 @@ public:
 	WaveFormMock() : StubGroup(0, 0, 0, 0) {
 		ON_CALL(*this, getImplWidget()).WillByDefault(Return(&StubGroup));
 		ON_CALL(*this, connect(_)).WillByDefault(Invoke([this](const signal_t::slot_type &s) { return signal.connect(s); }));
+		StubGroup.end();
 	}
 };

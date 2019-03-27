@@ -16,5 +16,6 @@ public:
 
 	SpectrumFormMock() : StubGroup(0, 0, 0, 0) {
 		ON_CALL(*this, getImplWidget()).WillByDefault(Return(&StubGroup));
+		StubGroup.end();
 	}
 };

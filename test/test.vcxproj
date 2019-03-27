@@ -57,6 +57,7 @@
     <ClInclude Include="..\src\IMenu.h" />
     <ClInclude Include="..\src\ISpectrum.h" />
     <ClInclude Include="..\src\IWaveForm.h" />
+    <ClInclude Include="AudioFileTest.h" />
     <ClInclude Include="MainWindowTest.h" />
     <ClInclude Include="MenuTest.h" />
     <ClInclude Include="mock\AudioFileMock.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="..\src\Menu.cpp" />
     <ClCompile Include="..\src\Spectrum.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />
+    <ClCompile Include="AudioFileTesting.cpp" />
     <ClCompile Include="MenuTesting.cpp" />
     <ClCompile Include="MainWindowTesting.cpp" />
     <ClCompile Include="pch.cpp">

@@ -17,6 +17,7 @@ AudioTrack {nullptr}
 	// Initialization of  widgets
 	WaveformChart.color(FL_WHITE);
 	WaveformChart.type(FL_LINE_CHART);
+	end();
 }
 
 bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)

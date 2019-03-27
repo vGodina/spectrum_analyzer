@@ -16,6 +16,7 @@ Spectrum::Spectrum() :
 		FFTChoice.add(std::to_string(2 << i).c_str());
 	FFTChoice.value(0);
 	FFTSize = 2 << (FFTChoice.value() + 8);
+	end();
 }
 
 bool Spectrum::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
