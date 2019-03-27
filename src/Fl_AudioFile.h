@@ -8,11 +8,9 @@ class Fl_AudioFile : public IAudioFile<T> {
 public:
 	Fl_AudioFile ();
 	bool Load (std::string FileName) override;
-	bool IsLoaded () const override;
 	int GetLength () const override;
 	const typename IAudioFile<T>::AudioBuffer& PassData() const override;
 private:
 	AudioFile<T> AudioTrack;
-	bool Loaded;
 };
 #endif FL_AUDIOFILE

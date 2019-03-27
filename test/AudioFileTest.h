@@ -9,8 +9,8 @@ using namespace testing;
 
 /////////////////////////AudioFileTest fixture//////////////////////////////////////////
 
-class AudioFileTest : public Test {
-public:
+struct AudioFileTest : public Test
+{
 	AudioFileTest() :
 		AudioTrack (std::make_unique<Fl_AudioFile<float>>()),
 		Menu (std::make_unique<NiceMock<MenuMock>>()),
@@ -37,7 +37,7 @@ public:
 
 	bool SliderSignalHandler(double Value)
 	{
-		return true;
+		return true; //not used yet
 	}
 
 	void TearDown() override { }

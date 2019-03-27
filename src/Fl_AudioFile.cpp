@@ -3,18 +3,10 @@
 template <typename T>
 Fl_AudioFile<T>::Fl_AudioFile() : AudioTrack() {}
 
-
 template <typename T>
 bool Fl_AudioFile<T>::Load(std::string FileName)
 {
-	Loaded = AudioTrack.load(FileName);
-	return Loaded;
-}
-
-template <typename T>
-bool Fl_AudioFile<T>::IsLoaded() const
-{
-	return Loaded;
+	return AudioTrack.load(FileName);
 }
 
 template <typename T>

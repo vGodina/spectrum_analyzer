@@ -23,4 +23,5 @@ private:
 
 	bool AudioFileHandler (std::string FileName);
 	bool SliderHandler (double CenterSample);
+	bool AudioIsLoaded;
 };

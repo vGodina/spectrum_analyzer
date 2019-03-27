@@ -63,7 +63,7 @@ TEST_F(MainWindowTest, WaveformTakesProperAudioBuffer)
 TEST_F(MainWindowTest, SliderHandlerCalledFromAudioHandler)
 {
 	ON_CALL(*AudioTrack, Load(_)).WillByDefault(Return(true));
-	EXPECT_CALL(*AudioTrack, IsLoaded());
+	//EXPECT_CALL(*AudioTrack, IsLoaded());
 
 	Menu->signal("test.wav");
 }
@@ -71,7 +71,7 @@ TEST_F(MainWindowTest, SliderHandlerCalledFromAudioHandler)
 TEST_F(MainWindowTest, SliderHandlerNotCalledFromAudioHandler)
 {
 	ON_CALL(*AudioTrack, Load(_)).WillByDefault(Return(false));
-	EXPECT_CALL(*AudioTrack, IsLoaded()).Times(0);
+	//EXPECT_CALL(*AudioTrack, IsLoaded()).Times(0);
 
 	Menu->signal("test.wav");
 }
@@ -80,30 +80,23 @@ TEST_F(MainWindowTest, SliderHandlerNotCalledFromAudioHandler)
 
 TEST_F(MainWindowTest, SliderHandlerCalledByWaveformSignal)
 {
-	EXPECT_CALL(*AudioTrack, IsLoaded());
+	//EXPECT_CALL(*AudioTrack, IsLoaded());
 
 	Waveform->signal(0.0);
 }
 
 TEST_F(MainWindowTest, SliderHandlerReturnedTrue)
 {
-	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
+	//ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
 
 	auto result = Waveform->signal(0.5);
 	EXPECT_TRUE(result.get());
 };
 
-TEST_F(MainWindowTest, SliderHandlerReturnedFalse)
-{
-	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(false));
-
-	auto result = Waveform->signal(0.5);
-	EXPECT_FALSE(result.get());
-};
 
 TEST_F(MainWindowTest, CenterSampleCalculationCalled)
 {
-	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
+	//ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
 	EXPECT_CALL(*AudioTrack, GetLength());
 
 	Waveform->signal(0.6);
@@ -111,7 +104,7 @@ TEST_F(MainWindowTest, CenterSampleCalculationCalled)
 
 TEST_F(MainWindowTest, SliderPositionReceivesRightValue)
 {	
-	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
+	//ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
 	ON_CALL(*AudioTrack, GetLength()).WillByDefault(Return(100));
 	EXPECT_CALL(*Spectrum, SetPosition(60));
 
@@ -120,7 +113,7 @@ TEST_F(MainWindowTest, SliderPositionReceivesRightValue)
 
 TEST_F(MainWindowTest, SliderPositionReceivesWrongValue)
 {	
-	ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
+	//ON_CALL(*AudioTrack, IsLoaded()).WillByDefault(Return(true));
 	ON_CALL(*AudioTrack, GetLength()).WillByDefault(Return(0));
 	EXPECT_CALL(*Spectrum, SetPosition(Matcher<int>(Ne(60))));
 

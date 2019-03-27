@@ -7,8 +7,8 @@ using namespace testing;
 
 /////////////////////////MenuTest fixture//////////////////////////////////////////
 
-class MenuTest : public Test {
-public:
+struct MenuTest : public Test
+{
 	MenuTest() :
 		AudioTrack(new NiceMock<AudioFileMock<float>>),
 		MainMenu(std::make_unique<Menu>())

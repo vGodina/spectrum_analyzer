@@ -10,8 +10,8 @@ using namespace testing;
 
 /////////////////////////MainWindowTest fixture//////////////////////////////////////////
 
-class MainWindowTest : public Test {
-public:
+struct MainWindowTest : public Test
+{
 	MainWindowTest()
 	{
 		auto MainMenu = std::make_unique<NiceMock<MenuMock>>();

@@ -10,15 +10,18 @@ MainWindow::MainWindow (int w, int h, const char* title,
 		MainMenu { std::move(Menu) },
 		WaveFrm { std::move(WaveForm) },
 		SpectraFrm {std::move(Spectrum)},
-		AudioTrack {std::move(AudioFile)}
+		AudioTrack {std::move(AudioFile)},
+		AudioIsLoaded(false)
 {
 	add(MainMenu->getImplWidget());
 	add(WaveFrm->getImplWidget());
 	add(SpectraFrm->getImplWidget());
+
 	// Connecting MainMenu signal with HandleAudio function. _1 allocates placeholder for passing value of file path
 	MenuConnection = MainMenu->connect(boost::bind(&MainWindow::AudioFileHandler, this, _1));
 	// Connecting Waveform slider's movement with its MainWindow Handler: update Spectrum chart
 	SliderInteraction = WaveFrm->connect(boost::bind(&MainWindow::SliderHandler, this, _1));
+
 	resizable(this);
 	Fl::visual(FL_DOUBLE | FL_INDEX);
 	show();
@@ -26,23 +29,20 @@ MainWindow::MainWindow (int w, int h, const char* title,
 
 bool MainWindow::AudioFileHandler (std::string FileName)
 {
-	if (AudioTrack->Load(FileName)) {
+	AudioIsLoaded = AudioTrack->Load(FileName);
+	if (AudioIsLoaded) {
 		WaveFrm->TakeAudioData(AudioTrack->PassData());
 		SliderHandler(0.5);
-		return true;
 	}
-	else
-		return false;
+	return AudioIsLoaded;
 }
  
 bool MainWindow::SliderHandler (double CenterValue)
 {
-	if (AudioTrack->IsLoaded()) {
+	if (AudioIsLoaded) {
 		int CenterSample = static_cast<int>(CenterValue * AudioTrack->GetLength());
 		SpectraFrm->SetPosition(CenterSample);
 		SpectraFrm->TakeAudioData(AudioTrack->PassData());
-		return true;
 	}
-	else
-		return false;
+	return AudioIsLoaded;
 }

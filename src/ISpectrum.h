@@ -5,9 +5,8 @@
 
 // Interface of Spectrum
 
-class ISpectrum
+struct ISpectrum
 {
-public:
 	virtual ~ISpectrum() = default;
 	virtual bool TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioData) = 0;
 	virtual bool SetPosition(int) = 0;

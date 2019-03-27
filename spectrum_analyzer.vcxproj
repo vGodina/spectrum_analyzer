@@ -164,6 +164,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MainWindow.cpp" />
     <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\RFileChooser.cpp" />
     <ClCompile Include="src\Spectrum.cpp" />
     <ClCompile Include="src\Waveform.cpp" />
   </ItemGroup>
@@ -172,12 +173,14 @@
     <ClInclude Include="src\FFTHandler.h" />
     <ClInclude Include="src\Fl_AudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
+    <ClInclude Include="src\IFileChooser.h" />
     <ClInclude Include="src\IMenu.h" />
     <ClInclude Include="src\ISpectrum.h" />
     <ClInclude Include="src\IWaveForm.h" />
     <ClInclude Include="src\LevelMeter.h" />
     <ClInclude Include="src\MainWindow.h" />
     <ClInclude Include="src\Menu.h" />
+    <ClInclude Include="src\RFileChooser.h" />
     <ClInclude Include="src\Spectrum.h" />
     <ClInclude Include="src\Waveform.h" />
   </ItemGroup>
