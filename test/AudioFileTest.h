@@ -17,36 +17,30 @@ public:
 		Waveform ( std::make_unique<NiceMock<WaveFormMock>>()),
 		Spectrum ( std::make_unique<NiceMock<SpectrumFormMock>>())
 	{
-		//auto MainMenu = std::make_unique<NiceMock<MenuMock>>();
-		//auto WaveFrm = std::make_unique<NiceMock<WaveFormMock>>();
-		//auto SpectrFrm = std::make_unique<NiceMock<SpectrumFormMock>>();
-
-		//Menu = MainMenu.get();
-		//Waveform = WaveFrm.get();
-		//Spectrum = SpectrFrm.get();
+		MenuConnection = Menu->connect(boost::bind(&AudioFileTest::MenuSignalHandler, this, _1));
+		SliderInteraction = Waveform->connect(boost::bind(&AudioFileTest::SliderSignalHandler, this, _1));
 	}
 
 	std::unique_ptr <Fl_AudioFile<float>> AudioTrack;
 
 	std::unique_ptr <NiceMock<MenuMock>> Menu;
 	std::unique_ptr <NiceMock<WaveFormMock>> Waveform;
-	std::unique_ptr < NiceMock<SpectrumFormMock>> Spectrum;
-	/*
-	NiceMock<MenuMock>* Menu;
-	NiceMock<WaveFormMock>* Waveform;
-	NiceMock<SpectrumFormMock>* Spectrum;
-	
+	std::unique_ptr <NiceMock<SpectrumFormMock>> Spectrum;
 
-	MenuMock* Menu;
-	WaveFormMock* Waveform;
-	SpectrumFormMock* Spectrum;
-	*/
-	void TearDown() override
+	boost::signals2::connection  MenuConnection;
+	boost::signals2::connection SliderInteraction;
+
+	bool MenuSignalHandler(std::string FilePath)
 	{
-		//delete Menu;
-		//delete Waveform;
-		//delete Spectrum;
+		return AudioTrack->Load(FilePath);
 	}
+
+	bool SliderSignalHandler(double Value)
+	{
+		return true;
+	}
+
+	void TearDown() override { }
 };
 
 
