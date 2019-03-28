@@ -10,6 +10,6 @@ struct ISpectrum
 	virtual ~ISpectrum() = default;
 	virtual bool TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioData) = 0;
 	virtual bool SetPosition(int) = 0;
-	virtual Fl_Widget* getImplWidget() = 0;
+	virtual Fl_Widget* GetImplWidget() = 0;
 };
 #endif ISPECTRUM

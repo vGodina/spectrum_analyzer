@@ -5,6 +5,7 @@
 #include "WaveFormMock.h"
 #include "SpectrumFormMock.h"
 #include "AudioFileMock.h"
+#include "IFileChooser.h"
 
 using namespace testing;
 

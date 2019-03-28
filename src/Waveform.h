@@ -6,15 +6,16 @@
 #include "IWaveForm.h"
 #include "CustomSlider.h"
 
-class Waveform : public Fl_Group, public IWaveForm {
+class Waveform : public IWaveForm {
 public:
-	Waveform();
+	Waveform(std::unique_ptr<Fl_Group> FlGroup);
 	using signal_t = boost::signals2::signal <bool (double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
-	Fl_Group* getImplWidget() override;
+	Fl_Group* GetImplWidget() override;
 
 private:
+	std::unique_ptr<Fl_Group> Group;
 	Fl_Chart WaveformChart;
 	CustomSlider Slider;
 	Fl_Button ZoomInH;

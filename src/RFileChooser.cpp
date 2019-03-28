@@ -1,18 +1,28 @@
 #include "RFileChooser.h"
 
-RFileChooser::RFileChooser() : Fl_Native_File_Chooser() {}
+RFileChooser::RFileChooser( ) : Chooser() { }
 
-void RFileChooser::filter(const char* Val)
+
+void RFileChooser::filter(std::string_view Val)
 {
-	Fl_Native_File_Chooser::filter(Val);
+	Chooser.filter(std::data(Val));
 }
+
 
 int RFileChooser::show()
 {
-	return Fl_Native_File_Chooser::show();
+	return Chooser.show();
 }
 
-const char* RFileChooser::filename()
+
+std::string_view RFileChooser::filename()
 {
-	return Fl_Native_File_Chooser::filename();
+	return Chooser.filename();
 }
+
+/*
+Fl_Native_File_Chooser* RFileChooser::GetImplWidget()
+{
+	return &Chooser;
+}
+*/

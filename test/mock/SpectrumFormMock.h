@@ -9,14 +9,14 @@ using namespace testing;
 
 struct SpectrumFormMock : public ISpectrum
 {
-	MOCK_METHOD0(getImplWidget, Fl_Widget*());
+	MOCK_METHOD0(GetImplWidget, Fl_Widget*());
 	MOCK_METHOD1(TakeAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
 	MOCK_METHOD1(SetPosition, bool(int));
 	Fl_Group StubGroup;
 
 	SpectrumFormMock() : StubGroup(0, 0, 0, 0)
 	{
-		ON_CALL(*this, getImplWidget()).WillByDefault(Return(&StubGroup));
+		ON_CALL(*this, GetImplWidget()).WillByDefault(Return(&StubGroup));
 		StubGroup.end();
 	}
 };

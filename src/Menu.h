@@ -3,19 +3,22 @@
 #include <fltk/Fl_Group.H>
 #include <fltk/Fl_Native_File_Chooser.h>
 #include "IMenu.h"
-#include "RFileChooser.h"
+#include "IFileChooser.h"
+#include "IButton.h"
 
-class Menu : public Fl_Group, public IMenu {
-public:
-	Menu();
+class Menu : public IMenu {
+public: 
+	Menu(std::unique_ptr<Fl_Group> FlGroup, std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button);
+
 	boost::signals2::connection connect (const signal_t::slot_type &slot);
-	Fl_Group* getImplWidget() override;
+	
+	Fl_Group* GetImplWidget() override;
 
 private:
-	Fl_Native_File_Chooser r;
-	//std::unique_ptr<RFileChooser> Chooser;
-	RFileChooser Chooser;
-	Fl_Button OpenButton;
+	std::unique_ptr<Fl_Group> Group;
+	std::unique_ptr<IFileChooser> Chooser;
+	std::unique_ptr<IButton> OpenButton;
+
 	signal_t MenuSignal;
 
 	static void CbOpenButton(Fl_Widget*, void*);

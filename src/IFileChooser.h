@@ -1,6 +1,8 @@
 #ifndef IFILECHOOSER
 #define IFILECHOOSER
-#include <fltk/Fl_Widget.H>
+#include <fltk/Fl_Native_File_Chooser.H>
+#include <memory>
+#include <string_view>
 
 // Interface of FileChooser
 
@@ -21,9 +23,10 @@ void filter(const char *f);
 struct IFileChooser
 {
 	virtual ~IFileChooser () = default;
-	virtual void filter(const char*) = 0;
+
+	virtual void filter(std::string_view filter) = 0;
 	virtual int show() = 0;
-	virtual const char* filename () = 0;
-	//virtual Fl_Widget* getImplWidget() = 0;
+	virtual std::string_view filename() = 0;
+	//virtual Fl_Native_File_Chooser* GetImplWidget() = 0;
 };
 #endif IFILECHOOSER

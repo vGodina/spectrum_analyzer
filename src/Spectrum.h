@@ -6,13 +6,14 @@
 #include "LevelMeter.h"
 #include "FFTHandler.h"
 
-class Spectrum : public Fl_Group, public ISpectrum {
+class Spectrum : public ISpectrum {
 public:
-	Spectrum();
+	Spectrum(std::unique_ptr<Fl_Group> FlGroup);
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
 	bool SetPosition(int);
-	Fl_Group* getImplWidget() override;
+	Fl_Group* GetImplWidget() override;
 private:
+	std::unique_ptr<Fl_Group> Group;
 	Fl_Choice FFTChoice;
 	Fl_Chart SpectrumChart;
 	LevelMeter LMeter;

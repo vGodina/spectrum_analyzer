@@ -1,13 +1,14 @@
 #include "Waveform.h"
 
-Waveform::Waveform() : Fl_Group{ 20, 100, 527, 247 },
-WaveformChart { 20, 100, 500, 200 },
-Slider { 20, 300, 500, 20 },
-ZoomInH { 47, 322, 25, 25, "+" },
-ZoomOutH { 20, 322, 25, 25, "-" },
-ZoomInV { 522, 100, 25, 25, "+" },
-ZoomOutV { 522, 127, 25, 25, "-" },
-AudioTrack {nullptr}
+Waveform::Waveform(std::unique_ptr<Fl_Group> FlGroup) :
+	Group{ std::move(FlGroup) },
+	WaveformChart { 20, 100, 500, 200 },
+	Slider { 20, 300, 500, 20 },
+	ZoomInH { 47, 322, 25, 25, "+" },
+	ZoomOutH { 20, 322, 25, 25, "-" },
+	ZoomInV { 522, 100, 25, 25, "+" },
+	ZoomOutV { 522, 127, 25, 25, "-" },
+	AudioTrack {nullptr}
 {
 	Slider.callback(CbSlider, this);
 	ZoomInH.callback(CbZoomInH, this);
@@ -17,7 +18,7 @@ AudioTrack {nullptr}
 	// Initialization of  widgets
 	WaveformChart.color(FL_WHITE);
 	WaveformChart.type(FL_LINE_CHART);
-	end();
+	Group->end();
 }
 
 bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
@@ -94,7 +95,7 @@ void Waveform::CbZoomOutV(Fl_Widget*, void* Obj)
 	static_cast<Waveform*>(Obj)->VerticalScale(0.5, false);
 }
 
-Fl_Group* Waveform::getImplWidget()
+Fl_Group* Waveform::GetImplWidget()
 {
-	return this;
+	return Group.get();
 }

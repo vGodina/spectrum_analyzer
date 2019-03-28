@@ -1,7 +1,7 @@
 #include "Spectrum.h"
 
-Spectrum::Spectrum() :
-	Fl_Group { 20, 360, 500, 222 },
+Spectrum::Spectrum (std::unique_ptr<Fl_Group> FlGroup) :
+	Group{ std::move(FlGroup) },
 	SpectrumChart { 20, 360, 500, 200 },
 	FFTChoice { 420, 560, 100, 22, "FFT Size:" },
 	FFT {},
@@ -16,7 +16,7 @@ Spectrum::Spectrum() :
 		FFTChoice.add(std::to_string(2 << i).c_str());
 	FFTChoice.value(0);
 	FFTSize = 2 << (FFTChoice.value() + 8);
-	end();
+	Group->end();
 }
 
 bool Spectrum::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
@@ -63,7 +63,7 @@ void Spectrum::Draw()
 	}
 }
 
-Fl_Group* Spectrum::getImplWidget()
+Fl_Group* Spectrum::GetImplWidget()
 {
-	return this;
+	return Group.get();
 }

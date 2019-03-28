@@ -3,7 +3,7 @@
 #include "MenuMock.h"
 #include "WaveFormMock.h"
 #include "SpectrumFormMock.h"
-#include "Fl_AudioFile.h"
+#include "RAudioFile.h"
 
 using namespace testing;
 
@@ -12,7 +12,7 @@ using namespace testing;
 struct AudioFileTest : public Test
 {
 	AudioFileTest() :
-		AudioTrack (std::make_unique<Fl_AudioFile<float>>()),
+		AudioTrack (std::make_unique<RAudioFile<float>>()),
 		Menu (std::make_unique<NiceMock<MenuMock>>()),
 		Waveform ( std::make_unique<NiceMock<WaveFormMock>>()),
 		Spectrum ( std::make_unique<NiceMock<SpectrumFormMock>>())
@@ -21,7 +21,7 @@ struct AudioFileTest : public Test
 		SliderInteraction = Waveform->connect(boost::bind(&AudioFileTest::SliderSignalHandler, this, _1));
 	}
 
-	std::unique_ptr <Fl_AudioFile<float>> AudioTrack;
+	std::unique_ptr <RAudioFile<float>> AudioTrack;
 
 	std::unique_ptr <NiceMock<MenuMock>> Menu;
 	std::unique_ptr <NiceMock<WaveFormMock>> Waveform;

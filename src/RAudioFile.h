@@ -1,16 +1,16 @@
-#ifndef FL_AUDIOFILE
-#define FL_AUDIOFILE
+#ifndef R_AUDIOFILE_H
+#define R_AUDIOFILE_H
 #include <audiofile/AudioFile.h>
 #include "IAudioFile.h"
 
 template <typename T>
-class Fl_AudioFile : public IAudioFile<T> {
+class RAudioFile : public IAudioFile<T> {
 public:
-	Fl_AudioFile ();
+	RAudioFile ();
 	bool Load (std::string FileName) override;
 	int GetLength () const override;
 	const typename IAudioFile<T>::AudioBuffer& PassData() const override;
 private:
 	AudioFile<T> AudioTrack;
 };
-#endif FL_AUDIOFILE
+#endif R_AUDIOFILE_H

@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <fltk/Fl_Group.H>
-#include "IMenu.h"
+#include "IFileChooser.h"
 
 using namespace testing;
 
 /////////////////////////MenuMock////////////////////////////////////////////////////////
 
-struct MenuMock : public IMenu
+struct FileChooserMock : public IFileChooser
 {
 	MOCK_METHOD0(GetImplWidget, Fl_Group*());
 	MOCK_METHOD1(connect, boost::signals2::connection(const signal_t::slot_type &slot));

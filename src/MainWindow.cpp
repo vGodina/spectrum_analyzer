@@ -13,9 +13,9 @@ MainWindow::MainWindow (int w, int h, const char* title,
 		AudioTrack {std::move(AudioFile)},
 		AudioIsLoaded(false)
 {
-	add(MainMenu->getImplWidget());
-	add(WaveFrm->getImplWidget());
-	add(SpectraFrm->getImplWidget());
+	add(MainMenu->GetImplWidget());
+	add(WaveFrm->GetImplWidget());
+	add(SpectraFrm->GetImplWidget());
 
 	// Connecting MainMenu signal with HandleAudio function. _1 allocates placeholder for passing value of file path
 	MenuConnection = MainMenu->connect(boost::bind(&MainWindow::AudioFileHandler, this, _1));
