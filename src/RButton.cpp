@@ -6,11 +6,12 @@ RButton::RButton(int x, int y, int w, int h, std::string_view L) : Button(x, y, 
 void RButton::callback(Fl_Callback* Widg, void* Obj) 
 {
 	Button.callback(Widg, Obj);
+	
 }
 
-/*
-Fl_Native_File_Chooser* RFileChooser::GetImplWidget()
+
+Fl_Widget* RButton::GetImplWidget()
 {
-	return &Chooser;
+	return &Button;
 }
-*/
+

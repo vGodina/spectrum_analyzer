@@ -1,7 +1,7 @@
 #include "Waveform.h"
 
-Waveform::Waveform(std::unique_ptr<Fl_Group> FlGroup) :
-	Group{ std::move(FlGroup) },
+Waveform::Waveform() :
+	Group{ 20, 100, 527, 247 },
 	WaveformChart { 20, 100, 500, 200 },
 	Slider { 20, 300, 500, 20 },
 	ZoomInH { 47, 322, 25, 25, "+" },
@@ -18,7 +18,8 @@ Waveform::Waveform(std::unique_ptr<Fl_Group> FlGroup) :
 	// Initialization of  widgets
 	WaveformChart.color(FL_WHITE);
 	WaveformChart.type(FL_LINE_CHART);
-	Group->end();
+
+	Group.end();
 }
 
 bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
@@ -97,5 +98,5 @@ void Waveform::CbZoomOutV(Fl_Widget*, void* Obj)
 
 Fl_Group* Waveform::GetImplWidget()
 {
-	return Group.get();
+	return &Group;
 }

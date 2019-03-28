@@ -6,22 +6,24 @@
 #include "RAudioFile.h"
 #include "RButton.h"
 #include "RFileChooser.h"
+#include "RChart.h"
 
 int main()
 {
 	// Menu Widget forming
-	auto MenuGroup = std::make_unique<Fl_Group>(30, 30, 100, 30);
+	//auto MenuGroup = std::make_unique<Fl_Group>(30, 30, 100, 30);
 	auto FileChooser = std::make_unique<RFileChooser>();
 	auto OpenMenuButton = std::make_unique<RButton>(30, 30, 100, 30, "Open .wav file");
-	auto MainMenu = std::make_unique<Menu>(std::move(MenuGroup),std::move(FileChooser), std::move(OpenMenuButton));
+	auto MainMenu = std::make_unique<Menu>(std::move(FileChooser), std::move(OpenMenuButton));
 
 	// Waveform Widget forming
-	auto WaveformGroup = std::make_unique<Fl_Group>(20, 100, 527, 247);
-	auto WaveFrm = std::make_unique<Waveform>(std::move(WaveformGroup));
+	//auto WaveformGroup = std::make_unique<Fl_Group>(20, 100, 527, 247);
+	auto WaveFrm = std::make_unique<Waveform>();
 
 	// Spectrum Widget forming
-	auto SpectrumGroup = std::make_unique<Fl_Group>(20, 360, 500, 222);
-	auto SpectrFrm = std::make_unique<Spectrum>(std::move(SpectrumGroup));
+	//auto SpectrumGroup = std::make_unique<Fl_Group>(20, 360, 500, 222);
+	auto SpectrumChart = std::make_unique<RChart>(20, 360, 500, 200, "");
+	auto SpectrFrm = std::make_unique<Spectrum>(std::move(SpectrumChart));
 
 	auto AudioTrack = std::make_unique<RAudioFile<float>>();
 

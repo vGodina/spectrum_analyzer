@@ -15,6 +15,6 @@ struct IButton
 	virtual ~IButton () = default;
 
 	virtual void callback(Fl_Callback*, void*) = 0;
-	//virtual Fl_Widget* GetImplWidget() = 0;
+	virtual Fl_Widget* GetImplWidget() = 0;
 };
 #endif IBUTTON

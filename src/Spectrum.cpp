@@ -1,22 +1,25 @@
 #include "Spectrum.h"
 
-Spectrum::Spectrum (std::unique_ptr<Fl_Group> FlGroup) :
-	Group{ std::move(FlGroup) },
-	SpectrumChart { 20, 360, 500, 200 },
+Spectrum::Spectrum (std::unique_ptr<IChart> Chart) :
+	Group{ 20, 360, 500, 222 },
+	SpectrumChart { std::move(Chart) },
 	FFTChoice { 420, 560, 100, 22, "FFT Size:" },
 	FFT {},
 	LMeter {},
 	AudioTrack { nullptr }
 {
 	FFTChoice.callback(CbFFTChoice, this);
-	SpectrumChart.color(FL_WHITE);
-	SpectrumChart.type(FL_LINE_CHART);
+	SpectrumChart->color(FL_WHITE);
+	SpectrumChart->type(FL_LINE_CHART);
 	// Create a list of Choice widget's FFTSize values from 2^9 to 2^20 
 	for (int i = 8; i < 20; i++)
 		FFTChoice.add(std::to_string(2 << i).c_str());
 	FFTChoice.value(0);
 	FFTSize = 2 << (FFTChoice.value() + 8);
-	Group->end();
+	
+	Group.add(SpectrumChart->GetImplWidget());
+	Group.add(FFTChoice);
+	Group.end();
 }
 
 bool Spectrum::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
@@ -53,17 +56,17 @@ void Spectrum::CheckFFTSize()
 
 void Spectrum::Draw()
 {
-	SpectrumChart.clear();
-	SpectrumChart.bounds(-120.0, 0.0);
+	SpectrumChart->clear();
+	SpectrumChart->bounds(-120.0, 0.0);
 	if (AudioTrack != nullptr) {
 		FFT.DoFFT((*AudioTrack)[0], FFTSize);
 		for (int n = 0; n <= FFTSize / 2; ++n)
-			SpectrumChart.add(FFT.PassAmpl(n));
+			SpectrumChart->add(FFT.PassAmpl(n));
 		LMeter.Set(FFT.PassRMS());
 	}
 }
 
 Fl_Group* Spectrum::GetImplWidget()
 {
-	return Group.get();
+	return &Group;
 }

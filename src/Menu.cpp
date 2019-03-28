@@ -1,14 +1,17 @@
 #include "Menu.h"
 #include <iostream>
 
-Menu::Menu(std::unique_ptr<Fl_Group> FlGroup, std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button) :
-	Group{std::move(FlGroup)},
+Menu::Menu(std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button) :
+	Group{ 30, 30, 100, 30 },
 	Chooser{ std::move(FileChooser) },
 	OpenButton {std::move(Button)}
 {
 	OpenButton->callback (CbOpenButton, this);
 	Chooser->filter("Audio files\t*.wav");
-	Group->end();
+
+	Group.add(OpenButton->GetImplWidget());
+
+	Group.end();
 }
 
 void Menu::CbOpenButton(Fl_Widget*, void* Obj)
@@ -32,5 +35,5 @@ boost::signals2::connection Menu::connect(const signal_t::slot_type &slot)
 
 Fl_Group* Menu::GetImplWidget()
 {
-	return Group.get();
+	return &Group;
 }

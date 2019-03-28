@@ -5,17 +5,19 @@
 #include "ISpectrum.h"
 #include "LevelMeter.h"
 #include "FFTHandler.h"
+#include "RChart.h"
 
 class Spectrum : public ISpectrum {
 public:
-	Spectrum(std::unique_ptr<Fl_Group> FlGroup);
+	Spectrum (std::unique_ptr<IChart> Chart);
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
 	bool SetPosition(int);
 	Fl_Group* GetImplWidget() override;
 private:
-	std::unique_ptr<Fl_Group> Group;
+	Fl_Group Group;
+	std::unique_ptr<IChart> SpectrumChart;
 	Fl_Choice FFTChoice;
-	Fl_Chart SpectrumChart;
+	//Fl_Chart SpectrumChart;
 	LevelMeter LMeter;
 	FFTHandler FFT;
 	const IAudioFile<float>::AudioBuffer* AudioTrack;

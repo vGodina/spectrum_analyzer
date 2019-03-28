@@ -8,14 +8,14 @@
 
 class Menu : public IMenu {
 public: 
-	Menu(std::unique_ptr<Fl_Group> FlGroup, std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button);
+	Menu(std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button);
 
 	boost::signals2::connection connect (const signal_t::slot_type &slot);
 	
 	Fl_Group* GetImplWidget() override;
 
 private:
-	std::unique_ptr<Fl_Group> Group;
+	Fl_Group Group;
 	std::unique_ptr<IFileChooser> Chooser;
 	std::unique_ptr<IButton> OpenButton;
 

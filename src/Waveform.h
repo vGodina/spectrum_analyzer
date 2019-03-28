@@ -8,14 +8,14 @@
 
 class Waveform : public IWaveForm {
 public:
-	Waveform(std::unique_ptr<Fl_Group> FlGroup);
+	Waveform();
 	using signal_t = boost::signals2::signal <bool (double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
 	Fl_Group* GetImplWidget() override;
 
 private:
-	std::unique_ptr<Fl_Group> Group;
+	Fl_Group Group;
 	Fl_Chart WaveformChart;
 	CustomSlider Slider;
 	Fl_Button ZoomInH;

@@ -54,6 +54,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="..\src\IAudioFile.h" />
+    <ClInclude Include="..\src\IButton.h" />
+    <ClInclude Include="..\src\IChart.h" />
     <ClInclude Include="..\src\IFileChooser.h" />
     <ClInclude Include="..\src\IMenu.h" />
     <ClInclude Include="..\src\ISpectrum.h" />
@@ -78,6 +80,7 @@
     <ClCompile Include="..\src\Menu.cpp" />
     <ClCompile Include="..\src\RAudioFile.cpp" />
     <ClCompile Include="..\src\RButton.cpp" />
+    <ClCompile Include="..\src\RChart.cpp" />
     <ClCompile Include="..\src\RFileChooser.cpp" />
     <ClCompile Include="..\src\Spectrum.cpp" />
     <ClCompile Include="..\src\Waveform.cpp" />
