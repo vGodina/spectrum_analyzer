@@ -6,10 +6,6 @@
 
 // Interface of Button
 
- /*
-
-*/
-
 struct IButton
 {
 	virtual ~IButton () = default;

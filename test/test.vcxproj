@@ -57,7 +57,10 @@
     <ClInclude Include="..\src\IButton.h" />
     <ClInclude Include="..\src\IChart.h" />
     <ClInclude Include="..\src\IChoice.h" />
+    <ClInclude Include="..\src\ICustomSlider.h" />
+    <ClInclude Include="..\src\IFFTHandler.h" />
     <ClInclude Include="..\src\IFileChooser.h" />
+    <ClInclude Include="..\src\ILevelMeter.h" />
     <ClInclude Include="..\src\IMenu.h" />
     <ClInclude Include="..\src\ISpectrum.h" />
     <ClInclude Include="..\src\IWaveForm.h" />
@@ -66,6 +69,12 @@
     <ClInclude Include="MainWindowTest.h" />
     <ClInclude Include="MenuTest.h" />
     <ClInclude Include="mock\AudioFileMock.h" />
+    <ClInclude Include="mock\ButtonMock.h" />
+    <ClInclude Include="mock\ChartMock.h" />
+    <ClInclude Include="mock\ChoiceMock.h" />
+    <ClInclude Include="mock\CustomSliderMock.h" />
+    <ClInclude Include="mock\FFTHandlerMock.h" />
+    <ClInclude Include="mock\LevelMeterMock.h" />
     <ClInclude Include="mock\MenuMock.h" />
     <ClInclude Include="mock\SpectrumFormMock.h" />
     <ClInclude Include="mock\WaveFormMock.h" />

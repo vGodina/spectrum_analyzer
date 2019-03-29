@@ -10,6 +10,5 @@ struct IFFTHandler
 	virtual double PassRMS() = 0;
 	virtual double PassAmpl(int Index) = 0;
 	virtual void SetCenterSample(int CentreSample) = 0;
-	//virtual Fl_Widget* GetImplWidget() = 0;
 };
 #endif IFFTHANDLER
