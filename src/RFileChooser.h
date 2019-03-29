@@ -1,5 +1,5 @@
-#ifndef RFILECHOOSER
-#define RFILECHOOSER
+#ifndef RFILECHOOSER_H
+#define RFILECHOOSER_H
 #include "IFileChooser.h"
 #include "fltk/Fl_Native_File_Chooser.H"
 #include <memory>
@@ -15,4 +15,4 @@ public:
 private:
 	Fl_Native_File_Chooser Chooser;
 };
-#endif RFILECHOOSER
+#endif RFILECHOOSER_H

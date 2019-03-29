@@ -45,7 +45,7 @@ double FFTHandler::PassAmpl(int Index)
 	return Ampl[Index];
 }
 
-void FFTHandler::SetCenterSample(int CentrSample)
+void FFTHandler::SetCenterSample(int CentreSample)
 {
-	CenterSample = CentrSample;
+	CenterSample = CentreSample;
 }

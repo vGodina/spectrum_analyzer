@@ -1,7 +1,7 @@
-#ifndef RCHART
-#define RCHART
+#ifndef RCHART_H
+#define RCHART_H
 #include "IChart.h"
-#include "fltk/Fl_Chart.h"
+#include <fltk/Fl_Chart.h>
 #include <memory>
 #include <string_view>
 
@@ -21,4 +21,4 @@ public:
 private:
 	Fl_Chart Chart;
 };
-#endif RCHART
+#endif RCHART_H

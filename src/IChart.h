@@ -1,11 +1,9 @@
 #ifndef ICHART
 #define ICHART
-#include <fltk/Fl_Widget.H>
+#include "fltk/Fl_Chart.H"
+
 // Interface of Chart
 
- /*
-
-*/
 
 struct IChart
 {
@@ -18,6 +16,5 @@ struct IChart
 	virtual void bounds (double* min, double* max) = 0;
 	virtual void add (double val) = 0;
 	virtual Fl_Widget* GetImplWidget() = 0;
-	//virtual void () = 0;
 };
 #endif ICHART

@@ -1,8 +1,8 @@
 #include "Menu.h"
 #include <iostream>
 
-Menu::Menu(std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button) :
-	Group{ 30, 30, 100, 30 },
+Menu::Menu(int x, int y, int w, int h, std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button) :
+	Group{ x, y, w, h },
 	Chooser{ std::move(FileChooser) },
 	OpenButton {std::move(Button)}
 {

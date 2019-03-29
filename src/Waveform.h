@@ -4,24 +4,30 @@
 #include <fltk/Fl_Group.H>
 #include "IAudioFile.h"
 #include "IWaveForm.h"
-#include "CustomSlider.h"
+#include "IChart.h"
+#include "IButton.h"
+#include "ICustomSlider.h"
+#include "ISlider.h"
 
 class Waveform : public IWaveForm {
 public:
-	Waveform();
+	Waveform(int x, int y, int w, int h, std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlider> Slidr,
+		std::unique_ptr<IButton> ZmInH, std::unique_ptr<IButton> ZmOutH,
+		std::unique_ptr<IButton> ZmInV, std::unique_ptr<IButton> ZmOutV);
+
 	using signal_t = boost::signals2::signal <bool (double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
 	Fl_Group* GetImplWidget() override;
-
+	
 private:
 	Fl_Group Group;
-	Fl_Chart WaveformChart;
-	CustomSlider Slider;
-	Fl_Button ZoomInH;
-	Fl_Button ZoomOutH;
-	Fl_Button ZoomInV;
-	Fl_Button ZoomOutV;
+	std::unique_ptr <IChart> WaveformChart;
+	std::unique_ptr <ICustomSlider> Slider;
+	std::unique_ptr <IButton> ZoomInH;
+	std::unique_ptr <IButton> ZoomOutH;
+	std::unique_ptr <IButton> ZoomInV;
+	std::unique_ptr <IButton> ZoomOutV;
 
 	static void CbSlider(Fl_Widget*, void*);
 	static void CbZoomInH(Fl_Widget*, void*);

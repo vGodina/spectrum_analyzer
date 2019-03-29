@@ -1,18 +1,17 @@
 #include <audiofft/AudioFFT.h>
-#include <vector>
+#include "IFFTHandler.h"
 
-class FFTHandler
+class FFTHandler : public IFFTHandler
 {
 public:
 	FFTHandler();
-	void DoFFT (std::vector <float> AudioTrack, int FFTSize);
-	double PassRMS();
-	double PassAmpl(int);
-	void SetCenterSample(int);
+	void DoFFT (std::vector <float> AudioTrack, int FFTSize) override;
+	double PassRMS() override;
+	double PassAmpl(int Index) override;
+	void SetCenterSample(int CentreSample) override;
 private:
 	audiofft::AudioFFT FFT;
 	double LogRMS;
 	std::vector<float> Ampl;
 	int CenterSample;
 };
-

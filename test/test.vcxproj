@@ -56,6 +56,7 @@
     <ClInclude Include="..\src\IAudioFile.h" />
     <ClInclude Include="..\src\IButton.h" />
     <ClInclude Include="..\src\IChart.h" />
+    <ClInclude Include="..\src\IChoice.h" />
     <ClInclude Include="..\src\IFileChooser.h" />
     <ClInclude Include="..\src\IMenu.h" />
     <ClInclude Include="..\src\ISpectrum.h" />

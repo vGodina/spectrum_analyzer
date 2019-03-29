@@ -3,23 +3,31 @@
 #include <fltk/Fl_Group.H>
 #include "IAudioFile.h"
 #include "ISpectrum.h"
+#include "IChart.h"
+#include "IChoice.h"
+#include "ILevelMeter.h"
+#include "IFFTHandler.h"
 #include "LevelMeter.h"
-#include "FFTHandler.h"
-#include "RChart.h"
+//#include "FFTHandler.h"
 
 class Spectrum : public ISpectrum {
 public:
-	Spectrum (std::unique_ptr<IChart> Chart);
+	Spectrum (int x, int y, int w, int h,
+		std::unique_ptr<IChart> Chart,
+		std::unique_ptr<IChoice> Choice,
+		std::unique_ptr <IFFTHandler> Fft,
+		std::unique_ptr<ILevelMeter> Meter);
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
 	bool SetPosition(int);
 	Fl_Group* GetImplWidget() override;
 private:
 	Fl_Group Group;
-	std::unique_ptr<IChart> SpectrumChart;
-	Fl_Choice FFTChoice;
-	//Fl_Chart SpectrumChart;
-	LevelMeter LMeter;
-	FFTHandler FFT;
+
+	std::unique_ptr <IChart> SpectrumChart;
+	std::unique_ptr <IChoice> FFTChoice;
+	std::unique_ptr <ILevelMeter> LMeter;
+	std::unique_ptr <IFFTHandler> FFT;
+
 	const IAudioFile<float>::AudioBuffer* AudioTrack;
 	int FFTSize;
 

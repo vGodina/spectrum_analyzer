@@ -167,7 +167,9 @@
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\RButton.cpp" />
     <ClCompile Include="src\RChart.cpp" />
+    <ClCompile Include="src\RChoice.cpp" />
     <ClCompile Include="src\RFileChooser.cpp" />
+    <ClCompile Include="src\RSlider.cpp" />
     <ClCompile Include="src\Spectrum.cpp" />
     <ClCompile Include="src\Waveform.cpp" />
   </ItemGroup>
@@ -176,6 +178,9 @@
     <ClInclude Include="src\FFTHandler.h" />
     <ClInclude Include="src\IButton.h" />
     <ClInclude Include="src\IChart.h" />
+    <ClInclude Include="src\IChoice.h" />
+    <ClInclude Include="src\IFFTHandler.h" />
+    <ClInclude Include="src\ILevelMeter.h" />
     <ClInclude Include="src\RAudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
     <ClInclude Include="src\IFileChooser.h" />
@@ -187,6 +192,7 @@
     <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\RButton.h" />
     <ClInclude Include="src\RChart.h" />
+    <ClInclude Include="src\RChoice.h" />
     <ClInclude Include="src\RFileChooser.h" />
     <ClInclude Include="src\Spectrum.h" />
     <ClInclude Include="src\Waveform.h" />
