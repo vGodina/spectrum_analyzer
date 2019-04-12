@@ -33,7 +33,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(MSBuildThisFileDirectory)mock;$(SolutionDir)src;$(SolutionDir)external\include;C:\Users\Vladimir_Godina\Downloads\boost_1_69_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(MSBuildThisFileDirectory)mock;$(SolutionDir)src;$(SolutionDir)external\include;$(VCToolsInstallDir)include\boost_1_69_0;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>

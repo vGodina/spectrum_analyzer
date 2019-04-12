@@ -1,6 +1,6 @@
 #include "RChoice.h"
 
-RChoice::RChoice(int x, int y, int w, int h, std::string_view L) : Choice(x, y, w, h, std::data(L))  { }
+RChoice::RChoice() : Choice(0, 0, 0, 0)  { }
 
 
 int RChoice::value() const
@@ -30,4 +30,14 @@ void RChoice::callback(Fl_Callback* Widg, void* Obj)
 Fl_Widget* RChoice::GetImplWidget()
 {
 	return &Choice;
+}
+
+void RChoice::SetGeometry(int x, int y, int w, int h)
+{
+	Choice.resize(x, y, w, h);
+}
+
+void RChoice::SetCaption(std::string_view L)
+{
+	Choice.label(std::data(L));
 }

@@ -7,7 +7,7 @@
 class RSlider : public ISlider
 {
 public:
-	RSlider(int x, int y, int w, int h, std::string_view L);
+	RSlider();
 
 	void type(uchar t) override;
 
@@ -19,7 +19,9 @@ public:
 
 	void callback(Fl_Callback*, void*) override;
 	Fl_Widget* GetImplWidget() override;
+
+	void SetGeometry(int x, int y, int w, int h) override;
 private:
 	Fl_Slider Slider;
 };
-#endif RSLIDER_H
+#endif

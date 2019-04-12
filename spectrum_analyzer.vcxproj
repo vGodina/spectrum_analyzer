@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(VCToolsInstallDir)include\boost_1_69_0;$(VCToolsInstallDir)include\di-cpp14\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Vladimir_Godina\Downloads\boost_1_69_0;$(SolutionDir)external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -160,6 +160,7 @@
     <ClCompile Include="external\include\audiofile\AudioFile.cpp" />
     <ClCompile Include="src\CustomSlider.cpp" />
     <ClCompile Include="src\FFTHandler.cpp" />
+    <ClCompile Include="src\OpMenuButton.cpp" />
     <ClCompile Include="src\RAudioFile.cpp" />
     <ClCompile Include="src\LevelMeter.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\ICustomSlider.h" />
     <ClInclude Include="src\IFFTHandler.h" />
     <ClInclude Include="src\ILevelMeter.h" />
+    <ClInclude Include="src\OpMenuButton.h" />
     <ClInclude Include="src\RAudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
     <ClInclude Include="src\IFileChooser.h" />

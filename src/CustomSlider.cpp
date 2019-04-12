@@ -51,3 +51,8 @@ Fl_Widget* CustomSlider::GetImplWidget()
 {
 	return Slider->GetImplWidget();
 }
+
+void CustomSlider::SetGeometry(int x, int y, int w, int h)
+{
+	Slider->SetGeometry(x, y, w, h);
+}

@@ -1,9 +1,9 @@
 #include "Waveform.h"
 
-Waveform::Waveform (int x, int y, int w, int h, std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlider> Slidr,
+Waveform::Waveform (std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlider> Slidr,
 	std::unique_ptr<IButton> ZmInH, std::unique_ptr<IButton> ZmOutH,
 	std::unique_ptr<IButton> ZmInV, std::unique_ptr<IButton> ZmOutV) :
-	Group{ x, y, w, h }, 
+	Group{ 0, 0, 0, 0 },
 	WaveformChart { std::move(Chart) },
 	Slider { std::move(Slidr) },
 	ZoomInH { std::move(ZmInH) },
@@ -17,6 +17,7 @@ Waveform::Waveform (int x, int y, int w, int h, std::unique_ptr<IChart> Chart, s
 	ZoomOutH->callback(CbZoomOutH, this);
 	ZoomInV->callback(CbZoomInV, this);
 	ZoomOutV->callback(CbZoomOutV, this);
+
 	// Initialization of  widgets
 	WaveformChart->color(FL_WHITE);
 	WaveformChart->type(FL_LINE_CHART);
@@ -107,4 +108,21 @@ void Waveform::CbZoomOutV(Fl_Widget*, void* Obj)
 Fl_Group* Waveform::GetImplWidget()
 {
 	return &Group;
+}
+
+void Waveform::SetGeometry(int x, int y, int w, int h)
+{
+	int W = 25;
+	int H = 25;
+	Group.resize(x, y, w, h);
+	ZoomInH->SetGeometry(x+27, y+222, W, H);
+	ZoomInH->SetCaption("+");
+	ZoomOutH->SetGeometry(x, y+222, W, H);
+	ZoomOutH->SetCaption("-");
+	ZoomInV->SetGeometry(x+502, y, W, H);
+	ZoomInV->SetCaption("+");
+	ZoomOutV->SetGeometry(x+502, y+27, W, H);
+	ZoomOutV->SetCaption("-");
+	WaveformChart->SetGeometry(20, 100, 500, 200);
+	Slider->SetGeometry(20, 300, 500, 20);
 }

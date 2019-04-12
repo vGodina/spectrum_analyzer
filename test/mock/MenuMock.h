@@ -11,7 +11,7 @@ struct MenuMock : public IMenu
 {
 	MOCK_METHOD0(GetImplWidget, Fl_Group*());
 	MOCK_METHOD1(connect, boost::signals2::connection(const signal_t::slot_type &slot));
-
+	MOCK_METHOD4(SetGeometry, void(int x, int y, int w, int h));
 	Fl_Group StubGroup;
 	signal_t signal;
 

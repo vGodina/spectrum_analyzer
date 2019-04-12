@@ -17,6 +17,8 @@ public:
 	void callback(Fl_Callback*, void*) override;
 	float slider_size() override;
 	Fl_Widget* GetImplWidget() override;
+	virtual void SetGeometry(int x, int y, int w, int h) override;
+
 private:
 	std::unique_ptr<ISlider> Slider;
 	signal_t SliderSignal;

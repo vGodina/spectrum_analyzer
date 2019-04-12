@@ -1,6 +1,6 @@
 #include "RChart.h"
 
-RChart::RChart(int x, int y, int w, int h, std::string_view L) : Chart(x, y, w, h, std::data(L))  { }
+RChart::RChart() : Chart(0, 0, 0, 0)  { }
 
 void RChart::color(Fl_Color bg)
 {
@@ -38,3 +38,7 @@ Fl_Widget* RChart::GetImplWidget()
 	return &Chart;
 }
 
+void RChart::SetGeometry(int x, int y, int w, int h)
+{
+	Chart.resize(x, y, w, h);
+}

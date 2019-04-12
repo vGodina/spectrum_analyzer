@@ -7,13 +7,15 @@
 class RChoice : public IChoice
 {
 public:
-	RChoice(int x, int y, int w, int h, std::string_view L);
+	RChoice();
 
 	int value() const override;
 	int value(int v) override;
 	int add(std::string_view v) override;
 	void callback(Fl_Callback*, void*) override;
 	Fl_Widget* GetImplWidget() override;
+	void SetGeometry(int x, int y, int w, int h) override;
+	virtual void SetCaption(std::string_view L) override;
 private:
 	Fl_Choice Choice;
 };

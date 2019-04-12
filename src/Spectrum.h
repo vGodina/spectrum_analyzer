@@ -11,7 +11,7 @@
 
 class Spectrum : public ISpectrum {
 public:
-	Spectrum (int x, int y, int w, int h,
+	Spectrum (
 		std::unique_ptr<IChart> Chart,
 		std::unique_ptr<IChoice> Choice,
 		std::unique_ptr <IFFTHandler> Fft,
@@ -19,6 +19,7 @@ public:
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&);
 	bool SetPosition(int);
 	Fl_Group* GetImplWidget() override;
+	void SetGeometry(int x, int y, int w, int h) override;
 private:
 	Fl_Group Group;
 

@@ -21,3 +21,8 @@ Fl_Widget* LevelMeter::GetImplWidget()
 {
 	return Meter->GetImplWidget();
 }
+
+void LevelMeter::SetGeometry(int x, int y, int w, int h)
+{
+	Meter->SetGeometry(x, y, w, h);
+}

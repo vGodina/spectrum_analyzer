@@ -28,5 +28,7 @@ struct ICustomSlider
 	virtual void callback(Fl_Callback*, void*) = 0;
 
 	virtual Fl_Widget* GetImplWidget() = 0;
+
+	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
 #endif ICUSTOMSLIDER

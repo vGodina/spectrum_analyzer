@@ -12,5 +12,7 @@ struct ILevelMeter
 	virtual void Set(double v) = 0;
 
 	virtual Fl_Widget* GetImplWidget() = 0;
+
+	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
-#endif ILEVELMETER
+#endif

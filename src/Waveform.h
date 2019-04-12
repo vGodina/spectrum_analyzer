@@ -11,7 +11,7 @@
 
 class Waveform : public IWaveForm {
 public:
-	Waveform(int x, int y, int w, int h, std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlider> Slidr,
+	Waveform(std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlider> Slidr,
 		std::unique_ptr<IButton> ZmInH, std::unique_ptr<IButton> ZmOutH,
 		std::unique_ptr<IButton> ZmInV, std::unique_ptr<IButton> ZmOutV);
 
@@ -19,7 +19,8 @@ public:
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
 	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
 	Fl_Group* GetImplWidget() override;
-	
+	void SetGeometry(int x, int y, int w, int h) override;
+
 private:
 	Fl_Group Group;
 	std::unique_ptr <IChart> WaveformChart;

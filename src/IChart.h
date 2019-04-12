@@ -4,7 +4,6 @@
 
 // Interface of Chart
 
-
 struct IChart
 {
 	virtual ~IChart() = default;
@@ -16,5 +15,6 @@ struct IChart
 	virtual void bounds (double* min, double* max) = 0;
 	virtual void add (double val) = 0;
 	virtual Fl_Widget* GetImplWidget() = 0;
+	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
 #endif ICHART

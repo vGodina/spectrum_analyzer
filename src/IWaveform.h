@@ -12,5 +12,6 @@ struct IWaveForm
 	virtual boost::signals2::connection connect(const signal_t::slot_type &slot) = 0;
 	virtual bool TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioData) = 0;
 	virtual Fl_Widget* GetImplWidget() = 0;
+	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
-#endif IWAVEFORM
+#endif

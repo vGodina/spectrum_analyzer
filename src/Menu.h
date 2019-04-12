@@ -8,11 +8,13 @@
 
 class Menu : public IMenu {
 public: 
-	Menu(int x, int y, int w, int h, std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button);
+	Menu(std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button);
 
 	boost::signals2::connection connect (const signal_t::slot_type &slot);
 	
 	Fl_Group* GetImplWidget() override;
+
+	void SetGeometry(int x, int y, int w, int h) override;
 
 private:
 	Fl_Group Group;

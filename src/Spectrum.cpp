@@ -1,11 +1,11 @@
 #include "Spectrum.h"
 
-Spectrum::Spectrum (int x, int y, int w, int h,
+Spectrum::Spectrum (
 	std::unique_ptr<IChart> Chart,
 	std::unique_ptr<IChoice> Choice,
 	std::unique_ptr <IFFTHandler> Fft,
 	std::unique_ptr<ILevelMeter> Meter) :
-		Group{ x, y, w, h },
+		Group { 0, 0, 0, 0 },
 		SpectrumChart { std::move(Chart) },
 		FFTChoice { std::move(Choice) },
 		FFT { std::move(Fft) },
@@ -76,4 +76,13 @@ void Spectrum::Draw()
 Fl_Group* Spectrum::GetImplWidget()
 {
 	return &Group;
+}
+
+void Spectrum::SetGeometry(int x, int y, int w, int h)
+{
+	Group.resize(x, y, w, h);
+	SpectrumChart->SetGeometry(x, y, 500, 200);
+	FFTChoice->SetGeometry(x+400, y+200, 100, 22);
+	FFTChoice->SetCaption("FFT Size:");
+	LMeter->SetGeometry(x+500, y, 10, 200);
 }

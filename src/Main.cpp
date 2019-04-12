@@ -14,36 +14,51 @@
 #include "LevelMeter.h"
 #include "FFTHandler.h"
 
+namespace di = boost::di;
+
 int main()
 {
+	/*auto MenuInjector = di::make_injector(
+		di::bind<IFileChooser>.to<RFileChooser>(),
+		di::bind<IButton>.to<OpMenuButton>()
+	);
+	//auto MMenu = MenuInjector.create<std::unique_ptr<Menu>>();
+	auto MMenu = di::create<std::unique_ptr<Menu>>(MenuInjector);	*/
+
 	// Menu Widget forming
 	auto FileChooser = std::make_unique<RFileChooser>();
-	auto OpenMenuButton = std::make_unique<RButton>(30, 30, 100, 30, "Open .wav file");
+	auto OpenMenuButton = std::make_unique<RButton>();
+	auto MainMenu = std::make_unique<Menu>(std::move(FileChooser), std::move(OpenMenuButton));
 
-	auto MainMenu = std::make_unique<Menu>(30, 30, 100, 30, std::move(FileChooser), std::move(OpenMenuButton));
+	MainMenu->SetGeometry(30, 30, 100, 30);
 
-	// Waveform Widget forming  std::unique_ptr<ISlider> Slidr
-	auto WaveformChart = std::make_unique<RChart>(20, 100, 500, 200, "");
-	auto Slider = std::make_unique<RSlider>(20, 300, 500, 20, "");
+	// Waveform Widget forming
+	auto Slider = std::make_unique<RSlider>();
 	auto CustomSlidr = std::make_unique<CustomSlider>(std::move(Slider));
-	auto ZoomInHButton = std::make_unique<RButton>(47, 322, 25, 25, "+");
-	auto ZoomOutHButton = std::make_unique<RButton>(20, 322, 25, 25, "-");
-	auto ZoomInVButton = std::make_unique<RButton>(522, 100, 25, 25, "+");
-	auto ZoomOutVButton = std::make_unique<RButton>(522, 127, 25, 25, "-");
 
-	auto WaveFrm = std::make_unique<Waveform>(20, 100, 527, 247,
-		std::move(WaveformChart), std::move(CustomSlidr),
-		std::move(ZoomInHButton), std::move(ZoomOutHButton), std::move(ZoomInVButton), std::move(ZoomOutVButton));
+	auto WaveformChart = std::make_unique<RChart>();
+	auto ZoomInHButton = std::make_unique<RButton>();
+	auto ZoomOutHButton = std::make_unique<RButton>();
+	auto ZoomInVButton = std::make_unique<RButton>();
+	auto ZoomOutVButton = std::make_unique<RButton>();
+
+	auto WaveFrm = std::make_unique<Waveform>(
+		std::move(WaveformChart), std::move(CustomSlidr), std::move(ZoomInHButton),
+		std::move(ZoomOutHButton), std::move(ZoomInVButton), std::move(ZoomOutVButton));
+
+	WaveFrm->SetGeometry(20, 100, 527, 247);
 
 	// Spectrum Widget forming
-	auto SpectrChart = std::make_unique<RChart>(20, 360, 500, 200, "");
-	auto SpectrChoice = std::make_unique<RChoice>(420, 560, 100, 22, "FFT Size:");
+	auto SpectrChart = std::make_unique<RChart>();
+	auto SpectrChoice = std::make_unique<RChoice>();
 	auto SpectrFFT = std::make_unique<FFTHandler>();
-	auto MeterChart = std::make_unique<RChart>(520, 360, 10, 200, "");
+	auto MeterChart = std::make_unique<RChart>();
 	auto SpectrLMeter = std::make_unique<LevelMeter>(std::move(MeterChart));
 
-	auto SpectrFrm = std::make_unique<Spectrum>(20, 360, 500, 222,
+	auto SpectrFrm = std::make_unique<Spectrum>(
 		std::move(SpectrChart), std::move(SpectrChoice), std::move(SpectrFFT), std::move(SpectrLMeter));
+
+	SpectrFrm->SetGeometry(20, 360, 500, 222);
 
 	auto AudioTrack = std::make_unique<RAudioFile<float>>();
 

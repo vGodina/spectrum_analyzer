@@ -1,6 +1,6 @@
 #include "RSlider.h"
 
-RSlider::RSlider(int x, int y, int w, int h, std::string_view L) : Slider(x, y, w, h, std::data(L))  { }
+RSlider::RSlider() : Slider(0, 0, 0, 0)  { }
 
 void RSlider::type(uchar t)
 {
@@ -35,4 +35,9 @@ void RSlider::callback(Fl_Callback* Widg, void* Obj)
 Fl_Widget* RSlider::GetImplWidget()
 {
 	return &Slider;
+}
+
+void RSlider::SetGeometry(int x, int y, int w, int h)
+{
+	Slider.resize(x, y, w, h);
 }

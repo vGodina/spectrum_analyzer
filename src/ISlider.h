@@ -1,7 +1,7 @@
 #ifndef ISLIDER
 #define ISLIDER
 #include <memory>
-#include <string_view>
+//#include <string_view>
 #include <fltk/Fl_Slider.h>
 
 // Interface of Slider
@@ -19,6 +19,9 @@ struct ISlider
 	virtual int value(double v) = 0;
 
 	virtual void callback(Fl_Callback*, void*) = 0;
+
 	virtual Fl_Widget* GetImplWidget() = 0;
+
+	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
-#endif ISLIDER
+#endif
