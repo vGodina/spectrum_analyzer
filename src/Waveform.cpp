@@ -54,7 +54,6 @@ void Waveform::CbSlider(Fl_Widget*, void* Obj)
 	auto ThisWaveform = static_cast<Waveform*>(Obj);
 	ThisWaveform->Draw(1.0);
 	ThisWaveform->Slider->EmitSignal();
-	//static_cast<Fl_Slider*>(Slider)->EmitSignal();
 }
 
 bool Waveform::Draw(double ZoomFactor)

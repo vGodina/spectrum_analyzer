@@ -8,7 +8,6 @@
 #include "ILevelMeter.h"
 #include "IFFTHandler.h"
 #include "LevelMeter.h"
-//#include "FFTHandler.h"
 
 class Spectrum : public ISpectrum {
 public:

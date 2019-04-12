@@ -43,15 +43,20 @@ bool Spectrum::SetPosition(int CentrSmpl)
 
 void Spectrum::CbFFTChoice(Fl_Widget*, void* Obj)
 {
-	static_cast<Spectrum*>(Obj)->CheckFFTSize();
-	static_cast<Spectrum*>(Obj)->Draw();
+	auto SpectrWidget = static_cast<Spectrum*>(Obj);
+
+	if (SpectrWidget->AudioTrack != nullptr)
+	{
+		SpectrWidget->CheckFFTSize();
+		SpectrWidget->Draw();
+	}
 }
 
 // Check if choosed FFT Size is not bigger than audio length
 void Spectrum::CheckFFTSize()
 {
 	unsigned int temp = 2 << (FFTChoice->value() + 8);
-	while (AudioTrack != nullptr && temp > (*AudioTrack)[0].size()) {
+	while (temp > (*AudioTrack)[0].size()) {
 		temp /= 2;
 		FFTChoice->value(FFTChoice->value() - 1);
 	}
@@ -62,12 +67,10 @@ void Spectrum::Draw()
 {
 	SpectrumChart->clear();
 	SpectrumChart->bounds(-120.0, 0.0);
-	if (AudioTrack != nullptr) {
-		FFT->DoFFT((*AudioTrack)[0], FFTSize);
-		for (int n = 0; n <= FFTSize / 2; ++n)
-			SpectrumChart->add(FFT->PassAmpl(n));
-		LMeter->Set(FFT->PassRMS());
-	}
+	FFT->DoFFT((*AudioTrack)[0], FFTSize);
+	for (int n = 0; n <= FFTSize / 2; ++n)
+		SpectrumChart->add(FFT->PassAmpl(n));
+	LMeter->Set(FFT->PassRMS());
 }
 
 Fl_Group* Spectrum::GetImplWidget()
