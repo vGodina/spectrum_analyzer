@@ -160,7 +160,6 @@
     <ClCompile Include="external\include\audiofile\AudioFile.cpp" />
     <ClCompile Include="src\CustomSlider.cpp" />
     <ClCompile Include="src\FFTHandler.cpp" />
-    <ClCompile Include="src\OpMenuButton.cpp" />
     <ClCompile Include="src\RAudioFile.cpp" />
     <ClCompile Include="src\LevelMeter.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -183,7 +182,6 @@
     <ClInclude Include="src\ICustomSlider.h" />
     <ClInclude Include="src\IFFTHandler.h" />
     <ClInclude Include="src\ILevelMeter.h" />
-    <ClInclude Include="src\OpMenuButton.h" />
     <ClInclude Include="src\RAudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
     <ClInclude Include="src\IFileChooser.h" />
