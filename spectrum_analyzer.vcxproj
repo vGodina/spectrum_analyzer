@@ -182,6 +182,7 @@
     <ClInclude Include="src\ICustomSlider.h" />
     <ClInclude Include="src\IFFTHandler.h" />
     <ClInclude Include="src\ILevelMeter.h" />
+    <ClInclude Include="src\ISlider.h" />
     <ClInclude Include="src\RAudioFile.h" />
     <ClInclude Include="src\IAudioFile.h" />
     <ClInclude Include="src\IFileChooser.h" />

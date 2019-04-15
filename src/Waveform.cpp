@@ -111,19 +111,27 @@ Fl_Group* Waveform::GetImplWidget()
 }
 
 void Waveform::SetGeometry(int x, int y, int w, int h)
-{
-	//Button Width and Height 
-	int W = 25;
-	int H = 25;
+{ 
+	constexpr int BtnW = 25;
+	constexpr int BtnH = 25;
+	constexpr int SliderH = 20;
+	constexpr int Gap = 2;
+
 	Group.resize(x, y, w, h);
-	ZoomInH->SetGeometry(x+27, y+222, W, H);
+
+	ZoomInH->SetGeometry(x + BtnW + Gap, y + h - BtnH, BtnW, BtnH);
 	ZoomInH->SetCaption("+");
-	ZoomOutH->SetGeometry(x, y+222, W, H);
+
+	ZoomOutH->SetGeometry(x, y + h - BtnH, BtnW, BtnH);
 	ZoomOutH->SetCaption("-");
-	ZoomInV->SetGeometry(x+502, y, W, H);
+
+	ZoomInV->SetGeometry(x + w - BtnW, y, BtnW, BtnH);
 	ZoomInV->SetCaption("+");
-	ZoomOutV->SetGeometry(x+502, y+27, W, H);
+
+	ZoomOutV->SetGeometry(x + w - BtnW, y + BtnH + Gap, BtnW, BtnH);
 	ZoomOutV->SetCaption("-");
-	WaveformChart->SetGeometry(20, 100, 500, 200);
-	Slider->SetGeometry(20, 300, 500, 20);
+
+	WaveformChart->SetGeometry(x, y, w - BtnW - Gap, h - BtnH - SliderH - Gap);
+
+	Slider->SetGeometry(x, y + h - BtnH - SliderH - Gap, w - BtnW - Gap, SliderH);
 }

@@ -21,6 +21,7 @@ public:
 	Fl_Group* GetImplWidget() override;
 
 	void SetGeometry(int x, int y, int w, int h) override;
+
 private:
 	Fl_Group Group;
 

@@ -1,5 +1,4 @@
 #include "Menu.h"
-#include <iostream>
 
 Menu::Menu(std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> Button) :
 	Group{ 0, 0, 0, 0 },
@@ -10,9 +9,7 @@ Menu::Menu(std::unique_ptr<IFileChooser> FileChooser, std::unique_ptr<IButton> B
 	OpenButton->SetCaption("Open .wav file");
 	Chooser->filter("Audio files\t*.wav");
 
-
 	Group.add(OpenButton->GetImplWidget());
-
 	Group.end();
 }
 

@@ -18,50 +18,21 @@ namespace di = boost::di;
 
 int main()
 {
-	/*auto MenuInjector = di::make_injector(
+	auto WinInjector = di::make_injector(
+		di::bind<IMenu>.to<Menu>(),
+		di::bind<IWaveForm>.to<Waveform>(),
+		di::bind<ISpectrum>.to<Spectrum>(),
+		di::bind<IAudioFile<float>>.to<RAudioFile<float>>(),
 		di::bind<IFileChooser>.to<RFileChooser>(),
-		di::bind<IButton>.to<OpMenuButton>()
+		di::bind<IButton>.to<RButton>(),
+		di::bind<ISlider>.to <RSlider>(),
+		di::bind<IChart>.to<RChart>(),
+		di::bind<ICustomSlider>.to<CustomSlider>(),
+		di::bind<IChoice>.to <RChoice>(),
+		di::bind<IFFTHandler>.to<FFTHandler>(),
+		di::bind<ILevelMeter>.to<LevelMeter>()
 	);
-	//auto MMenu = MenuInjector.create<std::unique_ptr<Menu>>();
-	auto MMenu = di::create<std::unique_ptr<Menu>>(MenuInjector);	*/
-
-	// Menu Widget forming
-	auto FileChooser = std::make_unique<RFileChooser>();
-	auto OpenMenuButton = std::make_unique<RButton>();
-	auto MainMenu = std::make_unique<Menu>(std::move(FileChooser), std::move(OpenMenuButton));
-
-	MainMenu->SetGeometry(30, 30, 100, 30);
-
-	// Waveform Widget forming
-	auto Slider = std::make_unique<RSlider>();
-	auto CustomSlidr = std::make_unique<CustomSlider>(std::move(Slider));
-
-	auto WaveformChart = std::make_unique<RChart>();
-	auto ZoomInHButton = std::make_unique<RButton>();
-	auto ZoomOutHButton = std::make_unique<RButton>();
-	auto ZoomInVButton = std::make_unique<RButton>();
-	auto ZoomOutVButton = std::make_unique<RButton>();
-
-	auto WaveFrm = std::make_unique<Waveform>(
-		std::move(WaveformChart), std::move(CustomSlidr), std::move(ZoomInHButton),
-		std::move(ZoomOutHButton), std::move(ZoomInVButton), std::move(ZoomOutVButton));
-
-	WaveFrm->SetGeometry(20, 100, 527, 247);
-
-	// Spectrum Widget forming
-	auto SpectrChart = std::make_unique<RChart>();
-	auto SpectrChoice = std::make_unique<RChoice>();
-	auto SpectrFFT = std::make_unique<FFTHandler>();
-	auto MeterChart = std::make_unique<RChart>();
-	auto SpectrLMeter = std::make_unique<LevelMeter>(std::move(MeterChart));
-
-	auto SpectrFrm = std::make_unique<Spectrum>(
-		std::move(SpectrChart), std::move(SpectrChoice), std::move(SpectrFFT), std::move(SpectrLMeter));
-
-	SpectrFrm->SetGeometry(20, 360, 500, 222);
-
-	auto AudioTrack = std::make_unique<RAudioFile<float>>();
-
-	MainWindow BaseWindow(600, 600, "Spectrum Analyzer", std::move(MainMenu), std::move(WaveFrm), std::move(SpectrFrm), std::move(AudioTrack));
+	auto BaseWindow = di::create<MainWindow*>(WinInjector);
+	BaseWindow->SetGeometry(50, 50, 600, 600);
 	return Fl::run();
 }

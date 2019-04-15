@@ -7,11 +7,14 @@
 
 class MainWindow : public Fl_Double_Window {
 public:
-	MainWindow(int w, int h, const char* title,
+	MainWindow(
 		std::unique_ptr<IMenu>,
 		std::unique_ptr<IWaveForm>,
 		std::unique_ptr<ISpectrum>,
 		std::unique_ptr<IAudioFile<float>>);
+
+	void SetGeometry(int x, int y, int w, int h);
+
 private:
 	std::unique_ptr <IMenu> MainMenu;
 	std::unique_ptr <IWaveForm> WaveFrm;

@@ -80,9 +80,16 @@ Fl_Group* Spectrum::GetImplWidget()
 
 void Spectrum::SetGeometry(int x, int y, int w, int h)
 {
+	constexpr int ChoiceW = 100;
+	constexpr int ChoiceH = 22;
+	constexpr int LMeterW = 10;
+
 	Group.resize(x, y, w, h);
-	SpectrumChart->SetGeometry(x, y, 500, 200);
-	FFTChoice->SetGeometry(x+400, y+200, 100, 22);
+
+	SpectrumChart->SetGeometry(x, y, w, h - ChoiceH);
+
+	FFTChoice->SetGeometry(x + w - ChoiceW, y + h - ChoiceH, ChoiceW, ChoiceH);
 	FFTChoice->SetCaption("FFT Size:");
-	LMeter->SetGeometry(x+500, y, 10, 200);
+
+	LMeter->SetGeometry(x+w, y, LMeterW, h - ChoiceH);
 }
