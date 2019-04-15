@@ -11,7 +11,7 @@ struct WaveFormMock : public IWaveForm
 {
 	MOCK_METHOD0(GetImplWidget, Fl_Widget*());
 	MOCK_METHOD1(connect, boost::signals2::connection(const signal_t::slot_type &slot));
-	MOCK_METHOD1(TakeAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
+	MOCK_METHOD1(SetAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
 
 	Fl_Group StubGroup;
 	signal_t signal;

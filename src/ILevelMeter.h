@@ -1,9 +1,9 @@
 #ifndef ILEVELMETER
 #define ILEVELMETER
+
 #include "fltk/Fl_Widget.H"
 
 // Interface of LevelMeter
-
 
 struct ILevelMeter
 {
@@ -15,4 +15,5 @@ struct ILevelMeter
 
 	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
+
 #endif

@@ -28,5 +28,5 @@ TEST_F(AudioFileTest, IsLoadedFalseWhenFileNotLoaded)
 TEST_F(AudioFileTest, GetLengthReturnsProperValue)
 {
 	AudioTrack->Load("C:\\Users\\Vladimir_Godina\\source\\repos\\.git\\spectrum_analyzer\\TestData\\test.wav");
-	EXPECT_EQ(AudioTrack->GetLength(), AudioTrack->PassData()[0].size());
+	EXPECT_EQ(AudioTrack->GetLength(), AudioTrack->GetData()[0].size());
 };

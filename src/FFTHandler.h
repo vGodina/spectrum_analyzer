@@ -5,10 +5,14 @@ class FFTHandler : public IFFTHandler
 {
 public:
 	FFTHandler();
+
 	void DoFFT (std::vector <float> AudioTrack, int FFTSize) override;
-	double PassRMS() override;
-	double PassAmpl(int Index) override;
-	void SetCenterSample(int CentreSample) override;
+
+	double GetRMS() const override;
+
+	double GetAmpl (int Index) const override;
+
+	void SetCenterSample (int CentreSample) override;
 private:
 	audiofft::AudioFFT FFT;
 	double LogRMS;

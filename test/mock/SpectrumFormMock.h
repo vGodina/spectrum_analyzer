@@ -10,7 +10,7 @@ using namespace testing;
 struct SpectrumFormMock : public ISpectrum
 {
 	MOCK_METHOD0(GetImplWidget, Fl_Widget*());
-	MOCK_METHOD1(TakeAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
+	MOCK_METHOD1(SetAudioData, bool(const IAudioFile<float>::AudioBuffer &AudioData));
 	MOCK_METHOD1(SetPosition, bool(int));
 	Fl_Group StubGroup;
 

@@ -31,7 +31,7 @@ bool MainWindow::AudioFileHandler (std::string FileName)
 {
 	AudioIsLoaded = AudioTrack->Load(FileName);
 	if (AudioIsLoaded) {
-		WaveFrm->TakeAudioData(AudioTrack->PassData());
+		WaveFrm->SetAudioData(AudioTrack->GetData());
 		SliderHandler(0.5);
 	}
 	return AudioIsLoaded;
@@ -42,7 +42,7 @@ bool MainWindow::SliderHandler (double CenterValue)
 	if (AudioIsLoaded) {
 		int CenterSample = static_cast<int>(CenterValue * AudioTrack->GetLength());
 		SpectraFrm->SetPosition(CenterSample);
-		SpectraFrm->TakeAudioData(AudioTrack->PassData());
+		SpectraFrm->SetAudioData(AudioTrack->GetData());
 	}
 	return AudioIsLoaded;
 }

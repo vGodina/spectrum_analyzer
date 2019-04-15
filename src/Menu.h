@@ -1,7 +1,4 @@
-#include <boost/signals2.hpp>
-#include <fltk/Fl_Button.h>
 #include <fltk/Fl_Group.H>
-#include <fltk/Fl_Native_File_Chooser.h>
 #include "IMenu.h"
 #include "IFileChooser.h"
 #include "IButton.h"

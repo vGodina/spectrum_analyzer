@@ -10,8 +10,8 @@ using namespace testing;
 struct FFTHandlerMock : public IFFTHandler
 {
 	MOCK_METHOD2(DoFFT, void(std::vector <float> AudioTrack, int FFTSize));
-	MOCK_METHOD0(PassRMS, double());
-	MOCK_METHOD1(PassAmpl, double(int Index));
+	MOCK_METHOD0(GetRMS, double());
+	MOCK_METHOD1(GetAmpl, double(int Index));
 	MOCK_METHOD1(SetCenterSample, void(int CentreSample));
 
 	FFTHandlerMock()

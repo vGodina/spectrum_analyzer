@@ -9,14 +9,16 @@ bool RAudioFile<T>::Load(std::string FileName)
 	return AudioTrack.load(FileName);
 }
 
+
 template <typename T>
 int RAudioFile<T>::GetLength () const
 {
 	return AudioTrack.getNumSamplesPerChannel();
 }
 
+
 template <typename T>
-const typename IAudioFile<T>::AudioBuffer& RAudioFile<T>::PassData() const
+const typename IAudioFile<T>::AudioBuffer& RAudioFile<T>::GetData() const
 {
 	return AudioTrack.samples;
 }

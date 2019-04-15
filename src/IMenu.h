@@ -1,5 +1,6 @@
 #ifndef IMENU
 #define IMENU
+
 #include <boost/signals2.hpp>
 
 // Interface of AudioFile
@@ -16,4 +17,5 @@ struct IMenu
 
 	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
+
 #endif

@@ -35,12 +35,12 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 	LogRMS = 10.0 * log10(RMS / 2);
 }
 
-double FFTHandler::PassRMS ()
+double FFTHandler::GetRMS () const
 {
 	return LogRMS;
 }
 
-double FFTHandler::PassAmpl(int Index)
+double FFTHandler::GetAmpl (int Index) const
 {
 	return Ampl[Index];
 }

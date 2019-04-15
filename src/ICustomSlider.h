@@ -1,7 +1,6 @@
 #ifndef ICUSTOMSLIDER
 #define ICUSTOMSLIDER
-#include <memory>
-#include <string_view>
+
 #include <fltk/Fl_Slider.h>
 #include <boost/signals2.hpp>
 
@@ -31,4 +30,5 @@ struct ICustomSlider
 
 	virtual void SetGeometry(int x, int y, int w, int h) = 0;
 };
-#endif ICUSTOMSLIDER
+
+#endif

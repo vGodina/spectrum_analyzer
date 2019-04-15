@@ -1,8 +1,7 @@
 #include "LevelMeter.h"
 
 
-LevelMeter::LevelMeter(std::unique_ptr<IChart> Chart) :
-	Meter { std::move(Chart)}
+LevelMeter::LevelMeter(std::unique_ptr<IChart> Chart) : Meter { std::move(Chart)}
 {
 	Meter->type(FL_BAR_CHART);
 	Meter->color(FL_GREEN);

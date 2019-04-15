@@ -1,8 +1,8 @@
 #ifndef IBUTTON
 #define IBUTTON
-#include <memory>
-#include <string_view>
+
 #include <fltk/Fl_Widget.h>
+#include <string_view>
 
 // Interface of Button
 
@@ -18,4 +18,5 @@ struct IButton
 
 	virtual void SetCaption(std::string_view L) = 0;
 };
+
 #endif

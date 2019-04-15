@@ -30,7 +30,7 @@ Waveform::Waveform (std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlide
 	Group.end();
 }
 
-bool Waveform::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
+bool Waveform::SetAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
 	AudioVector = (*AudioTrack)[0];
@@ -112,6 +112,7 @@ Fl_Group* Waveform::GetImplWidget()
 
 void Waveform::SetGeometry(int x, int y, int w, int h)
 {
+	//Button Width and Height 
 	int W = 25;
 	int H = 25;
 	Group.resize(x, y, w, h);

@@ -26,7 +26,7 @@ Spectrum::Spectrum (
 	Group.end();
 }
 
-bool Spectrum::TakeAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
+bool Spectrum::SetAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
 	CheckFFTSize();
@@ -69,8 +69,8 @@ void Spectrum::Draw()
 	SpectrumChart->bounds(-120.0, 0.0);
 	FFT->DoFFT((*AudioTrack)[0], FFTSize);
 	for (int n = 0; n <= FFTSize / 2; ++n)
-		SpectrumChart->add(FFT->PassAmpl(n));
-	LMeter->Set(FFT->PassRMS());
+		SpectrumChart->add(FFT->GetAmpl(n));
+	LMeter->Set(FFT->GetRMS());
 }
 
 Fl_Group* Spectrum::GetImplWidget()

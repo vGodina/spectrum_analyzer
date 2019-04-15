@@ -47,7 +47,7 @@ TEST_F(MainWindowTest, AudioFileHandlerReturnedFalse)
 TEST_F(MainWindowTest, WaveformCalledFromAudioHandler)
 {
 	ON_CALL(*AudioTrack, Load(_)).WillByDefault(Return(true));
-	EXPECT_CALL(*Waveform, TakeAudioData(_));
+	EXPECT_CALL(*Waveform, SetAudioData(_));
 
 	Menu->signal("test.wav");
 }
@@ -55,7 +55,7 @@ TEST_F(MainWindowTest, WaveformCalledFromAudioHandler)
 TEST_F(MainWindowTest, WaveformTakesProperAudioBuffer)
 {
 	ON_CALL(*AudioTrack, Load(_)).WillByDefault(Return(true));
-	EXPECT_CALL(*Waveform, TakeAudioData(AudioTrack->stubBuffer));
+	EXPECT_CALL(*Waveform, SetAudioData(AudioTrack->stubBuffer));
 
 	Menu->signal("test.wav");
 }

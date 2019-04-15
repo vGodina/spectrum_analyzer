@@ -1,6 +1,3 @@
-#include <boost/signals2.hpp>
-#include <fltk/Fl_Button.h>
-#include <fltk/Fl_Chart.H>
 #include <fltk/Fl_Group.H>
 #include "IAudioFile.h"
 #include "IWaveForm.h"
@@ -17,7 +14,7 @@ public:
 
 	using signal_t = boost::signals2::signal <bool (double)>;
 	boost::signals2::connection connect(const signal_t::slot_type &slot) override;
-	bool TakeAudioData(const IAudioFile<float>::AudioBuffer&) override;
+	bool SetAudioData(const IAudioFile<float>::AudioBuffer&) override;
 	Fl_Group* GetImplWidget() override;
 	void SetGeometry(int x, int y, int w, int h) override;
 

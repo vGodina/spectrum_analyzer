@@ -1,8 +1,8 @@
 #ifndef RBUTTON_H
 #define RBUTTON_H
+
 #include "IButton.h"
 #include "fltk/Fl_Button.h"
-#include <memory>
 
 class RButton : public IButton
 {
@@ -20,4 +20,5 @@ public:
 private:
 	Fl_Button Button;
 };
+
 #endif
