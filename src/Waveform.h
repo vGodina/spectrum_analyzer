@@ -28,15 +28,11 @@ private:
 	std::unique_ptr <IButton> ZoomOutV;
 
 	static void CbSlider(Fl_Widget*, void*);
-	static void CbZoomInH(Fl_Widget*, void*);
-	static void CbZoomOutH(Fl_Widget*, void*);
-	static void CbZoomInV(Fl_Widget*, void*);
-	static void CbZoomOutV(Fl_Widget*, void*);
 
 	std::vector<float> AudioVector;
 	int CenterSample;
 	int AudioLength;
 	const IAudioFile<float>::AudioBuffer* AudioTrack;
-	bool Draw(double ZoomFactor);
+	bool Draw(double ZoomFactor = 1.0);
 	void VerticalScale(double VertFactor, bool ClearChart);
 };

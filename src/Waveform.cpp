@@ -12,15 +12,17 @@ Waveform::Waveform (std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlide
 	ZoomOutV { std::move(ZmOutV) },
 	AudioTrack {nullptr}
 {
+	// callbacks
 	Slider->callback(CbSlider, this);
-	ZoomInH->callback(CbZoomInH, this);
-	ZoomOutH->callback(CbZoomOutH, this);
-	ZoomInV->callback(CbZoomInV, this);
-	ZoomOutV->callback(CbZoomOutV, this);
+	ZoomInH->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->Draw(2.0); }, this);
+	ZoomOutH->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->Draw(0.5); }, this);
+	ZoomInV->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->VerticalScale(2.0, false); }, this);
+	ZoomOutV->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->VerticalScale(0.5, false); }, this);
 
 	// Initialization of  widgets
 	WaveformChart->color(FL_WHITE);
 	WaveformChart->type(FL_LINE_CHART);
+
 	Group.add(WaveformChart->GetImplWidget());
 	Group.add(Slider->GetImplWidget());
 	Group.add(ZoomInH->GetImplWidget());
@@ -34,12 +36,7 @@ bool Waveform::SetAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 {
 	AudioTrack = &AudioTrk;
 	AudioVector = (*AudioTrack)[0];
-	float bound = 0.0f;
-	for (auto Sample : AudioVector) {
-		float temp = ((Sample < 0) ? -Sample : Sample);
-		bound = ((bound < temp) ? temp : bound);
-	}
-	WaveformChart->bounds(-bound, bound);
+	WaveformChart->bounds(-1.0, 1.0);
 	Slider->Reset();
 	Draw(1.0);
 	return true;
@@ -83,26 +80,6 @@ void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)
 	min /= VertFactor;
 	max /= VertFactor;
 	WaveformChart->bounds(min, max);
-}
-
-void Waveform::CbZoomInH(Fl_Widget*, void* Obj)
-{
-	static_cast<Waveform*>(Obj)->Draw(2.0);
-}
-
-void Waveform::CbZoomOutH(Fl_Widget*, void* Obj)
-{
-	static_cast<Waveform*>(Obj)->Draw(0.5);
-}
-
-void Waveform::CbZoomInV(Fl_Widget*, void* Obj)
-{
-	static_cast<Waveform*>(Obj)->VerticalScale(2.0, false);
-}
-
-void Waveform::CbZoomOutV(Fl_Widget*, void* Obj)
-{
-	static_cast<Waveform*>(Obj)->VerticalScale(0.5, false);
 }
 
 Fl_Group* Waveform::GetImplWidget()
