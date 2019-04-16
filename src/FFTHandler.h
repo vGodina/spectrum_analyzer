@@ -18,4 +18,7 @@ private:
 	double LogRMS;
 	std::vector<float> Ampl;
 	int CenterSample;
+
+	long Iteration;
+	long long SumTime;
 };

@@ -7,7 +7,7 @@ CustomSlider::CustomSlider(std::unique_ptr<ISlider> Slidr) :
 	Reset();
 }
 
-inline void CustomSlider::Reset ()
+void CustomSlider::Reset ()
 {
 	Slider->slider_size(1.0);
 	Slider->value(0.5);

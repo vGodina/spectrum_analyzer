@@ -13,11 +13,17 @@ Waveform::Waveform (std::unique_ptr<IChart> Chart, std::unique_ptr <ICustomSlide
 	AudioTrack {nullptr}
 {
 	// callbacks
-	Slider->callback(CbSlider, this);
+	
 	ZoomInH->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->Draw(2.0); }, this);
 	ZoomOutH->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->Draw(0.5); }, this);
+	
 	ZoomInV->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->VerticalScale(2.0, false); }, this);
 	ZoomOutV->callback( [](Fl_Widget*, void* Obj) {static_cast<Waveform*>(Obj)->VerticalScale(0.5, false); }, this);
+	
+	Slider->callback([](Fl_Widget*, void* Obj) {
+		static_cast<Waveform*>(Obj)->Draw(1.0);
+		static_cast<Waveform*>(Obj)->Slider->EmitSignal();
+	}, this);
 
 	// Initialization of  widgets
 	WaveformChart->color(FL_WHITE);
@@ -47,17 +53,10 @@ boost::signals2::connection Waveform::connect(const signal_t::slot_type &slot)
 	return Slider->connect(slot);
 }
 
-void Waveform::CbSlider(Fl_Widget*, void* Obj)
-{
-	auto ThisWaveform = static_cast<Waveform*>(Obj);
-	ThisWaveform->Draw(1.0);
-	ThisWaveform->Slider->EmitSignal();
-}
-
 bool Waveform::Draw(double ZoomFactor)
 {
 	int ChartLength = 1000;
-	VerticalScale(1.0, true); // It holds Chart's bounds with no change after clear
+	VerticalScale(1.0, true); // Clear Chart and hold bounds with no change
 	Slider->Resize(ZoomFactor);
 	int VisibleSamples = static_cast<int>(round(Slider->slider_size() * AudioVector.size()));
 	int StartSample = static_cast<int>(round(Slider->GetStartValue() * AudioVector.size()));
@@ -66,20 +65,17 @@ bool Waveform::Draw(double ZoomFactor)
 		Decimation = 1;
 		ChartLength = VisibleSamples;
 	}
-	for (int i = 0; i < ChartLength; ++i)
-		WaveformChart->add(AudioVector[StartSample + i * Decimation]);
+	//for (int i = 0; i < ChartLength; ++i) WaveformChart->add(AudioVector[StartSample + i * Decimation]);
 	return (ChartLength == 0) ? false : true;
 }
 
-void Waveform::VerticalScale(double VertFactor = 1.0, bool ClearChart = false)
+void Waveform::VerticalScale(double VertFactor, bool ClearChart = false)
 {
 	double min, max;
 	WaveformChart->bounds(&min, &max);
 	if (ClearChart)
 		WaveformChart->clear();
-	min /= VertFactor;
-	max /= VertFactor;
-	WaveformChart->bounds(min, max);
+	WaveformChart->bounds(min / VertFactor, max / VertFactor);
 }
 
 Fl_Group* Waveform::GetImplWidget()

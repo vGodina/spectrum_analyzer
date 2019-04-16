@@ -33,6 +33,9 @@ private:
 	const IAudioFile<float>::AudioBuffer* AudioTrack;
 
 	int FFTSize;
+	int FFTMinSizePower;
+	int FFTMaxSizePower;
+	double LevelFloor;
 
 	static void CbFFTChoice(Fl_Widget*, void*);
 	void CheckFFTSize();
