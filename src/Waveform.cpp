@@ -65,7 +65,8 @@ bool Waveform::Draw(double ZoomFactor)
 		Decimation = 1;
 		ChartLength = VisibleSamples;
 	}
-	//for (int i = 0; i < ChartLength; ++i) WaveformChart->add(AudioVector[StartSample + i * Decimation]);
+	for (int i = 0; i < ChartLength; ++i)
+		WaveformChart->add(AudioVector[StartSample + i * Decimation]);
 	return (ChartLength == 0) ? false : true;
 }
 

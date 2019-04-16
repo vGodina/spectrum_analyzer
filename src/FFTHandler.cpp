@@ -28,17 +28,20 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 	float Norm = 1 / pow(static_cast<float>(N), 2);
 	
 	auto start = std::chrono::system_clock::now();
+
 	///////////////// multithread //////////////////
-	unsigned ThreadsNumber = std::thread::hardware_concurrency() - 1;
+
+	unsigned ThreadsNumber = std::thread::hardware_concurrency();
+
 	std::vector <double> RMS (ThreadsNumber, 0.0);
 	std::vector <std::thread> ThreadList;
 	double SumRMS = 0.0;
 
 	for (int i = 0; i < ThreadsNumber; ++i)
 	{
-		int Start = i * N / ThreadsNumber + 1;
-		int End = (i + 1) * N / ThreadsNumber + 1;
-		ThreadList.push_back(std::thread([Re, Im, N, Norm, &RMS, this, i, Start, End]() {
+		ThreadList.push_back(std::thread([Re, Im, N, Norm, &RMS, this, i, ThreadsNumber]() {
+			int Start = i * N / ThreadsNumber + 1;
+			int End = (i + 1) * N / ThreadsNumber + 1;
 			float Ampl1 = 0.0F;
 			for (int n = Start; n < End; ++n)
 			{
@@ -48,16 +51,16 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 				// log scale of Ak.
 				Ampl[n] = 10.0F * log10f(Ampl1);
 			}
-			
 		}));
 		SumRMS += RMS[i];
 	}
 	
 	for (int i = 0; i < ThreadsNumber; ++i)
-		ThreadList[i].join();	
+		ThreadList[i].join();
 
 	LogRMS = 10.0 * log10(0.5*(SumRMS));
 	
+
 	/* /////////////////// single thread //////////
 	double RMS = 0.0F;
 	float Ampl2 = 0.0F; //square of Amplitude
@@ -79,8 +82,7 @@ void FFTHandler::DoFFT(std::vector <float> AudioTrack, int FFTSize)
 	auto elapsed = end - start;
 	++Iteration;
 	SumTime += elapsed.count();
-	double T = static_cast<double>(SumTime) / static_cast<double>(Iteration);
-	std::cout << T <<'\n';
+	std::cout << SumTime / Iteration << '\n';
 }
 
 double FFTHandler::GetRMS () const

@@ -13,6 +13,7 @@ public:
 	double GetAmpl (int Index) const override;
 
 	void SetCenterSample (int CentreSample) override;
+
 private:
 	audiofft::AudioFFT FFT;
 	double LogRMS;
