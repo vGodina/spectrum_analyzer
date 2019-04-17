@@ -40,7 +40,7 @@ bool MainWindow::AudioFileHandler (std::string FileName)
 bool MainWindow::SliderHandler (double CenterValue)
 {
 	if (AudioIsLoaded) {
-		int CenterSample = static_cast<int>(CenterValue * AudioTrack->GetLength());
+		unsigned int CenterSample = static_cast<unsigned int>(CenterValue * AudioTrack->GetLength());
 		SpectraFrm->SetPosition(CenterSample);
 		SpectraFrm->SetAudioData(AudioTrack->GetData());
 	}

@@ -16,7 +16,7 @@ public:
 
 	bool SetAudioData(const IAudioFile<float>::AudioBuffer&);
 
-	bool SetPosition(int);
+	bool SetPosition(unsigned int CenterSample);
 
 	Fl_Group* GetImplWidget() override;
 

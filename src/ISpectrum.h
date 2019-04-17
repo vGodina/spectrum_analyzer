@@ -12,7 +12,7 @@ struct ISpectrum
 
 	virtual bool SetAudioData(const IAudioFile<float>::AudioBuffer& AudioData) = 0;
 
-	virtual bool SetPosition(int) = 0;
+	virtual bool SetPosition(unsigned int CenterSample) = 0;
 
 	virtual Fl_Widget* GetImplWidget() = 0;
 

@@ -39,9 +39,9 @@ bool Spectrum::SetAudioData(const IAudioFile<float>::AudioBuffer& AudioTrk)
 }
 
 // Gets index of audio sample corresponding to the center of FFT window
-bool Spectrum::SetPosition(int CentrSmpl)
+bool Spectrum::SetPosition(unsigned int CenterSample)
 {
-	FFT->SetCenterSample(CentrSmpl);
+	FFT->SetCenterSample(CenterSample);
 	return true;
 }
 
@@ -72,7 +72,8 @@ void Spectrum::Draw()
 	SpectrumChart->clear();
 	SpectrumChart->bounds(LevelFloor, 0.0);
 	FFT->DoFFT((*AudioTrack)[0], FFTSize);
-	//for (int n = 0; n <= FFTSize / 2; ++n) SpectrumChart->add(FFT->GetAmpl(n));
+	for (int n = 0; n <= FFTSize / 2; ++n)
+		SpectrumChart->add(FFT->GetAmpl(n));
 	LMeter->Set(FFT->GetRMS());
 }
 

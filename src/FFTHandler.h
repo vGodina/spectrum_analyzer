@@ -12,14 +12,12 @@ public:
 
 	double GetAmpl (int Index) const override;
 
-	void SetCenterSample (int CentreSample) override;
+	void SetCenterSample (unsigned int CentreSample) override;
 
 private:
 	audiofft::AudioFFT FFT;
 	double LogRMS;
 	std::vector<float> Ampl;
-	int CenterSample;
-
-	long Iteration;
-	long long SumTime;
+	// CenterSample corresponds to the center of FFT selection
+	unsigned int CenterSample;
 };

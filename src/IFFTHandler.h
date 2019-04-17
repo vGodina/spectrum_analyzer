@@ -13,7 +13,7 @@ struct IFFTHandler
 
 	virtual double GetAmpl(int Index) const = 0;
 
-	virtual void SetCenterSample(int CentreSample) = 0;
+	virtual void SetCenterSample(unsigned int CentreSample) = 0;
 };
 
 #endif
