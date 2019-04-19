@@ -5,12 +5,13 @@ project(spectrum_analyzer) # this sets the project name
 # adding source files
 file(GLOB SourceFiles "src/*.cpp")
 file(GLOB_RECURSE ExtSourceFiles "external/include/*.cpp")
+# file(GLOB_RECURSE ExtIncludeFiles "external/include/*.h")
 
 # adding headers
 include_directories(src)
 
 # adding external headers
-include_directories("external/include")
+include_directories(external/include)
 
 # adding libraries
 include_directories( "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/include/di-cpp14/include")
@@ -24,3 +25,9 @@ target_compile_features(spectrum_analyzer PRIVATE cxx_std_17)
 target_link_libraries(spectrum_analyzer fltkd)
 
 install(TARGETS spectrum_analyzer DESTINATION bin)
+
+
+#### package connection example
+# find_package(BOOST REQUIRED)
+# include_directories(${BOOST_INCLUDE_DIRS} )
+# target_link_libraries(spectrum_analyzer ${BOOST_LIBRARY} )
