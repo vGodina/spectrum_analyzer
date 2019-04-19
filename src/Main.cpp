@@ -1,4 +1,3 @@
-#include <memory>
 #include <boost/di.hpp>
 #include "MainWindow.h"
 #include "Menu.h"
