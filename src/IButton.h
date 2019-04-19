@@ -1,7 +1,7 @@
 #ifndef IBUTTON
 #define IBUTTON
 
-#include <fltk/Fl_Widget.h>
+#include <fltk/Fl_Widget.H>
 #include <string_view>
 
 // Interface of Button

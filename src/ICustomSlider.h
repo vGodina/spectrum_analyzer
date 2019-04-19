@@ -1,7 +1,7 @@
 #ifndef ICUSTOMSLIDER
 #define ICUSTOMSLIDER
 
-#include <fltk/Fl_Slider.h>
+#include <fltk/Fl_Slider.H>
 #include <boost/signals2.hpp>
 
 // Interface of CustomSlider

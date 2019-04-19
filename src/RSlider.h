@@ -1,8 +1,7 @@
 #ifndef RSLIDER_H
 #define RSLIDER_H
+
 #include "ISlider.h"
-#include <fltk/Fl_Slider.h>
-#include <memory>
 
 class RSlider : public ISlider
 {

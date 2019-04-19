@@ -2,7 +2,7 @@
 #define RCHOICE_H
 
 #include "IChoice.h"
-#include "fltk/Fl_Choice.h"
+#include "fltk/Fl_Choice.H"
 
 class RChoice : public IChoice
 {

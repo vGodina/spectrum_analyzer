@@ -2,7 +2,7 @@
 #define RCHART_H
 
 #include "IChart.h"
-#include <fltk/Fl_Chart.h>
+#include <fltk/Fl_Chart.H>
 
 class RChart : public IChart
 {

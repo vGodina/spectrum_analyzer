@@ -1,8 +1,7 @@
 #ifndef ISLIDER
 #define ISLIDER
-#include <memory>
-//#include <string_view>
-#include <fltk/Fl_Slider.h>
+
+#include <fltk/Fl_Slider.H>
 
 // Interface of Slider
 

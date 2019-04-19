@@ -2,7 +2,7 @@
 #define RBUTTON_H
 
 #include "IButton.h"
-#include "fltk/Fl_Button.h"
+#include "fltk/Fl_Button.H"
 
 class RButton : public IButton
 {
